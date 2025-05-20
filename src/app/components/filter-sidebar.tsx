@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, ChevronDownCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -31,14 +31,15 @@ export function FilterSidebar() {
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Filters</h2>
+    <div className="bg-(--color-primary) py-(--pb-cards) px-(--pi-cards) rounded-md min-h-[300px] flex flex-col h-auto">
+        <h2 className="text-(length:--fs-h6) font-semibold py-3">Filters</h2>
 
-      <Collapsible defaultOpen className="border rounded-md">
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" className="flex w-full justify-between p-4 cursor-pointer">
-            <span>Ingredients</span>
-            <ChevronDown className="h-4 w-4" />
+      <div className="flex-col gap-4 mt-auto">
+      <Collapsible defaultOpen className="space-y-3 border-b">
+        <CollapsibleTrigger asChild className="p-0">
+          <Button variant="ghost" className="flex w-full justify-between py-4  cursor-pointer">
+            <span className="text-(length:--fs-p)">Ingredients</span>
+            <ChevronDownCircle className="h-4 w-4" />
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
@@ -56,11 +57,11 @@ export function FilterSidebar() {
         </CollapsibleContent>
       </Collapsible>
 
-      <Collapsible className="border rounded-md">
+      <Collapsible className="space-y-3 border-b">
         <CollapsibleTrigger asChild>
           <Button variant="ghost" className="flex w-full justify-between p-4 cursor-pointer">
-            <span>Stores</span>
-            <ChevronDown className="h-4 w-4" />
+            <span className="text-(length:--fs-p)">Stores</span>
+            <ChevronDownCircle className="h-4 w-4" />
           </Button>
         </CollapsibleTrigger>
         <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
@@ -75,7 +76,8 @@ export function FilterSidebar() {
         </CollapsibleContent>
       </Collapsible>
 
-      <Button className="w-full bg-cyan-800 text-white uppercase tracking-wide cursor-pointer">Apply Filters</Button>
+        <Button className="w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4">Apply filters</Button>
+      </div>
     </div>
   )
 }

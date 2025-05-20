@@ -74,15 +74,15 @@ export function DrinksList() {
         {filteredDrinks.map((drink) => (
           <Card key={drink.name} className="overflow-hidden">
             <div className="aspect-square relative bg-muted">
-              <Image src={/* drink.image || */ "/placeholder.svg"} alt={drink.name} fill className="object-cover" />
+                <Badge variant="outline" className="absolute top-2 right-2 z-10 bg-(--color-secondary) text-(--color-primary) text-(length:--fs-p) rounded-full border-none px-[16px] py-[6px]">{drink.price.toFixed(2)}€</Badge>
+              <Image src={ drink.image || "/placeholder.svg"} alt={drink.name} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-semibold">{drink.name}</h3>
+                  <h3 className="font-semibold text-(length:--fs-h6)">{drink.name}</h3>
                   <p className="text-sm text-muted-foreground">{drink.store}</p>
                 </div>
-                <Badge variant="outline">{drink.price.toFixed(2)}€</Badge>
               </div>
               <div className="mt-2 flex">
                 <Collapsible className="border rounded-md w-full">
@@ -105,7 +105,7 @@ export function DrinksList() {
             </CardContent>
             <CardFooter className="p-4 pt-0 hover:*:bg-gray-200">
               <Button variant="outline" size="sm" className="w-full rounded-full" asChild>
-                <a href={drink.url} target="_blank" rel="noopener noreferrer" className="py-[10px]">
+                <a href={drink.url} target="_blank" rel="noopener noreferrer" className="py-[10px] w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4">
                   View in Store
                   <ExternalLink className="ml-2 h-3 w-3" />
                 </a>

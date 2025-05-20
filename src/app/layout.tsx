@@ -6,8 +6,8 @@ import './globals.css'
 
 
 export const metadata: Metadata = {
-  title: "Estonian Functional Drinks",
-  description: "A collection of functional drinks from Estonian grocery stores",
+  title: "Find your tempo",
+  description: "A collection of functional drinks from Estonian grocery stores. Find your tempo.",
 }
 
 const archivo = Archivo({
