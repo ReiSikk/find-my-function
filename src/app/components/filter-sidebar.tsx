@@ -11,7 +11,6 @@ import { Label } from "@/components/ui/label"
 // Sample ingredients - you'll replace these with actual data from your scraper
 const sampleIngredients = [
   "Caffeine",
-  "Taurine",
   "B Vitamins",
   "Ginseng",
   "L-Carnitine",
@@ -37,18 +36,19 @@ export function FilterSidebar() {
 
       <Collapsible defaultOpen className="border rounded-md">
         <CollapsibleTrigger asChild>
-          <Button variant="ghost" className="flex w-full justify-between p-4">
+          <Button variant="ghost" className="flex w-full justify-between p-4 cursor-pointer">
             <span>Ingredients</span>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="px-4 pb-4 space-y-2">
+        <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           {sampleIngredients.map((ingredient) => (
             <div key={ingredient} className="flex items-center space-x-2">
               <Checkbox
                 id={`ingredient-${ingredient}`}
                 checked={selectedIngredients.includes(ingredient)}
                 onCheckedChange={() => toggleIngredient(ingredient)}
+                className="cursor-pointer"
               />
               <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
             </div>
@@ -58,24 +58,24 @@ export function FilterSidebar() {
 
       <Collapsible className="border rounded-md">
         <CollapsibleTrigger asChild>
-          <Button variant="ghost" className="flex w-full justify-between p-4">
+          <Button variant="ghost" className="flex w-full justify-between p-4 cursor-pointer">
             <span>Stores</span>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="px-4 pb-4 space-y-2">
+        <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           <div className="flex items-center space-x-2">
-            <Checkbox id="store-selver" />
+            <Checkbox id="store-selver" className="cursor-pointer" />
             <Label htmlFor="store-selver">E-Selver</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <Checkbox id="store-rimi" />
+            <Checkbox id="store-rimi" className="cursor-pointer" />
             <Label htmlFor="store-rimi">Rimi</Label>
           </div>
         </CollapsibleContent>
       </Collapsible>
 
-      <Button className="w-full">Apply Filters</Button>
+      <Button className="w-full bg-cyan-800 text-white uppercase tracking-wide cursor-pointer">Apply Filters</Button>
     </div>
   )
 }

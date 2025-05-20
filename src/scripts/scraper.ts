@@ -1,7 +1,7 @@
 // This is a placeholder for the Puppeteer scraper
 // You'll implement this script to scrape data from E-Selver and Rimi
 
-import puppeteer from "puppeteer"
+import * as puppeteer from 'puppeteer';
 import type { Drink } from "@/lib/types"
 
 async function retry<T>(
@@ -17,6 +17,47 @@ async function retry<T>(
     console.log(`${errorMsg}, retrying in ${delay/1000}s... (${retries} attempts left)`);
     await new Promise(resolve => setTimeout(resolve, delay));
     return retry(fn, retries - 1, delay, errorMsg);
+  }
+}
+
+async function extractIngredients(page: puppeteer.Page, productUrl: string): Promise<string[]> {
+  try {
+    console.log(`Visiting product page: ${productUrl}`);
+    
+    // Navigate to the product page
+    await page.goto(`https://www.selver.ee${productUrl}`, {
+      waitUntil: 'networkidle2',
+      timeout: 30000
+    });
+    
+    // Wait for accordion elements to load
+    await page.waitForSelector('.AttributeAccordion__content', { timeout: 10000 });
+    
+    // Get all accordion contents
+    const accordionContents = await page.$$('.AttributeAccordion__content');
+    
+    // Check if we have at least 2 accordion contents
+    if (accordionContents.length >= 2) {
+      // Extract text from the second accordion content
+      const ingredientsText = await page.evaluate(el => el.textContent?.trim(), accordionContents[1]);
+      
+      if (ingredientsText) {
+        // Split by commas, semicolons, or other common separators and trim each ingredient
+        const ingredients = ingredientsText
+          .split(/[,;.]/)
+          .map(item => item.trim())
+          .filter(item => item.length > 0);
+        
+        console.log(`Found ${ingredients.length} ingredients`);
+        return ingredients;
+      }
+    }
+    
+    console.log('No ingredients found on product page');
+    return ['No ingredients found'];
+  } catch (error) {
+    console.error(`Error extracting ingredients from ${productUrl}:`, error);
+    return ['Error extracting ingredients'];
   }
 }
 
@@ -80,9 +121,16 @@ export async function scrapeESelver(): Promise<Drink[]> {
         productUrl 
     })
 
-      // For ingredients, you might need to visit each product page
-      // This is a simplified example
-      const ingredients = ["Placeholder"] // You'll need to implement actual ingredient extraction
+       // Create a new page for ingredient extraction to avoid navigation issues on main page
+        const ingredientPage = await browser.newPage();
+        await ingredientPage.setDefaultNavigationTimeout(30000);
+        
+        // Extract ingredients
+        const ingredients = await extractIngredients(ingredientPage, productUrl);
+        console.log("Ingredients:", ingredients);
+        
+        // Close the ingredient page to free up resources
+        await ingredientPage.close();
 
       drinks.push({
         name,
@@ -90,7 +138,7 @@ export async function scrapeESelver(): Promise<Drink[]> {
         image: imageUrl,
         store: "E-Selver",
         ingredients,
-        url: productUrl,
+        url: `https://www.selver.ee${productUrl}`,
       })
     }
   } catch (error) {

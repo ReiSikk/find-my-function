@@ -24,7 +24,7 @@ export async function GET() {
     const { data, error } = await supabase
       .from('drinks')
       .upsert(allDrinks, {
-        onConflict: 'id',
+        onConflict: 'url',
         ignoreDuplicates: false
       })
     
