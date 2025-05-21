@@ -75,7 +75,7 @@ export function DrinksList() {
           <Card key={drink.name} className="overflow-hidden">
             <div className="aspect-square relative bg-muted">
                 <Badge variant="outline" className="absolute top-2 right-2 z-10 bg-(--color-secondary) text-(--color-primary) text-(length:--fs-p) rounded-full border-none px-[16px] py-[6px]">{drink.price.toFixed(2)}€</Badge>
-              <Image src={ /* drink.image || */ "/placeholder.svg"} alt={drink.name} fill className="object-cover" />
+              <Image src={ drink.image || "/placeholder.svg"} alt={drink.name} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
               <div className="flex justify-between items-start">
@@ -103,9 +103,9 @@ export function DrinksList() {
                 </Collapsible>
               </div>
             </CardContent>
-            <CardFooter className="p-4 pt-0 hover:*:bg-gray-200">
+            <CardFooter className="p-4 pt-0">
               <Button variant="outline" size="sm" className="w-full rounded-full" asChild>
-                <a href={drink.url} target="_blank" rel="noopener noreferrer" className="py-[10px] w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4">
+                <a href={drink.url} target="_blank" rel="noopener noreferrer" className="py-[10px] w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4 hover:bg-(--color-secondary) hover:text-(--color-primary)">
                   View in Store
                   <ExternalLink className="ml-2 h-3 w-3" />
                 </a>

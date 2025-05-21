@@ -76,7 +76,8 @@ export function FilterSidebar() {
         </CollapsibleContent>
       </Collapsible>
 
-        <Button className="w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4">Apply filters</Button>
+        <Button className="w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4     border border-transparent
+    hover:border-(--color-secondary)">Apply filters</Button>
       </div>
     </div>
   )
