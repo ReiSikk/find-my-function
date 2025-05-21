@@ -1,10 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown, ChevronDownCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
@@ -31,53 +35,67 @@ export function FilterSidebar() {
   }
 
   return (
-    <div className="bg-(--color-primary) py-(--pb-cards) px-(--pi-cards) rounded-md min-h-[300px] flex flex-col h-auto">
-        <h2 className="text-(length:--fs-h6) font-semibold py-3">Filters</h2>
+    <div className="bg-(--color-primary) py-(--pb-cards) px-(--pi-cards) rounded-md flex flex-col h-auto">
+      <div className="sm:flex-col lg:flex-row items-center justify-between w-full gap-2">
+        <h2 className="text-(length:--fs-h6) font-medium py-3">Filters</h2>
+        <Button className="s bg-[var(--color-bg--light)] text-[var(--color-secondary)] rounded-full border border-transparent hover:border-[var(--color-secondary)]">
+          Apply filters
+        </Button>
+      </div>
+
 
       <div className="flex-col gap-4 mt-auto">
-      <Collapsible defaultOpen className="space-y-3 border-b">
-        <CollapsibleTrigger asChild className="p-0">
-          <Button variant="ghost" className="flex w-full justify-between py-4  cursor-pointer">
-            <span className="text-(length:--fs-p)">Ingredients</span>
-            <ChevronDownCircle className="h-4 w-4" />
-          </Button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-          {sampleIngredients.map((ingredient) => (
-            <div key={ingredient} className="flex items-center space-x-2">
-              <Checkbox
-                id={`ingredient-${ingredient}`}
-                checked={selectedIngredients.includes(ingredient)}
-                onCheckedChange={() => toggleIngredient(ingredient)}
-                className="cursor-pointer"
-              />
-              <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
-            </div>
-          ))}
-        </CollapsibleContent>
-      </Collapsible>
+       <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value="item-1" className="">
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Is it accessible?</AccordionTrigger>
+          <AccordionContent className="flex flex-col px-1.5 py-3">
+            <span
+              className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
+              onClick={() => setSelectedIngredients([])}
+            >
+              Clear all
+            </span>
+            {sampleIngredients.map((ingredient) => (
+              <div key={ingredient} className="flex items-center space-x-2 py-2">
+                <Checkbox
+                  id={`ingredient-${ingredient}`}
+                  checked={selectedIngredients.includes(ingredient)}
+                  onCheckedChange={() => toggleIngredient(ingredient)}
+                  className="cursor-pointer"
+                />
+                <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
+              </div>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
 
-      <Collapsible className="space-y-3 border-b">
-        <CollapsibleTrigger asChild>
-          <Button variant="ghost" className="flex w-full justify-between p-4 cursor-pointer">
-            <span className="text-(length:--fs-p)">Stores</span>
-            <ChevronDownCircle className="h-4 w-4" />
-          </Button>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-          <div className="flex items-center space-x-2">
-            <Checkbox id="store-selver" className="cursor-pointer" />
-            <Label htmlFor="store-selver">E-Selver</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox id="store-rimi" className="cursor-pointer" />
-            <Label htmlFor="store-rimi">Rimi</Label>
-          </div>
-        </CollapsibleContent>
-      </Collapsible>
+        <AccordionItem value="item-2" className="">
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
+          <AccordionContent className="flex flex-col px-1.5 py-3">
+            <span
+              className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
+              onClick={() => setSelectedIngredients([])}
+            >
+              Clear all
+            </span>
 
-        <Button className="w-full bg-(--color-bg--light) text-(--color-secondary) text-(length:--fs-p) cursor-pointer rounded-full mt-4     border border-transparent
-    hover:border-(--color-secondary)">Apply filters</Button>
+              <div className="flex items-center space-x-2 py-2">
+                <Checkbox
+                  id="store-selver"
+                  className="cursor-pointer"
+                />
+                <Label htmlFor="store-selver">E-Selver</Label>
+              </div>
+              <div className="flex items-center space-x-2 py-2">
+                <Checkbox
+                  id="store-rimi"
+                  className="cursor-pointer"
+                />
+                <Label htmlFor="store-rimi">Rimi</Label>
+              </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
       </div>
     </div>
   )
