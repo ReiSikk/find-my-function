@@ -1,24 +1,15 @@
-// This is a placeholder for the Puppeteer scraper
-// You'll implement this script to scrape data from E-Selver and Rimi
+/* ==========================================================================
+   Scraper for E-Selver and Rimi
+   This script uses Puppeteer to scrape product information from E-Selver and Rimi's websites.
+   It extracts product names, prices, images, and ingredients from the product pages.
+   The scraped data is then returned as an array of Drink objects.
+   The script also includes a function to analyze the ingredients and categorize them using a predefined mapping.
+   ========================================================================== */
 
 import * as puppeteer from 'puppeteer';
 import type { Drink } from "@/lib/types"
+import { analyzeDrinkIngredients } from '../lib/tag-utils';
 
-async function retry<T>(
-  fn: () => Promise<T>, 
-  retries = 3, 
-  delay = 5000,
-  errorMsg = "Operation failed"
-): Promise<T> {
-  try {
-    return await fn();
-  } catch (error) {
-    if (retries <= 0) throw error;
-    console.log(`${errorMsg}, retrying in ${delay/1000}s... (${retries} attempts left)`);
-    await new Promise(resolve => setTimeout(resolve, delay));
-    return retry(fn, retries - 1, delay, errorMsg);
-  }
-}
 
 async function extractIngredients(page: puppeteer.Page, productUrl: string): Promise<string[]> {
   try {
@@ -114,12 +105,12 @@ export async function scrapeESelver(): Promise<Drink[]> {
       const price = Number.parseFloat(priceText.replace("€", "").replace(",", "."))
       const imageUrl = await product.$eval("img", (el) => el.getAttribute("src") || "")
       const productUrl = await product.$eval("a", (el) => el.getAttribute("href") || "")
-      console.log("Product details:", { 
-        name, 
-        price, 
-        imageUrl, 
-        productUrl 
-    })
+    //   console.log("Product details:", { 
+    //     name, 
+    //     price, 
+    //     imageUrl, 
+    //     productUrl 
+    // })
 
        // Create a new page for ingredient extraction to avoid navigation issues on main page
         const ingredientPage = await browser.newPage();
@@ -127,10 +118,12 @@ export async function scrapeESelver(): Promise<Drink[]> {
         
         // Extract ingredients
         const ingredients = await extractIngredients(ingredientPage, productUrl);
-        console.log("Ingredients:", ingredients);
+        const tags = analyzeDrinkIngredients(ingredients);
+        console.log("Tags:", tags);
         
         // Close the ingredient page to free up resources
         await ingredientPage.close();
+
 
       drinks.push({
         name,
@@ -139,6 +132,7 @@ export async function scrapeESelver(): Promise<Drink[]> {
         store: "E-Selver",
         ingredients,
         url: `https://www.selver.ee${productUrl}`,
+        tags
       })
     }
   } catch (error) {

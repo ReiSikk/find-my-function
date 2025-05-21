@@ -1,10 +1,13 @@
+import { TagCategory } from './ingredient-tags';
+
 export interface Drink {
   name: string
   price: number
   image: string
   store: string
   ingredients: string[]
-  url: string
+  url: string,
+  tags?: TagCategory[];
 }
 
 
