@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useDrinks } from "../../lib/hooks/useDrinks"
 import Image from "next/image"
 import { ExternalLink, ChevronDown, LucidePlus, LucideX } from "lucide-react"
 import { Drink } from "../../lib/types";
@@ -12,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { cn } from "../../lib/utils"
 
 
 export async function fetchDrinks(): Promise<Drink[]> {
@@ -32,40 +34,16 @@ export async function fetchDrinks(): Promise<Drink[]> {
 
 
 export function DrinksList() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [drinks, setDrinks] = useState<Drink[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [activeCardId, setActiveCardId] = useState<number | null>(null)
-  console.log("Drinks in state:",drinks);
-
-    // Fetch drinks when component mounts
-  useEffect(() => {
-    async function loadDrinks() {
-      try {
-        setLoading(true)
-        const data = await fetchDrinks()
-        console.log("Fetched drinks:", data)
-        setDrinks(data)
-      } catch (err) {
-        console.error("Failed to fetch drinks:", err)
-        setError("Failed to load drinks. Please try again later.")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadDrinks()
-  }, [])
-
-  const filteredDrinks = drinks.filter((drink) => drink.name.toLowerCase().includes(searchTerm.toLowerCase()))
-
-
-  // Handle card overlay state
-  const toggleCardOverlay = (index: number) => {
-    setActiveCardId(activeCardId === index ? null : index)
-    console.log("Active card ID:", activeCardId);
-  }
+   const {
+    filteredDrinks,
+    searchTerm,
+    setSearchTerm,
+    loading,
+    error,
+    activeCardId,
+    toggleCardOverlay,
+    refreshDrinks
+  } = useDrinks();
   
 
   return (
@@ -77,22 +55,35 @@ export function DrinksList() {
         </div>
       </div>
 
+
+        {loading ? (
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-secondary)]"></div>
+        </div>
+      ) : error ? (
+        <div className="text-center p-6 bg-red-50 text-red-500 rounded-md">
+          {error}
+        </div>
+      ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredDrinks.map((drink, index) => (
           <Card key={drink.name} className="overflow-hidden relative">
             <div className="aspect-square relative bg-muted">
-                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-secondary) text-(--color-primary) text-(length:--fs-p) rounded-full border-none px-[16px] py-[6px]">{drink.price.toFixed(2)}€</Badge>
-              <Image src={ drink.image || "/placeholder.svg"} alt={drink.name} fill className="object-cover" />
+                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-secondary) text-(--color-primary) text-(length:--fs-p) rounded-full border-none px-[16px] py-[6px]" aria-label="Badge displaying product price">{drink.price.toFixed(2)}€</Badge>
+              <Image src={ drink.image || "/placeholder.svg"} alt={`Product image displaying the product ${drink.name}`} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
               <div className="flex justify-between items-start">
-                <div>
+                <div className="flex items-start justify-between gap-6">
                   <h3 className="font-medium text-(length:--fs-h6)">{drink.name}</h3>
+                  <a className="bg-(--color-secondary) text-(--color-primary) flex items-center justify-center cursor-pointer rounded-full p-2" href={drink.url} target="_blank" rel="noopener noreferrer" aria-label="External link to buy the product">
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
 
                {drink.tags && drink.tags.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
+                  <div className="mt-3 mb-6 flex flex-wrap gap-1">
                     {drink.tags.map(tag => (
                       <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-4 py-1.5 text-(--color-bg--light) bg-(--color-secondary)">
                         {tag}
@@ -101,63 +92,41 @@ export function DrinksList() {
                   </div>
                 )}
 
-              <div className="mt-2 flex">
-                <Collapsible className="border rounded-md w-full">
-                    <CollapsibleTrigger asChild>
-                      <Button variant="ghost" className="justify-between cursor-pointer w-full">
-                        <span>Ingredients</span>
-                        <ChevronDown className="h-4 w-4" />
-                      </Button>
-                    </CollapsibleTrigger>
-                  <CollapsibleContent className="px-4 pb-4 space-y-2 transition-all data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-                  {drink.ingredients.map((ingredient) => (
-                    <div key={ingredient} className="flex items-center space-x-2">
-
-                      <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
-                    </div>
-                  ))}
-                </CollapsibleContent>
-                </Collapsible>
-              </div>
             </CardContent>
-            <CardFooter className="pt-0 flex gap-2 justify-end">
-                {/* <Button variant="outline" asChild className="w-full rounded-full py-3">
-                <a 
-                  href={drink.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center justify-center gap-2 text-[var(--fs-p)]"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </Button> */}
+            <CardFooter className="pt-0 flex gap-2 justify-end relative">
                    <div 
-                   className="flex justify-between items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 bg-(--color-bg) cursor-pointer z-10"
-                    onClick={() => toggleCardOverlay(index)}
+                   className={`flex justify-between items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-(--color-bg) cursor-pointer z-10 transition-all duration-200 ${activeCardId === index ? 'hover:border-(--color-primary) hover:bg-(--color-secondary) hover:text-(--color-primary)' : 'hover:bg-(--color-secondary) hover:text-(--color-primary)'}`}
+                   onClick={() => toggleCardOverlay(index)}
+                   aria-label={`${activeCardId === index ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
+                   role="button"
                    >
-                    <span>View ingredients</span>
+                      <span className="whitespace-nowrap text-(length:--fs-p)">
+                        {activeCardId === index ? 'Close overlay' : 'View ingredients'}
+                      </span>
                     <div className="bg-(--color-white) rounded-full p-2">
-                      {activeCardId === index ? (
-                        <LucideX className="h-4 w-4 text-[var(--color-bg)]" />
-                      ) : (
-                        <LucidePlus className="h-4 w-4 text-[var(--color-bg)]" />
-                      )}
+                        <LucidePlus 
+                        className={`h-4 w-4 text-[var(--color-bg)] transition-transform duration-200 ${
+                          activeCardId === index ? 'rotate-45' : ''
+                        }`}
+                        />
                     </div>
                   </div>
             </CardFooter>
             {activeCardId === index && (
-              <div className="absolute inset-0 bg-(--color-secondary) text-(--color-bg) flex flex-col p-6 z-9">
+              <div className="absolute inset-0 bg-(--color-secondary) text-(--color-bg) flex flex-col px-6 pb-16 pt-4 z-9">
                 <h4>Ingredients</h4>
                 <ul className="list-disc pl-6 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   {drink.ingredients.map((ingredient) => (
                     <li key={ingredient} className="text-(length:--fs-p)">{ingredient}</li>
                   ))}
+                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-secondary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
                 </ul>
               </div>
             )}
           </Card>
         ))}
       </div>
+      )}
     </div>
   )
 }
