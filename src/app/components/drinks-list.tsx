@@ -119,10 +119,23 @@ export function DrinksList() {
               <div className={`absolute inset-0 bg-[var(--color-secondary)] text-[var(--color-bg)] flex flex-col px-6 pb-16 pt-4 z-9 transition-opacity duration-300 ${
                 openOverlays[index] ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
               }`}>
-                <h4>Ingredients</h4>
-                <ul className="list-disc pl-6 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <h4 className="text-(length:--fs-h5) pb-1.5 border-b">Ingredients</h4>
+                   {drink.tags && drink.tags.length > 0 && (
+                    <>
+                    <span className="text-(length:--fs-p) mt-3">This product contains the following functional ingredients:</span>
+                    <div className="mt-3 flex flex-wrap gap-1">
+                      {drink.tags.map(tag => (
+                        <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-3 py-1.5 text-(--color-secondary) bg-(--color-primary)">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    </>
+                )}
+
+                <ul className="list-disc pl-6 mt-8 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   {drink.ingredients.map((ingredient) => (
-                    <li key={ingredient} className="text-(length:--fs-p)">{ingredient}</li>
+                    <li key={ingredient} className="text-(length:--fs-small)">{ingredient}</li>
                   ))}
                     <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-secondary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
                 </ul>
