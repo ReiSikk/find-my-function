@@ -35,7 +35,7 @@ export function DrinksList() {
     setSearchTerm,
     loading,
     error,
-    activeCardId,
+    openOverlays,
     toggleCardOverlay,
     refreshDrinks,
   } = useDrinksContext();  
@@ -99,25 +99,26 @@ export function DrinksList() {
             </CardContent>
             <CardFooter className="pt-0 flex gap-2 justify-end relative">
                    <div 
-                   className={`flex justify-between items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-(--color-bg) cursor-pointer z-10 transition-all duration-200 ${activeCardId === index ? 'hover:border-(--color-primary) hover:bg-(--color-secondary) hover:text-(--color-primary)' : 'hover:bg-(--color-secondary) hover:text-(--color-primary)'}`}
+                   className={`flex justify-between items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-(--color-bg) cursor-pointer z-10 transition-all duration-200 ${openOverlays[index] ? 'hover:border-(--color-primary) hover:bg-(--color-secondary) hover:text-(--color-primary)' : 'hover:bg-(--color-secondary) hover:text-(--color-primary)'}`}
                    onClick={() => toggleCardOverlay(index)}
-                   aria-label={`${activeCardId === index ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
+                   aria-label={`${openOverlays[index] ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
                    role="button"
                    >
                       <span className="whitespace-nowrap text-(length:--fs-p)">
-                        {activeCardId === index ? 'Close overlay' : 'View ingredients'}
+                        {openOverlays[index] ? 'Close overlay' : 'View ingredients'}
                       </span>
                     <div className="bg-(--color-white) rounded-full p-2">
                         <LucidePlus 
                         className={`h-4 w-4 text-[var(--color-bg)] transition-transform duration-200 ${
-                          activeCardId === index ? 'rotate-45' : ''
+                          openOverlays[index] ? 'rotate-45' : ''
                         }`}
                         />
                     </div>
                   </div>
             </CardFooter>
-            {activeCardId === index && (
-              <div className="absolute inset-0 bg-(--color-secondary) text-(--color-bg) flex flex-col px-6 pb-16 pt-4 z-9">
+              <div className={`absolute inset-0 bg-[var(--color-secondary)] text-[var(--color-bg)] flex flex-col px-6 pb-16 pt-4 z-9 transition-opacity duration-300 ${
+                openOverlays[index] ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+              }`}>
                 <h4>Ingredients</h4>
                 <ul className="list-disc pl-6 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   {drink.ingredients.map((ingredient) => (
@@ -126,7 +127,6 @@ export function DrinksList() {
                     <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-secondary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
                 </ul>
               </div>
-            )}
           </Card>
         ))}
       </div>

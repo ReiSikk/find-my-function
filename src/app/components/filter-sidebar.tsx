@@ -70,7 +70,7 @@ export function FilterSidebar() {
           <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">
           {MERCHANTS.map((merchant) => (
-              <div className="flex items-center space-x-2 py-2">
+              <div key={merchant} className="flex items-center space-x-2 py-2">
                 <Checkbox
                   id={`merchant-${merchant}`}
                   checked={activeFilters.selectedMerchants.includes(merchant)}

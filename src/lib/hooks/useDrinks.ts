@@ -35,8 +35,6 @@ export function useDrinks(initialSearchTerm = '') {
   const [pendingMinPrice, setPendingMinPrice] = useState(0);
   const [pendingMaxPrice, setPendingMaxPrice] = useState(100);
   
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  
   // Use SWR for data fetching with caching
   const { 
     data: drinks, 
@@ -98,12 +96,6 @@ const handleMerchantChange = useCallback((merchant: string) => {
     const newMerchants = isSelected
       ? prev.selectedMerchants.filter(item => item !== merchant)
       : [...prev.selectedMerchants, merchant];
-      
-    console.log('Merchant selection updated:', {
-      merchant,
-      isSelected,
-      newMerchants
-    });
     
     return {
       ...prev,
@@ -158,7 +150,6 @@ const filteredDrinks = useMemo(() => {
     return matchesAll;
   });
 
-  console.log(`Filtering complete: ${results.length} drinks match criteria`);
   return [...results];
 
 }, [drinks, searchTerm, activeFilters]);
@@ -166,9 +157,14 @@ const filteredDrinks = useMemo(() => {
 
   
   // Toggle card overlay
+  const [openOverlays, setOpenOverlays] = useState<Record<number, boolean>>({});
+
   const toggleCardOverlay = useCallback((index: number) => {
-    setActiveCardId(prevId => prevId === index ? null : index);
-  }, []);
+  setOpenOverlays(prev => ({
+    ...prev,
+    [index]: !prev[index]
+  }));
+}, []);
 
 
   // Manual refresh function
@@ -208,7 +204,8 @@ const filteredDrinks = useMemo(() => {
     // Other state
     loading: isLoading,
     error: error ? "Failed to load drinks. Please try again later." : null,
-    activeCardId,
+    // Overlay states for cards
+    openOverlays,
     toggleCardOverlay,
     refreshDrinks,
     hasPendingChanges
