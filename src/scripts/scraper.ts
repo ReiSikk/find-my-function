@@ -54,11 +54,7 @@ async function extractIngredients(page: puppeteer.Page, productUrl: string): Pro
 
 // Example scraper function for E-Selver
 export async function scrapeESelver(): Promise<Drink[]> {
-    // free proxy server URL
-    const proxyURL = 'http://160.86.242.23:8080';
 
-    // launch a browser instance with the
-    // --proxy-server flag enabled
     const browser = await puppeteer.launch();
 
 
@@ -83,14 +79,6 @@ export async function scrapeESelver(): Promise<Drink[]> {
   try {
     // Navigate to E-Selver's functional drinks page
     await page.goto("https://www.selver.ee/joogid/spordijoogid-pulbrid-batoonid")
-    
-    // extract the IP the request comes from
-    // and print it
-    // const body = await page.waitForSelector('body');
-    // if (body) {
-    //     const ip = await body.getProperty('textContent');
-    //     console.log(await ip.jsonValue());
-    // }
 
     // Wait for the products to load
     await page.waitForSelector(".ProductCard")
@@ -105,12 +93,6 @@ export async function scrapeESelver(): Promise<Drink[]> {
       const price = Number.parseFloat(priceText.replace("€", "").replace(",", "."))
       const imageUrl = await product.$eval("img", (el) => el.getAttribute("src") || "")
       const productUrl = await product.$eval("a", (el) => el.getAttribute("href") || "")
-    //   console.log("Product details:", { 
-    //     name, 
-    //     price, 
-    //     imageUrl, 
-    //     productUrl 
-    // })
 
        // Create a new page for ingredient extraction to avoid navigation issues on main page
         const ingredientPage = await browser.newPage();
@@ -158,9 +140,7 @@ export async function scrapeAllStores() {
 
   const allDrinks = [...selverDrinks, ...rimiDrinks]
 
-  // Here you would save the data to Supabase or another storage
-//   console.log(`Scraped ${allDrinks.length} drinks in total`)
-
+  // Return all drinks for so the API can insert them in to the database
   return allDrinks
 
 }

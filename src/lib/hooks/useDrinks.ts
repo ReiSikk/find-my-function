@@ -1,5 +1,5 @@
 // src/lib/hooks/useDrinks.ts
-import { useState, useEffect } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Drink } from '../types';
 import { createSupabaseClient } from '../supabase-client';
 import useSWR from 'swr';
@@ -22,6 +22,19 @@ async function fetchDrinks(): Promise<Drink[]> {
 
 export function useDrinks(initialSearchTerm = '') {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+  // Active filters (currently applied)
+  const [activeFilters, setActiveFilters] = useState({
+    minPrice: 0,
+    maxPrice: 100,
+    selectedIngredients: [] as string[],
+    selectedMerchants: [] as string[]
+  });
+
+  
+  // Pending filters (not yet applied)
+  const [pendingMinPrice, setPendingMinPrice] = useState(0);
+  const [pendingMaxPrice, setPendingMaxPrice] = useState(100);
+  
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   
   // Use SWR for data fetching with caching
@@ -29,33 +42,175 @@ export function useDrinks(initialSearchTerm = '') {
     data: drinks, 
     error, 
     isLoading,
-    mutate: refreshDrinks
+    mutate
   } = useSWR('drinks', fetchDrinks, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
-    dedupingInterval: 3600000, // Cahce for 1 hour
+    dedupingInterval: 3600000, // Cache for 1 hour
   });
+
   
-  // Filter drinks based on search term
-  const filteredDrinks = drinks 
-    ? drinks.filter((drink) => drink.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    : [];
+  // Reset all filters to defaults
+  const resetFilters = useCallback(() => {
+    setPendingMinPrice(0);
+    setPendingMaxPrice(100);
+    setSearchTerm('');
+    
+    // Immediately apply the reset
+    setActiveFilters({
+      minPrice: 0,
+      maxPrice: 100,
+      selectedIngredients: [],
+      selectedMerchants: []
+    });
+  }, []);
+  
+
+  
+// Handle drink category change
+const handleDrinkCategoryChange = useCallback((category: string) => {
+
+   setActiveFilters(prev => {
+    const isSelected = prev.selectedIngredients.includes(category);
+    
+    const newIngredients = isSelected
+      ? prev.selectedIngredients.filter(item => item !== category)
+      : [...prev.selectedIngredients, category];
+      
+    console.log('New selection:', newIngredients);
+    
+    return {
+      ...prev,
+      selectedIngredients: newIngredients
+    };
+  });
+}, []);
+
+
+// Handle store selection change
+const handleMerchantChange = useCallback((merchant: string) => {
+  setActiveFilters(prev => {
+    // Check if this merchant is already selected
+    const isSelected = prev.selectedMerchants.includes(merchant);
+    
+    // Toggle merchant selection
+    const newMerchants = isSelected
+      ? prev.selectedMerchants.filter(item => item !== merchant)
+      : [...prev.selectedMerchants, merchant];
+      
+    console.log('Merchant selection updated:', {
+      merchant,
+      isSelected,
+      newMerchants
+    });
+    
+    return {
+      ...prev,
+      selectedMerchants: newMerchants
+    };
+  });
+}, []);
+
+
+  // Handle slider range change (updates pending values only)
+const handlePriceRangeChange = useCallback(([min, max]: [number, number]) => {
+  // Update pending values for the slider UI
+  setPendingMinPrice(min);
+  setPendingMaxPrice(max);
+  
+  // Immediately apply to active filters
+  setActiveFilters(prev => ({
+    ...prev,
+    minPrice: min,
+    maxPrice: max
+  }));
+}, []);
+
+
+
+const filteredDrinks = useMemo(() => {
+  if (!drinks) return [];
+
+
+  const results = drinks.filter((drink) => {
+    // Filter by search term 
+    const matchesSearch = drink.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+    // Filter by price range
+    const matchesPrice = drink.price >= activeFilters.minPrice && 
+                        drink.price <= activeFilters.maxPrice;
+    
+    // Filter by ingredients (if any selected)
+   const matchesIngredients =
+      activeFilters.selectedIngredients.length === 0 ||
+      activeFilters.selectedIngredients.every(ingredient =>
+        drink.tags?.some(tag => tag.toLowerCase().includes(ingredient.toLowerCase()))
+      );
+
+    // Filter by merchants (if any selected)
+    const matchesMerchant =   activeFilters.selectedMerchants.length === 0 || 
+    activeFilters.selectedMerchants.includes(drink.store);
+        
+
+    // Return drinks that match all filters
+    const matchesAll = matchesSearch && matchesPrice && matchesIngredients && matchesMerchant;
+    return matchesAll;
+  });
+
+  console.log(`Filtering complete: ${results.length} drinks match criteria`);
+  return [...results];
+
+}, [drinks, searchTerm, activeFilters]);
+
+
   
   // Toggle card overlay
-  const toggleCardOverlay = (index: number) => {
+  const toggleCardOverlay = useCallback((index: number) => {
     setActiveCardId(prevId => prevId === index ? null : index);
-  };
+  }, []);
+
+
+  // Manual refresh function
+  const refreshDrinks = useCallback(() => {
+    console.log('Refreshing drinks data...');
+    return mutate();
+  }, [mutate]);
+
+
+  // Check if pending filters differ from active filters
+  const hasPendingChanges = useMemo(() => {
+    return pendingMinPrice !== activeFilters.minPrice || 
+           pendingMaxPrice !== activeFilters.maxPrice;
+  }, [pendingMinPrice, pendingMaxPrice, activeFilters]);
+
   
   return {
-    drinks,
+     drinks,
     filteredDrinks,
     searchTerm,
     setSearchTerm,
+    // For drink categories
+    selectedIngredients: activeFilters.selectedIngredients,
+    handleDrinkCategoryChange,
+    // For merchants
+    handleMerchantChange,
+    // For price range (pending)
+    minPrice: pendingMinPrice,
+    maxPrice: pendingMaxPrice,
+    setMinPrice: setPendingMinPrice,
+    setMaxPrice: setPendingMaxPrice,
+    handlePriceRangeChange,
+    // Active filters state
+    activeFilters,
+    // Filter actions
+    resetFilters,
+    // Other state
     loading: isLoading,
     error: error ? "Failed to load drinks. Please try again later." : null,
     activeCardId,
     toggleCardOverlay,
-    refreshDrinks
+    refreshDrinks,
+    hasPendingChanges
   };
 }

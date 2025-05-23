@@ -1,19 +1,14 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useDrinks } from "../../lib/hooks/useDrinks"
+import { useDrinksContext } from "../../lib/context/DrinksContext"
 import Image from "next/image"
-import { ExternalLink, ChevronDown, LucidePlus, LucideX } from "lucide-react"
+import { ExternalLink, LucidePlus } from "lucide-react"
 import { Drink } from "../../lib/types";
 import { createSupabaseClient } from "../../lib/supabase-client";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { cn } from "../../lib/utils"
 
 
 export async function fetchDrinks(): Promise<Drink[]> {
@@ -42,16 +37,17 @@ export function DrinksList() {
     error,
     activeCardId,
     toggleCardOverlay,
-    refreshDrinks
-  } = useDrinks();
-  
+    refreshDrinks,
+  } = useDrinksContext();  
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-2 sm:flex-row justify-between">
         <h1 className="text-2xl font-bold">Functional Drinks</h1>
-        <div className="w-1/3">
-          <Input className="rounded-full" placeholder="Search drinks..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <div className="w-full sm:max-w-[250px]">
+            <Input className="rounded-full" placeholder="Search drinks..." value={searchTerm} onChange={(e) => {
+              setSearchTerm(e.target.value);
+              }} />
         </div>
       </div>
 
@@ -63,6 +59,14 @@ export function DrinksList() {
       ) : error ? (
         <div className="text-center p-6 bg-red-50 text-red-500 rounded-md">
           {error}
+        </div>
+      )  : filteredDrinks.length === 0 ? (
+        // Show a message when no drinks match the filters
+        <div className="text-center p-12 bg-(--color-bg--light) rounded-md">
+          <h3 className="mb-2 text-(--color-white)">No drinks found</h3>
+          <p className="text-(length:--fs-p) text-(--color-white) opacity-90">
+            No drinks match your current filters. Try adjusting the price range or search term.
+          </p>
         </div>
       ) : (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

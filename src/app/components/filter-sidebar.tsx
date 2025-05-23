@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
-
 import { Button } from "@/components/ui/button"
+import { useDrinksContext } from "@/lib//context/DrinksContext"
+
 import {
   Accordion,
   AccordionContent,
@@ -11,58 +11,55 @@ import {
 } from "@/components/ui/accordion"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import PriceRangeSelector from "@/components/ui/price-range-selector"
+import { DRINK_CATEGORIES, MERCHANTS } from "@/lib/constants"
 
-// Sample ingredients - you'll replace these with actual data from your scraper
-const sampleIngredients = [
-  "Caffeine",
-  "B Vitamins",
-  "Ginseng",
-  "L-Carnitine",
-  "Guarana",
-  "Electrolytes",
-  "Protein",
-  "Collagen",
-  "Magnesium",
-]
+
 
 export function FilterSidebar() {
-  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([])
-
-  const toggleIngredient = (ingredient: string) => {
-    setSelectedIngredients((prev) =>
-      prev.includes(ingredient) ? prev.filter((i) => i !== ingredient) : [...prev, ingredient],
-    )
-  }
+   const {
+    minPrice,
+    maxPrice,
+    setMinPrice,
+    setMaxPrice,
+    activeFilters,
+    handlePriceRangeChange,
+    selectedIngredients,
+    handleDrinkCategoryChange,
+    handleMerchantChange,
+    resetFilters,
+  } = useDrinksContext();
 
   return (
     <div className="bg-(--color-primary) py-(--pb-cards) px-(--pi-cards) rounded-md flex flex-col h-auto">
-      <div className="sm:flex-col lg:flex-row items-center justify-between w-full gap-2">
+      <div className="flex items-center justify-between w-full gap-2 pb-2">
         <h2 className="text-(length:--fs-h6) font-medium py-3">Filters</h2>
-        <Button className="s bg-[var(--color-bg--light)] text-[var(--color-secondary)] rounded-full border border-transparent hover:border-[var(--color-secondary)]">
-          Apply filters
+        <Button 
+        className="cursor-pointer bg-[var(--color-bg--light)] text-[var(--color-secondary)] rounded-full border border-transparent hover:border-[var(--color-secondary)]"
+        onClick={resetFilters}
+        >
+          Reset filters
         </Button>
       </div>
 
 
       <div className="flex-col gap-4 mt-auto">
-       <Accordion type="single" collapsible className="w-full">
+       <Accordion type="multiple" defaultValue={["item-1"]}  className="w-full">
         <AccordionItem value="item-1" className="">
-          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Is it accessible?</AccordionTrigger>
-          <AccordionContent className="flex flex-col px-1.5 py-3">
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
+          <AccordionContent className="flex flex-col px-3 py-3">
             <span
               className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
-              onClick={() => setSelectedIngredients([])}
             >
               Clear all
             </span>
-            {sampleIngredients.map((ingredient) => (
+            {DRINK_CATEGORIES.map((ingredient) => (
               <div key={ingredient} className="flex items-center space-x-2 py-2">
-                <Checkbox
-                  id={`ingredient-${ingredient}`}
-                  checked={selectedIngredients.includes(ingredient)}
-                  onCheckedChange={() => toggleIngredient(ingredient)}
-                  className="cursor-pointer"
-                />
+                 <Checkbox
+                    checked={selectedIngredients.includes(ingredient)}
+                  onCheckedChange={() => handleDrinkCategoryChange(ingredient)}
+                    id={`ingredient-${ingredient}`}
+                  />
                 <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
               </div>
             ))}
@@ -71,28 +68,32 @@ export function FilterSidebar() {
 
         <AccordionItem value="item-2" className="">
           <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
-          <AccordionContent className="flex flex-col px-1.5 py-3">
-            <span
-              className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
-              onClick={() => setSelectedIngredients([])}
-            >
-              Clear all
-            </span>
+          <AccordionContent className="flex flex-col px-3 py-3">
+          {MERCHANTS.map((merchant) => (
+              <div className="flex items-center space-x-2 py-2">
+                <Checkbox
+                  id={`merchant-${merchant}`}
+                  checked={activeFilters.selectedMerchants.includes(merchant)}
+                  className="cursor-pointer"
+                  onCheckedChange={() => handleMerchantChange(merchant)}
+                />
+                <Label htmlFor="store-selver">{merchant}</Label>
+              </div>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
 
-              <div className="flex items-center space-x-2 py-2">
-                <Checkbox
-                  id="store-selver"
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="store-selver">E-Selver</Label>
-              </div>
-              <div className="flex items-center space-x-2 py-2">
-                <Checkbox
-                  id="store-rimi"
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="store-rimi">Rimi</Label>
-              </div>
+        <AccordionItem value="item-3" className="">
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Price range</AccordionTrigger>
+          <AccordionContent className="flex flex-col px-1.5 py-3">
+            <PriceRangeSelector
+              minPrice={minPrice}
+              maxPrice={maxPrice}
+              onMinPriceChange={setMinPrice}
+              onMaxPriceChange={setMaxPrice}
+              onRangeChange={handlePriceRangeChange}
+              onReset={resetFilters}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
