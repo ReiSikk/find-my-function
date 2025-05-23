@@ -2,10 +2,10 @@ import { TagCategory } from './ingredient-tags';
 
 export interface Drink {
   name: string
-  price: number
+  price: number;
   image: string
   store: string
-  ingredients: string[]
+  ingredients: string[],
   url: string,
   tags?: TagCategory[];
 }
