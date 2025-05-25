@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   },
       {
         protocol: "https",
-        hostname: "www.rimi.ee",
+        hostname: "rimibaltic-res.cloudinary.com",
         port: "",
         pathname: "/**",
       },
