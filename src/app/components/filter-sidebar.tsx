@@ -57,8 +57,9 @@ export function FilterSidebar() {
               <div key={ingredient} className="flex items-center space-x-2 py-2">
                  <Checkbox
                     checked={selectedIngredients.includes(ingredient)}
-                  onCheckedChange={() => handleDrinkCategoryChange(ingredient)}
+                    onCheckedChange={() => handleDrinkCategoryChange(ingredient)}
                     id={`ingredient-${ingredient}`}
+                    className="cursor-pointer"
                   />
                 <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
               </div>
