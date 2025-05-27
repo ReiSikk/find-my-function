@@ -9,12 +9,15 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
+  SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Mail, Calendar, LogOut, Plus } from "lucide-react"
 import { UserData } from "@/lib/types"
+import { useSidebar } from "@/components/ui/sidebar"
+import { AccountSideBarTrigger } from "./account-sidebar-trigger"
 
 interface AccountSidebarProps {
   user: UserData
@@ -36,6 +39,12 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
 
   return (
     <Sidebar className="border-r bg-(--color-bg) text-(--color-secondary) z-10">
+      <SidebarRail className=" bg-(--color-bg) text-(--color-secondary) z-10 max-h-fit">
+        <div className="mt-6">
+          <AccountSideBarTrigger />
+        </div>
+        <SidebarSeparator />
+      </SidebarRail>
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12">
@@ -46,7 +55,9 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
             <h2 className="font-semibold text-lg">
               {user.firstName} {user.lastName}
             </h2>
-            <p className="text-sm text-muted-foreground">@{user.username || "user"}</p>
+            {user.username && (
+              <p className="text-sm text-muted-foreground">@{user.username || "user"}</p>
+            )}
           </div>
         </div>
       </SidebarHeader>

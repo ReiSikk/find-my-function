@@ -4,6 +4,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
 import { PanelLeftIcon } from "lucide-react"
+import { AccountSideBarTrigger } from "../../app/components/account-sidebar-trigger"
 
 import { useIsMobile } from "@/lib/hooks/use-mobile"
 import { cn } from "@/lib/utils"
@@ -139,7 +140,7 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+            // "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
             className
           )}
           {...props}
@@ -264,7 +265,7 @@ function SidebarTrigger({
     <Button
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
-      variant="ghost"
+      variant="default"
       size="icon"
       className={cn("size-7", className)}
       onClick={(event) => {
@@ -433,7 +434,8 @@ function SidebarGroupAction({
         className
       )}
       {...props}
-    />
+    >
+      </Comp>
   )
 }
 

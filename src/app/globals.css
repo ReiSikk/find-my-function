@@ -27,6 +27,7 @@
   --fs-h4: clamp(28.43px, 4vw, 37.9px);
   --fs-h5: clamp(21.3px, 3vw, 28.4px);
   --fs-h6: clamp(15.97px, 2vw, 21.3px);
+  --fs-nav: 14px;
   --fs-p: clamp(14px, 2vw, 16px);
   --fs-small: 12px;
 

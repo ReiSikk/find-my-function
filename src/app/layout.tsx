@@ -7,6 +7,7 @@ import {
 } from '@clerk/nextjs'
 import { Header } from "./components/header"
 import './globals.css'
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 
 export const metadata: Metadata = {
@@ -27,10 +28,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
-      <body className={archivo.className}>
+      <body className={`${archivo.className} bg-(--color-bg)`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <SidebarProvider>
         <Header />
           {children}
+      </SidebarProvider>
         </ThemeProvider>
       </body>
     </html>
