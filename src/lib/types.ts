@@ -1,13 +1,30 @@
 import { TagCategory } from './ingredient-tags';
 
-export interface Drink {
-  name: string
+// Base interface for scraped drinks (without id)
+export interface ScrapedDrink {
+  name: string;
   price: number;
-  image: string
-  store: string
-  ingredients: string[],
-  url: string,
+  image: string;
+  store: string;
+  ingredients: string[];
+  url: string;
   tags?: TagCategory[];
+}
+
+// Extended interface for drinks stored in database (with id)
+export interface Drink extends ScrapedDrink {
+  id: number;
+}
+
+
+export interface UserData {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+  username: string | null;
+  imageUrl: string;
+  emailAddress: string | undefined; // Can be undefined from Clerk
+  createdAt: Date | null; // Clerk provides Date | null, not number
 }
 
 

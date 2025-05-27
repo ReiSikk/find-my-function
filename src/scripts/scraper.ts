@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import * as puppeteer from 'puppeteer';
-import type { Drink } from "@/lib/types"
+import type { Drink, ScrapedDrink } from "@/lib/types"
 import { analyzeDrinkIngredients } from '../lib/tag-utils';
 
 // Extract ingredients from Selver product page
@@ -172,7 +172,7 @@ async function extractRimiIngredients(page: puppeteer.Page, productUrl: string):
 }
 
 // Example scraper function for E-Selver
-export async function scrapeESelver(): Promise<Drink[]> {
+export async function scrapeESelver(): Promise<ScrapedDrink[]> {
 
   const browser = await puppeteer.launch();
 
@@ -191,7 +191,7 @@ export async function scrapeESelver(): Promise<Drink[]> {
       Object.defineProperty(navigator, 'webdriver', { get: () => false });
     });
 
-  const drinks: Drink[] = []
+  const drinks: ScrapedDrink[] = []
 
   try {
     // Navigate to E-Selver's functional drinks page
@@ -244,7 +244,7 @@ export async function scrapeESelver(): Promise<Drink[]> {
 }
 
 // Example scraper function for Rimi
-export async function scrapeRimi(): Promise<Drink[]> {
+export async function scrapeRimi(): Promise<ScrapedDrink[]> {
     const browser = await puppeteer.launch();
 
     const page = await browser.newPage()
@@ -263,7 +263,7 @@ export async function scrapeRimi(): Promise<Drink[]> {
       Object.defineProperty(navigator, 'webdriver', { get: () => false });
     });
 
-  const drinks: Drink[] = []
+  const drinks: ScrapedDrink[] = []
 
    try {
     // Navigate to Rimi's sports drinks page

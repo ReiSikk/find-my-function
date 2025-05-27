@@ -2,6 +2,10 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Archivo } from "next/font/google"
 import { ThemeProvider } from "./components/theme-provider"
+import {
+  ClerkProvider,
+} from '@clerk/nextjs'
+import { Header } from "./components/header"
 import './globals.css'
 
 
@@ -21,12 +25,15 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <body className={archivo.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <Header />
           {children}
         </ThemeProvider>
       </body>
     </html>
+    </ClerkProvider>
   )
 }
