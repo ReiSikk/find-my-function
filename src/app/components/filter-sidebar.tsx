@@ -31,11 +31,11 @@ export function FilterSidebar() {
   } = useDrinksContext();
 
   return (
-    <div className="bg-(--color-primary) py-(--pb-cards) px-(--pi-cards) rounded-md flex flex-col h-auto">
+    <div className="bg-(--color-bg) pb-(--pb-cards) px-(--pi-cards) rounded-md flex flex-col h-auto sticky top-8 bottom-0 left-0 right-0 w-full">
       <div className="flex items-center justify-between w-full gap-2 pb-2">
-        <h2 className="text-(length:--fs-h6) font-medium py-3">Filters</h2>
+        <h2 className="text-(length:--fs-h6) text-(--color-secondary) font-medium py-3">Filters</h2>
         <Button 
-        className="cursor-pointer bg-[var(--color-bg--light)] text-[var(--color-secondary)] rounded-full border border-transparent hover:border-[var(--color-secondary)]"
+        className="cursor-pointer bg-[var(--color-btn)] text-[var(--color-secondary)] rounded-full border border-transparent hover:border-[var(--color-secondary)]"
         onClick={resetFilters}
         >
           Reset filters
@@ -46,7 +46,7 @@ export function FilterSidebar() {
       <div className="flex-col gap-4 mt-auto">
        <Accordion type="multiple" defaultValue={["item-1"]}  className="w-full">
         <AccordionItem value="item-1" className="">
-          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-secondary) text-(--color-secondary) hover:text-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">
             <span
               className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
@@ -68,7 +68,7 @@ export function FilterSidebar() {
         </AccordionItem>
 
         <AccordionItem value="item-2" className="">
-          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-secondary) text-(--color-secondary) hover:text-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">
           {MERCHANTS.map((merchant) => (
               <div key={merchant} className="flex items-center space-x-2 py-2">
@@ -85,7 +85,7 @@ export function FilterSidebar() {
         </AccordionItem>
 
         <AccordionItem value="item-3" className="">
-          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-bg) px-3 py-3">Price range</AccordionTrigger>
+          <AccordionTrigger className="text-(length:--fs-p) cursor-pointer hover:bg-(--color-secondary) text-(--color-secondary) hover:text-(--color-bg) px-3 py-3">Price range</AccordionTrigger>
           <AccordionContent className="flex flex-col px-1.5 py-3">
             <PriceRangeSelector
               minPrice={minPrice}

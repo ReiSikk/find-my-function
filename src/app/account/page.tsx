@@ -10,7 +10,12 @@ import { useEffect } from "react"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
-  console.log("User:", user);
+
+    useEffect(() => {
+    if (isLoaded && !user) {
+      window.location.href = "https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000/";
+    }
+  }, [isLoaded, user]);
 
   // Show loading while Clerk loads user data
   if (!isLoaded) {
@@ -20,12 +25,6 @@ export default function AccountPage() {
       </div>
     )
   }
-
-    useEffect(() => {
-    if (isLoaded && !user) {
-      window.location.href = "https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000/";
-    }
-  }, [isLoaded, user]);
 
     if (!user) {
     return (
@@ -46,7 +45,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-(--color-bg) text-(--color-secondary)">
       <DrinksProvider>
         <SidebarProvider defaultOpen={true}>
           <div className="flex min-h-screen w-full">
@@ -59,10 +58,9 @@ export default function AccountPage() {
                       <h1 className="text-3xl font-bold tracking-tight">My List</h1>
                       <p className="text-muted-foreground">Your saved drinks and favorites</p>
                     </div>
+
+                    <DrinksList showOnlyFavorites={true} />
                     
-                    <div className="rounded-lg border bg-card p-6">
-                      <DrinksList showOnlyFavorites={true} />
-                    </div>
                   </div>
                 </div>
               </main>

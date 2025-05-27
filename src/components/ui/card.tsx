@@ -2,12 +2,20 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
+
+function Card({ 
+  className, 
+  hasActiveOverlay = false, 
+  ...props 
+}: React.ComponentProps<"div"> & { hasActiveOverlay?: boolean }) {
   return (
     <div
       data-slot="card"
       className={cn(
-        "bg-(--color-primary) text-card-foreground flex flex-col rounded-xl pb-[16px] shadow-sm",
+        "bg-(--color-bg) text-card-foreground flex flex-col pb-[16px] transition-colors duration-200",
+        hasActiveOverlay 
+          ? "border border-(--color-bg)"
+          : "border border-(--color-secondary)", 
         className
       )}
       {...props}

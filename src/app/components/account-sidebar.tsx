@@ -35,7 +35,7 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
 }
 
   return (
-    <Sidebar className="border-r bg-(--color-bg) z-10">
+    <Sidebar className="border-r bg-(--color-bg) text-(--color-secondary) z-10">
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12">
