@@ -20,7 +20,7 @@ import { useSidebar } from "@/components/ui/sidebar"
 import { AccountSideBarTrigger } from "./account-sidebar-trigger"
 
 interface AccountSidebarProps {
-  user: UserData
+  user: UserData,
 }
 
 export function AccountSidebar({ user }: AccountSidebarProps) {
