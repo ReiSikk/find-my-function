@@ -1,12 +1,12 @@
 "use client"
 
 import { useUser } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
 import { AccountSidebar } from "../components/account-sidebar"
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
 import { DrinksList } from "../components/drinks-list"
 import { DrinksProvider } from "@/lib/context/DrinksContext"
 import { UserData } from "@/lib/types"
+import { useEffect } from "react"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -21,8 +21,18 @@ export default function AccountPage() {
     )
   }
 
-  if (!user) {
-    redirect("/sign-in")
+    useEffect(() => {
+    if (isLoaded && !user) {
+      window.location.href = "https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000/";
+    }
+  }, [isLoaded, user]);
+
+    if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
     const userData: UserData = {
