@@ -2,6 +2,20 @@ import { useState, useEffect } from "react";
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+// Helper function to generate system propmts for user selected nutrition stack type
+function getSystemPrompt(stack: string) {
+  switch (stack) {
+    case "hydration":
+      return "You are a hydration expert. Recommend hydration drinks and electrolyte products. Provide concise, evidence-based suggestions with purchase links if possible.";
+    case "protein":
+      return "You are a protein supplement expert. Recommend protein powders, shakes, and bars. Provide concise, evidence-based suggestions with purchase links if possible.";
+    case "supplements":
+      return "You are a supplement expert. Recommend vitamins, minerals, and performance supplements. Provide concise, evidence-based suggestions with purchase links if possible.";
+    default:
+      return "You are a helpful AI assistant for nutrition and fitness. Provide concise, evidence-based suggestions with purchase links if possible.";
+  }
+}
+
 export function NutritionStackView({ stack }: { stack: string }) {
   // AI search functionality 
   const [search, setSearch] = useState("");
@@ -30,7 +44,7 @@ export function NutritionStackView({ stack }: { stack: string }) {
       fetch("/api/ai-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: search, stack }),
+        body: JSON.stringify({ query: search, stack, systemPrompt: getSystemPrompt(stack) }),
       })
         .then(res => res.json())
         .then(data => {

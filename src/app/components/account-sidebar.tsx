@@ -95,7 +95,7 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
             </div>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroupLabel>Nutrition Stacks</SidebarGroupLabel>
+        <SidebarGroupLabel>Search AI for products</SidebarGroupLabel>
         <SidebarGroupContent>
           <div className="flex flex-col gap-2 px-2">
             <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("hydration")}>
