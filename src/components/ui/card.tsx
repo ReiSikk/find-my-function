@@ -15,7 +15,7 @@ function Card({
         "bg-(--color-bg) text-card-foreground flex flex-col pb-[16px] transition-colors duration-200",
         hasActiveOverlay 
           ? "border border-(--color-bg)"
-          : "border border-(--color-secondary)", 
+          : "border border-(--color-primary)", 
         className
       )}
       {...props}

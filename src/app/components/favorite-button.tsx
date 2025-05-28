@@ -28,10 +28,10 @@ export function FavoriteButton({
 
   return (
     <Heart
-      className={`h-6 w-6 cursor-pointer transition-colors duration-200 ${
+      className={`h-6 w-6 cursor-pointer transition-colors duration-200 flex-shrink-0 ${
         isFavorited
           ? 'text-red-500 fill-current'
-          : 'text-[var(--color-secondary)] hover:text-[var(--color-white)]'
+          : 'text-[var(--color-primary)] hover:text-[var(--color-primary)]'
       } ${className}`}
       onClick={handleClick}
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}

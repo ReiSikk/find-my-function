@@ -12,20 +12,19 @@
   /* --color-bg: #0E0E0E;
   --color-bg: #2D2D2D;
   --color-bg: #1D1D1D;
-  --color-secondary: #C9ADA7;
-  --color-white: #F2E9E4; */
+  --color-primary: #C9ADA7;
+  --color-primary: #F2E9E4; */
   /* Test */
   --color-bg: #f4f1e0;
-  --color-secondary: #321E1E;
+  --color-primary: #321E1E;
   --color-btn: #e9847c;
-  --color-white: #321e1e;
 
   /* Typography */
   --fs-h1: clamp(67.36px, 9vw, 89.8px);
   --fs-h2: clamp(50.48px, 7vw, 67.3px);
   --fs-h3: clamp(37.88px, 5vw, 50.5px);
   --fs-h4: clamp(28.43px, 4vw, 37.9px);
-  --fs-h5: clamp(21.3px, 3vw, 28.4px);
+  --fs-h5: clamp(21.3px, 3vw, 28.4px)
   --fs-h6: clamp(15.97px, 2vw, 21.3px);
   --fs-nav: 14px;
   --fs-p: clamp(14px, 2vw, 16px);
