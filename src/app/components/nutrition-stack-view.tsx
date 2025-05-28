@@ -1,19 +1,25 @@
 import { useState, useEffect } from "react";
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export function NutritionStackView({ stack }: { stack: string }) {
   // AI search functionality 
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
 
   // Clear previous results when search changes
     useEffect(() => {
     if (search === "") {
       setResults(null);
+      setError(null);
       setLoading(false);
       return;
     }
     setResults(null); 
+    setError(null);
   }, [search, stack]);
 
   useEffect(() => {
@@ -28,8 +34,15 @@ export function NutritionStackView({ stack }: { stack: string }) {
       })
         .then(res => res.json())
         .then(data => {
-          setResults(data.reply);
-          setLoading(false);
+          if (!data.reply) {
+            setError("No results found. Rate limit for AI search exceeded. Please try again later.");
+            setLoading(false);
+            return;
+          } else {
+            setResults(data.reply);
+            setLoading(false);
+            setError(null);
+          }
         })
         .catch(() => {
           setResults("Sorry, something went wrong.");
@@ -53,8 +66,25 @@ export function NutritionStackView({ stack }: { stack: string }) {
         onChange={e => setSearch(e.target.value)}
       />
       <div>
-          <div className="text-sm text-muted-foreground">
-        {loading ? "Searching..." : results || "Start typing to see results."}
+          <div className="text-(--fs-p)">
+          {loading && "Searching..."}
+          {error && (
+            <div className="text-red-600 font-semibold mb-4">{error}</div>
+          )}
+          {!loading && !error && results && (
+            <Markdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                ul: ({ children }) => <ul className="list-disc pl-5 bg-(--color-primary) text-(--color-bg) p-6 rounded-md">{children}</ul>,
+                li: ({ children }) => <li className="mb-2">{children}</li>,
+                a: ({ children, href }) => <a href={href} className="underline underline-offset-3 hover:text-blue-500" target="_blank" rel="noopener noreferrer">{children}</a>,
+                p: ({ children }) => <p className="mb-4">{children}</p>,
+              }}
+            >
+              {results}
+            </Markdown>
+          )}
+          {!loading && !error && !results && "Start typing to see results."}
       </div>
       </div>
     </div>
