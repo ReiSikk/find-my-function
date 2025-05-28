@@ -19,19 +19,17 @@ export function Header() {
 
   const DotIcon = () => {
   return (
-    <LucideClipboardList className="h-4 w-4 text-(--color-secondary)" />
+    <LucideClipboardList className="h-4 w-4 text-(--color-primary)" />
   )
 }
 
   return (
-    <header className="border-b border-(--color-secondary) px-[16px] md:px-[32px] py-2 shadow-sm bg-(--color-bg) text-(--color-secondary)">
+    <header className="border-b border-(--color-primary) px-[16px] md:px-[32px] py-2 shadow-sm bg-(--color-bg) text-(--color-primary)">
       <div className="flex h-16 items-center justify-between w-full">
-        {!sidebarOpen &&
         <Link href="/" className="text-(length:--fs-h6) text-nowrap uppercase font-bold">
           Tempo
         </Link>
-        }
-        <nav className={`flex items-center space-x-4 text-(--color-secondary) ${sidebarOpen ? 'justify-end' : 'justify-end'} w-full`}>
+        <nav className={`flex items-center space-x-4 text-(--color-primary) ${sidebarOpen ? 'justify-end' : 'justify-end'} w-full`}>
           {/* <ModeToggle /> */}
            <SignedOut>
               <SignInButton />
@@ -39,11 +37,8 @@ export function Header() {
             </SignedOut>
             <div className="flex gap-4 items-end space-x-2">
               <SignedIn>
-                {/* <Link href="/account" className="text-(length:--fs-nav) font-semibold uppercase tracking-wide mr-0">
-                  My List
-                </Link> */}
                 <div className="flex flex-col items-center justify-center cursor-pointer">
-                  <UserButton>
+                  <UserButton showName={true}>
                      <UserButton.MenuItems>
                       <UserButton.Link
                         label="My Lists"
@@ -52,7 +47,6 @@ export function Header() {
                       />
                     </UserButton.MenuItems>
                   </UserButton>
-                  <p className="text-(length:--fs-nav) font-semibold uppercase tracking-wide ">Profile</p>
                 </div>
               </SignedIn>
             </div>

@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         model: "meta-llama/llama-3.3-8b-instruct:free",
         messages: [
-          { role: "system", content: `You are a helpful AI assistant for nutrition and fitness.` },
+          { role: "system", content: `You are a helpful AI assistant for nutrition and fitness. Provide formatted responses without unneccessary information and keep the responses concise. Think and reason like an expert. No hallucinating allowed. When input includes drinks names, provide links to purchase those products in your output responses.` },
           { role: "user", content: `I'm looking for ${stack} products. ${query}` },
         ],
       }),

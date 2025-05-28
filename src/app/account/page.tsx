@@ -51,7 +51,7 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-(--color-bg) text-(--color-secondary)">
+    <div className="min-h-screen bg-(--color-bg) text-(--color-primary)">
       <DrinksProvider>
           <div className="flex min-h-screen w-full">
             <AccountSidebar user={userData} onSelectStack={setSelectedStack} />
@@ -59,7 +59,7 @@ export default function AccountPage() {
               <main className="flex-1 overflow-y-auto">
                 <div className="container mx-auto pt-6 px-6 pb-[100px]">
                   <div className="space-y-6">
-                    <Link href="/" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer bg-[var(--color-bg)] text-[var(--color-secondary)] border border-transparent hover:border-[var(--color-secondary)] hover:bg-secondary hover:text-(--color-bg) rounded-full px-4 py-2 mt-4">
+                    <Link href="/" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer bg-[var(--color-bg)] text-[var(--color-primary)] border border-transparent hover:border-[var(--color-primary)] hover:bg-secondary hover:text-(--color-bg) rounded-full px-4 py-2 mt-4">
                     <LucideArrowLeft className="h-4 w-4" />
                     Back home
                     </Link>
@@ -69,9 +69,7 @@ export default function AccountPage() {
                       <>
                         <h1 className="text-3xl font-bold tracking-tight">My List</h1>
                         <p className="text-muted-foreground">Your saved drinks and favorites</p>
-                        <div className="rounded-lg border bg-card p-6">
-                          <DrinksList showOnlyFavorites={true} />
-                        </div>
+                        <DrinksList showOnlyFavorites={true} />
                       </>
                     )}
                     {selectedStack && (

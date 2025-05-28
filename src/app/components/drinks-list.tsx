@@ -63,13 +63,13 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
     : filteredDrinks;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-[100px]">
       <div className="flex flex-col gap-2 sm:flex-row justify-between">
           {displayDrinks && (
           <h1 className="text-2xl font-bold">
             {showOnlyFavorites 
               ? `Found ${displayDrinks.length} favorite drinks` 
-              : `Found ${displayDrinks.length} drinks for you`
+              : `Found ${displayDrinks.length} matching drinks`
             }
           </h1>
         )}
@@ -86,14 +86,14 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
 
         {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-secondary)]"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-primary)]"></div>
         </div>
       ) : error ? (
         <div className="text-center p-6 bg-red-50 text-red-500 rounded-md">
           {error}
         </div>
       )  : displayDrinks.length === 0 ? (
-        <div className="text-center p-12 bg-[var(--color-secondary)] text-(--color-bg) rounded-md">
+        <div className="text-center p-12 bg-[var(--color-primary)] text-(--color-bg) rounded-md">
           <h3 className="mb-2">
             {showOnlyFavorites ? "No favorite drinks found" : "No drinks found"}
           </h3>
@@ -105,7 +105,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
           </p>
             <Link
               href="/" 
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer bg-[var(--color-bg)] text-[var(--color-secondary)] border border-transparent hover:border-[var(--color-bg)] hover:bg-transparent hover:text-(--color-bg) rounded-full px-4 py-2 mt-4"
+              className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer bg-[var(--color-bg)] text-[var(--color-primary)] border border-transparent hover:border-[var(--color-bg)] hover:bg-transparent hover:text-(--color-bg) rounded-full px-4 py-2 mt-4"
             >
                Browse all drinks
           </Link>
@@ -119,14 +119,14 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
             hasActiveOverlay={openOverlays[index]}
           >
             <div className="aspect-square relative bg-muted">
-                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-secondary) text-(--color-bg) text-(length:--fs-small) rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">{drink.price.toFixed(2)}€</Badge>
+                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-primary) text-(--color-bg) text-(length:--fs-small) rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">{drink.price.toFixed(2)}€</Badge>
               <Image src={ drink.image || "/placeholder.svg"} alt={`Product image displaying the product ${drink.name}`} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
               <div className="flex justify-between items-start">
                 <div className="flex items-start justify-between gap-6">
                   <h3 className="font-medium text-(length:--fs-h6)">{drink.name}</h3>
-                  <a className="bg-(--color-secondary) text-(--color-bg) flex items-center justify-center cursor-pointer rounded-full p-2" href={drink.url} target="_blank" rel="noopener noreferrer" aria-label="External link to buy the product">
+                  <a className="bg-(--color-primary) text-(--color-bg) flex items-center justify-center cursor-pointer rounded-full p-2" href={drink.url} target="_blank" rel="noopener noreferrer" aria-label="External link to buy the product">
                     <ExternalLink className="h-4 w-4" />
                   </a>
                 </div>
@@ -135,7 +135,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                {drink.tags && drink.tags.length > 0 && (
                   <div className="mt-3 mb-6 flex flex-wrap gap-1">
                     {drink.tags.map(tag => (
-                      <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-4 py-1.5 text-(--color-bg) bg-(--color-secondary)">
+                      <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-4 py-1.5 text-(--color-bg) bg-(--color-primary)">
                         {tag}
                       </Badge>
                     ))}
@@ -143,7 +143,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                 )}
 
             </CardContent>
-            <CardFooter className="pt-0 px-4 flex gap-2 justify-between relative">
+            <CardFooter className="pt-0 px-4 justify-between flex gap-2 relative">
               
                 <FavoriteButton 
                   drink={drink} 
@@ -151,10 +151,10 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                   onToggleFavorite={toggleFavorite}
                 />
                <div 
-                  className={`group flex justify-between items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-[var(--color-secondary)] text-[var(--color-bg)] cursor-pointer z-10 transition-all duration-200 ${
+                  className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-[var(--color-primary)] text-[var(--color-bg)] cursor-pointer z-10 transition-all duration-200 ${
                     openOverlays[index] 
                       ? ' bg-[var(--color-bg)] hover:text-[var(--color-bg)] hover:border-[var(--color-bg)]' 
-                      : 'hover:bg-[var(--color-bg)] hover:text-[var(--color-secondary)] hover:border-[var(--color-secondary)]'
+                      : 'hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]'
                   }`}
                   onClick={() => toggleCardOverlay(index)}
                   aria-label={`${openOverlays[index] ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
@@ -163,16 +163,16 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                   <span className="whitespace-nowrap text-[var(--fs-small)]">
                     {openOverlays[index] ? 'Close overlay' : 'View ingredients'}
                   </span>
-                  <div className="bg-[var(--color-bg)] rounded-full p-2 transition-all duration-200 group-hover:bg-[var(--color-secondary)]">
+                  <div className="bg-[var(--color-bg)] rounded-full p-2 transition-all duration-200 group-hover:bg-[var(--color-primary)]">
                     <LucidePlus 
-                      className={`h-4 w-4 text-[var(--color-secondary)] transition-all duration-200 group-hover:text-[var(--color-bg)] ${
+                      className={`h-4 w-4 text-[var(--color-primary)] transition-all duration-200 group-hover:text-[var(--color-bg)] ${
                         openOverlays[index] ? 'rotate-45' : ''
                       }`}
                     />
                   </div>
                 </div>
             </CardFooter>
-              <div className={`absolute inset-0 bg-[var(--color-secondary)] text-[var(--color-bg)] flex flex-col px-6 pb-16 pt-4 z-9 transition-opacity duration-300 ${
+              <div className={`absolute inset-0 bg-[var(--color-primary)] text-[var(--color-bg)] flex flex-col px-6 pb-16 pt-4 z-9 transition-opacity duration-300 ${
                 openOverlays[index] ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
               }`}>
                 <h4 className="text-(length:--fs-h5) pb-1.5 border-b">Ingredients</h4>
@@ -181,7 +181,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                     <span className="text-(length:--fs-p) mt-3">This product contains the following functional ingredients:</span>
                     <div className="mt-3 flex flex-wrap gap-1">
                       {drink.tags.map(tag => (
-                        <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-3 py-1.5 text-(--color-secondary) bg-(--color-bg)">
+                        <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-3 py-1.5 text-(--color-primary) bg-(--color-bg)">
                           {tag}
                         </Badge>
                       ))}
@@ -193,7 +193,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                   {drink.ingredients.map((ingredient) => (
                     <li key={ingredient} className="text-(length:--fs-small)">{ingredient}</li>
                   ))}
-                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-secondary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-primary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
                 </ul>
               </div>
           </Card>

@@ -6,6 +6,16 @@ export function NutritionStackView({ stack }: { stack: string }) {
   const [results, setResults] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Clear previous results when search changes
+    useEffect(() => {
+    if (search === "") {
+      setResults(null);
+      setLoading(false);
+      return;
+    }
+    setResults(null); 
+  }, [search, stack]);
+
   useEffect(() => {
     if (search.length < 3) return; // avoid too short queries
 
@@ -42,11 +52,9 @@ export function NutritionStackView({ stack }: { stack: string }) {
         value={search}
         onChange={e => setSearch(e.target.value)}
       />
-      {/* Render AI search results here */}
       <div>
-        {/* Example: <AiProductResults query={search} stack={stack} /> */}
           <div className="text-sm text-muted-foreground">
-        {loading ? "Searching..." : results || "AI-powered product links will appear here."}
+        {loading ? "Searching..." : results || "Start typing to see results."}
       </div>
       </div>
     </div>

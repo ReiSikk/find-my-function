@@ -39,14 +39,11 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
 }
 
   return (
-    <Sidebar className="border-r bg-(--color-bg) text-(--color-secondary) z-10">
-      <SidebarRail className=" bg-(--color-bg) text-(--color-secondary) z-10 max-h-fit">
-        <div className="mt-6">
-          <AccountSideBarTrigger />
-        </div>
-        <SidebarSeparator />
-      </SidebarRail>
+    <Sidebar className="border-r bg-(--color-bg) text-(--color-primary) z-10">
       <SidebarHeader className="p-4">
+        <SidebarRail className=" bg-(--color-bg) text-(--color-primary) z-10 max-h-fit mt-[82px]">
+          <AccountSideBarTrigger />
+      </SidebarRail>
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12">
             <AvatarImage src={user.imageUrl || "/placeholder.svg"} alt={user.firstName || "User"} />
@@ -101,13 +98,13 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
         <SidebarGroupLabel>Nutrition Stacks</SidebarGroupLabel>
         <SidebarGroupContent>
           <div className="flex flex-col gap-2 px-2">
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-secondary) hover:text-(--color-bg)" onClick={() => onSelectStack("hydration")}>
+            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("hydration")}>
               Hydration Products
             </Button>
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-secondary) hover:text-(--color-bg)" onClick={() => onSelectStack("protein")}>
+            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("protein")}>
               Protein Products
             </Button>
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-secondary) hover:text-(--color-bg)" onClick={() => onSelectStack("supplements")}>
+            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("supplements")}>
               Supplements
             </Button>
           </div>
