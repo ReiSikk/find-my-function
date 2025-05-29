@@ -1,25 +1,44 @@
 @import "tailwindcss";
+@layer theme, base, components, utilities;
 
-@custom-variant dark (&:is(.dark *));
+@layer components {
+  .btn-main {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border-radius: 200px;
+  padding: var(--p-btn);
+  font-size: var(--fs-p);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, color 0.3s ease;
+  height: 36px;
+  text-wrap: nowrap;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  transition: color 200ms, background 200ms, border-color 200ms;
+  transition-duration: 200ms;
+}
+.btn-main:hover {
+  background: var(--color-primary);
+  color: var(--color-bg);;
+}
+}
 
-@theme {
-  --animate-collapsible-down: collapsible-down 0.2s ease-out;
-  --animate-collapsible-up: collapsible-up 0.2s ease-out;
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
 
-  /* COLORS */
-  /* --color-bg: #0E0E0E;
-  --color-bg: #2D2D2D;
-  --color-bg: #1D1D1D;
-  --color-primary: #C9ADA7;
-  --color-primary: #F2E9E4; */
-  /* Test */
-  --color-bg: #f4f1e0;
-  --color-primary: #321E1E;
-  --color-btn: #e9847c;
 
-  /* Typography */
+:root {
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+    /* Typography */
   --fs-h1: clamp(67.36px, 9vw, 89.8px);
   --fs-h2: clamp(50.48px, 7vw, 67.3px);
   --fs-h3: clamp(37.88px, 5vw, 50.5px);
@@ -30,9 +49,21 @@
   --fs-p: clamp(14px, 2vw, 16px);
   --fs-small: 12px;
 
+    --animate-collapsible-down: collapsible-down 0.2s ease-out;
+  --animate-collapsible-up: collapsible-up 0.2s ease-out;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --color-bg: #f4f1e0;
+  --color-primary: #321E1E;
+  --color-btn: #e9847c;
+
+
+
   /* Paddings */
   --pb-cards: clamp(18px, 3vw, 24px);
   --pi-cards: clamp(14px, 2vw, 16px);
+  --p-btn: 22px 8px;
 
   @keyframes collapsible-down {
     from {
@@ -89,18 +120,6 @@
 
 }
 
-:root {
-  --sidebar: hsl(0 0% 98%);
-  --sidebar-foreground: hsl(240 5.3% 26.1%);
-  --sidebar-primary: hsl(240 5.9% 10%);
-  --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(240 4.8% 95.9%);
-  --sidebar-accent-foreground: hsl(240 5.9% 10%);
-  --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
-
-}
-
 .dark {
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);
@@ -111,4 +130,60 @@
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
+}
+
+
+/* *** Clerck specific styling *** */
+.cl-userButtonBox {
+  border: 1px solid var(--color-primary);
+  border-radius: 200px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.cl-userButtonBox:hover {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+.cl-userButtonBox:active {
+  opacity: 0.8;
+}
+
+.cl-userButtonPopoverMain {
+  background: var(--color-bg);
+}
+.cl-userButtonPopoverActionButton, .cl-userButtonPopoverCustomItemButton, .cl-userPreview__userButton {
+  color: var(--color-primary);
+}
+.cl-userButtonPopoverActionButton:hover, .cl-userButtonPopoverCustomItemButton:hover {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+.cl-userButtonPopoverFooter {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+/* Hide the footer of clerck UserButton popover  */
+/* .cl-userButtonPopoverFooter {
+  display: none;
+} */
+
+
+/* ** Clerck User Profile Modal ** */
+.cl-navbar  {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+.cl-pageScrollBox  {
+  background: var(--color-bg);
+  color: var(--color-primary);
+}
+.cl-navbarButton {
+  color: var(--color-bg);
+}
+.cl-internal-pp7u0o {
+  color: var(--color-bg);
+}
+.cl-internal-168uxhv {
+  color: var(--color-bg);
+  opacity: 0.8;
 }
