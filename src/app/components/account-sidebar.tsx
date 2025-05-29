@@ -16,7 +16,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Mail, Calendar, LogOut, Plus } from "lucide-react"
 import { UserData } from "@/lib/types"
-import { useSidebar } from "@/components/ui/sidebar"
 import { AccountSideBarTrigger } from "./account-sidebar-trigger"
 
 interface AccountSidebarProps {
@@ -41,7 +40,7 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
   return (
     <Sidebar className="border-r bg-(--color-bg) text-(--color-primary) z-10">
       <SidebarHeader className="p-4">
-        <SidebarRail className=" bg-(--color-bg) text-(--color-primary) z-10 max-h-fit mt-[82px]">
+        <SidebarRail className=" bg-(--color-bg) text-(--color-primary) z-10 max-h-fit mt-[16px] background-transparent">
           <AccountSideBarTrigger />
       </SidebarRail>
         <div className="flex items-center gap-3">
