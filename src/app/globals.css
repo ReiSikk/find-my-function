@@ -65,6 +65,7 @@
   --pi-cards: clamp(14px, 2vw, 16px);
   --p-btn: 22px 8px;
 
+
   @keyframes collapsible-down {
     from {
       height: 0;
@@ -119,6 +120,10 @@
   }
 
 }
+/* General reset */
+  html {
+    scroll-behavior: smooth;
+  }
 
 .dark {
   --sidebar: hsl(240 5.9% 10%);
@@ -131,7 +136,6 @@
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
 }
-
 
 /* *** Clerck specific styling *** */
 .cl-userButtonBox {

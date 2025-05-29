@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Container, Button, Section, Heading, Tailwind, Html } from "@react-email/components";
+import { LucideArrowRight } from 'lucide-react';
 
 
 interface EmailTemplateProps {
@@ -19,9 +20,10 @@ export function EmailTemplate({ email }: EmailTemplateProps) {
             </Text>
             <Button
               href="https://your-tempo-site.com"
-              className="bg-[#2d1d1a] text-white px-6 py-4 text-sm w-full max-w-[225px] font-semibold rounded-full"
+              className="bg-[#2d1d1a] text-white px-6 py-8 text-sm w-full max-w-[225px] font-semibold rounded-full flex items-center justify-between"
             >
               Find your tempo!
+              <LucideArrowRight className="inline ml-2 h-4 w-4" />
             </Button>
           </Container>
         </Section>
