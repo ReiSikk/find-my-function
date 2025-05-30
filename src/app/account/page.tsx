@@ -67,8 +67,8 @@ export default function AccountPage() {
                       </Link>
                       <h1 className="text-3xl font-bold tracking-tight">My List</h1>
                       <p className="text-muted-foreground">Your saved drinks and favorites</p>
-                      <DrinksList showOnlyFavorites={true} />
-                      <CardsCarousel />
+                      {/* <DrinksList showOnlyFavorites={true} /> */}
+                      <CardsCarousel showOnlyFavorites={true}/>
                       <NutritionStackView stack={selectedStack} onSelectStack={setSelectedStack}/>
                   </div>
                 </div>

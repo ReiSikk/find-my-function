@@ -12,6 +12,7 @@ interface DrinkCardProps {
   openOverlay: boolean;
   onToggleOverlay: () => void;
   index: number;
+  carouselMode?: boolean;
 }
 
 export function DrinkCard({
@@ -25,7 +26,7 @@ export function DrinkCard({
   return (
     <Card 
       key={drink.name} 
-      className="overflow-hidden relative"
+      className="overflow-hidden relative h-full"
       hasActiveOverlay={openOverlay}
     >
       <div className="aspect-square relative bg-muted">

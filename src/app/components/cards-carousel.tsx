@@ -6,15 +6,19 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { Drink } from "@/lib/types"
 import { useDrinksContext } from "@/lib/context/DrinksContext"
+import { useFavorites } from "../../lib/hooks/useFavourites"
+import { DrinkCard } from "./drink-card"
+import { useMemo } from "react"
+import { Car } from 'lucide-react'
 
 interface CardsCarouselProps {
-  drinks: Drink[];
+  showOnlyFavorites?: boolean;
 }
 
-export default function CardsCarousel() {
-      const {
+export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarouselProps) {
+
+    const {
         filteredDrinks,
         searchTerm,
         setSearchTerm,
@@ -22,23 +26,47 @@ export default function CardsCarousel() {
         error,
         openOverlays,
         toggleCardOverlay,
-        refreshDrinks,
-      } = useDrinksContext();  
-      console.log("Filtered drinks in CardsCarousel:", filteredDrinks);
+    } = useDrinksContext(); 
+
+      // Pass refreshDrinks as callback to useFavorites
+    const { isFavorited, toggleFavorite } = useFavorites();
+    
+    
+      // Memoize the display drinks to prevent unnecessary recalculations
+      const displayDrinks = useMemo(() => {
+        if (showOnlyFavorites) {
+          return filteredDrinks.filter(drink => drink.id && isFavorited(drink.id));
+        }
+        return filteredDrinks;
+      }, [filteredDrinks, showOnlyFavorites, isFavorited]);
 
   return (
     <Carousel
      opts={{
         align: "start",
-        loop: true,
+        loop: false,
      }}
     >
-        <CarouselContent>
-        {filteredDrinks.map((drink) => (
-            <CarouselItem key={drink.id} className="md:basis-1/2 lg:basis-1/3">
-            </CarouselItem>
-         ))}
+        <CarouselContent className='ml-2 md:-ml-4'>
+        {displayDrinks.map((drink, index) => (
+            <CarouselItem
+             className="md:basis-1/2 lg:basis-1/3 l-2 md:pl-4 "
+             key={index}>
+                 <DrinkCard 
+                     key={drink.id}
+                     drink={drink}
+                     isFavorited={isFavorited(drink.id!)}
+                     onToggleFavorite={() => toggleFavorite(drink)} 
+                     openOverlay={openOverlays[index]}
+                     onToggleOverlay={() => toggleCardOverlay(index)}
+                     index={index}
+                     carouselMode={true}
+                 />
+             </CarouselItem>
+        ))}
         </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
     </Carousel>
   )
 }
