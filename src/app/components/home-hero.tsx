@@ -2,58 +2,88 @@
 
 import type React from "react"
 
-import { useState } from "react"
-import { Filter, BarChart3, Sparkles } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import Link from "next/link"
+import { Filter, BarChart3, Sparkles, LucideArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("")
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle search logic here
-    console.log("Searching for:", searchQuery)
-  }
+  // Hero dynamic section animations
+  const KEYWORDS = ["hydration", "energy", "recovery", "protein", "electrolyte"];
+  const keywordsLoop = [...KEYWORDS, KEYWORDS[0]];
+  const [keywordIndex, setKeywordIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(true);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setKeywordIndex((prev) => {
+      if (prev === KEYWORDS.length) {
+        setIsAnimating(false); // Disable animation for the jump
+        return 1; // Jump to the real first keyword (index 1)
+      } else {
+        setIsAnimating(true); // Enable animation
+        return prev + 1;
+      }
+    });
+  }, 2000);
+  return () => clearInterval(interval);
+}, []);
+
+
 
   return (
     <section className="relative bg-(--color-bg) py-20 px-4 sm:px-6 lg:px-8">
-      {/* Background pattern */}
       <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,hsl(var(--color-primary))_1px,transparent_0)] bg-[length:20px_20px]" />
 
       <div className="relative max-w-4xl mx-auto text-center">
-        {/* Main headline */}
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-(--color-primary) mb-8 tracking-tight">
-          Fuel Your Flow.
+          Fuel Your Tempo.
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-(--color-primary) mb-12 max-w-3xl mx-auto leading-relaxed opacity-70">
-          Find the best hydration, energy, and recovery drinks—
-          <br className="hidden sm:block" />
-          filtered by real ingredients and built for performance.
-        </p>
-
-        {/* Search bar */}
-        <form onSubmit={handleSearch} className="mb-16 max-w-2xl mx-auto">
-          <div className="flex rounded-lg overflow-hidden shadow-lg bg-(--color-bg) border border-[hsl(var(--color-primary)/0.2)]">
-            <Input
-              type="text"
-              placeholder="Search for hydration, energy, or recovery..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 border-0 bg-transparent text-(--color-primary) placeholder:text-[hsl(var(--color-primary)/0.5)] focus-visible:ring-0 focus-visible:ring-offset-0 text-base px-6 py-4"
-            />
-            <Button
-              type="submit"
-              className="bg-(--color-primary) hover:bg-[hsl(var(--color-primary)/0.9)] text-[hsl(var(--color-bg))] px-8 py-4 rounded-none font-medium border-0"
+        <div className="pos relative text-lg sm:text-xl text-(--color-primary) mb-12 max-w-3xl mx-auto leading-relaxed opacity-70 flex justify-center">
+          <span>Find the best&nbsp;</span>
+          <span className="relative inline-block h-[1.5em] overflow-hidden align-middle">
+            <span
+              className={`flex flex-col ${isAnimating ? "transition-transform duration-500" : ""}`}
             >
-              Search
-            </Button>
-          </div>
-        </form>
+                {keywordsLoop.map((word, i) => (
+                  <span
+                    key={i}
+                    className="font-semibold text-(--color-primary) text-(length:--fs-h6)"
+                    aria-hidden={keywordIndex !== i}
+                    style={{
+                      transform: `translateY(-${keywordIndex * 100}%)`,
+                      opacity: keywordIndex === i ? 1 : 0,
+                      transition: isAnimating ? "transform 0.5s ease-in-out, opacity 0.5s ease-in-out" : "none"
+                    }}
+                    onTransitionEnd={() => {
+                      // If we just jumped, reset index to 1 (real first keyword)
+                      if (keywordIndex === KEYWORDS.length) {
+                        setIsAnimating(false);
+                        setKeywordIndex(1);
+                      }
+                    }}
+                  >
+                    {word}
+                  </span>
+                ))}
+              </span>
+            </span>
+          <span>&nbsp;products, built for performance.</span>
+        </div>
 
-        {/* Feature cards */}
+        <Link
+          href="/account"
+          className="btn-main mb-16 max-w-2xl mx-auto"
+        >
+          <span>Find your tempo</span>
+          <LucideArrowRight className="w-4 h-4" />
+        </Link>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           <div className="text-center group">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-[hsl(var(--color-primary)/0.1)] hover:bg-[hsl(var(--color-primary)/0.15)] rounded-2xl mb-6 transition-all duration-200 group-hover:scale-105">
@@ -71,7 +101,7 @@ export function HeroSection() {
             </div>
             <h3 className="text-xl font-semibold text-(--color-primary) mb-3">Store Comparison</h3>
             <p className="text-(--color-primary) leading-relaxed opacity-70">
-              Compare availability and price across multiple Estonian grocery stores.
+              Compare prices across multiple Estonian grocery stores.
             </p>
           </div>
 
