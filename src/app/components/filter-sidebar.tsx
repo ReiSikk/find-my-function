@@ -46,10 +46,10 @@ export function FilterSidebar() {
       <div className="flex-col gap-4 mt-auto">
        <Accordion type="multiple" defaultValue={["item-1"]}  className="w-full">
         <AccordionItem value="item-1" className="">
-          <AccordionTrigger className="text-(length:--fs-p) font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
+          <AccordionTrigger className="txt-p font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">
             <span
-              className="mb-2 underline underline-offset-2 cursor-pointer text-(length:--fs-small)"
+              className="mb-2 underline underline-offset-2 cursor-pointer txt-small"
             >
               Clear all
             </span>
@@ -68,7 +68,7 @@ export function FilterSidebar() {
         </AccordionItem>
 
         <AccordionItem value="item-2" className="">
-          <AccordionTrigger className="text-(length:--fs-p) font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
+          <AccordionTrigger className="txt-p font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Stores</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">
           {MERCHANTS.map((merchant) => (
               <div key={merchant} className="flex items-center space-x-2 py-2">
@@ -85,7 +85,7 @@ export function FilterSidebar() {
         </AccordionItem>
 
         <AccordionItem value="item-3" className="">
-          <AccordionTrigger className="text-(length:--fs-p) font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Price range</AccordionTrigger>
+          <AccordionTrigger className="txt-p font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Price range</AccordionTrigger>
           <AccordionContent className="flex flex-col px-1.5 py-3">
             <PriceRangeSelector
               minPrice={minPrice}

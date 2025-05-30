@@ -119,7 +119,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
             hasActiveOverlay={openOverlays[index]}
           >
             <div className="aspect-square relative bg-muted">
-                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-primary) text-(--color-bg) text-(length:--fs-small) rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">{drink.price.toFixed(2)}€</Badge>
+                <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-primary) text-(--color-bg) txt-small rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">{drink.price.toFixed(2)}€</Badge>
               <Image src={ drink.image || "/placeholder.svg"} alt={`Product image displaying the product ${drink.name}`} fill className="object-cover" />
             </div>
             <CardContent className="p-4">
@@ -135,7 +135,7 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                {drink.tags && drink.tags.length > 0 && (
                   <div className="mt-3 mb-6 flex flex-wrap gap-1">
                     {drink.tags.map(tag => (
-                      <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-4 py-1.5 text-(--color-bg) bg-(--color-primary)">
+                      <Badge key={tag} variant="secondary" className="txt-small rounded-full px-4 py-1.5 text-(--color-bg) bg-(--color-primary)">
                         {tag}
                       </Badge>
                     ))}
@@ -178,10 +178,10 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                 <h4 className="text-(length:--fs-h5) pb-1.5 border-b">Ingredients</h4>
                    {drink.tags && drink.tags.length > 0 && (
                     <>
-                    <span className="text-(length:--fs-p) mt-3">This product contains the following functional ingredients:</span>
+                    <span className="txt-p mt-3">This product contains the following functional ingredients:</span>
                     <div className="mt-3 flex flex-wrap gap-1">
                       {drink.tags.map(tag => (
-                        <Badge key={tag} variant="secondary" className="text-(length:--fs-small) rounded-full px-3 py-1.5 text-(--color-primary) bg-(--color-bg)">
+                        <Badge key={tag} variant="secondary" className="txt-small rounded-full px-3 py-1.5 text-(--color-primary) bg-(--color-bg)">
                           {tag}
                         </Badge>
                       ))}
@@ -189,9 +189,9 @@ const { favoritedDrinks, isFavorited, toggleFavorite } = useFavorites({
                     </>
                 )}
 
-                <ul className="list-disc pl-6 mt-8 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <ul className="list-none pl-6 mt-8 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                   {drink.ingredients.map((ingredient) => (
-                    <li key={ingredient} className="text-(length:--fs-small)">{ingredient}</li>
+                    <li key={ingredient} className="txt-small">{ingredient}</li>
                   ))}
                     <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-primary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
                 </ul>

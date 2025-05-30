@@ -94,7 +94,7 @@ export default function AccountPage() {
                       </>
                     )}
                     {selectedStack && (
-                      <NutritionStackView stack={selectedStack} />
+                      <NutritionStackView stack={selectedStack} onSelectStack={setSelectedStack}/>
                     )}
 
                   </div>

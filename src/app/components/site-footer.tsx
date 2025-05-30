@@ -71,16 +71,16 @@ function SiteFooter() {
     <footer className="bg-(--color-bg) pt-[32px] pb-[64px] lg:pb-32 lg:pt-16 border-t border-(--color-secondary) text-(--color-primary)">
       <div className="px-[16px] md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full">
         <div className='flex flex-col items-start order-2 md:order-1'>
-          <h3 className="text-(length:--fs-h4) font-semibold text-neutral-800 mb-4">
+          <h3 className="h4 font-semibold text-neutral-800 mb-4">
             Find My Function
           </h3>
-          <p className="text-(length:--fs-p) font-medium mb-6 lg:mb-16">
+          <p className="txt-p font-medium mb-6 lg:mb-16">
             A personal project to experiment, learn and have fun with new technologies.
           </p>
-          <p className="text-(length:--fs-p) mb-[100px] max-w-[62ch]">
+          <p className="txt-p mb-[100px] max-w-[62ch]">
             Built with Next JS, TypeScript, Tailwind CSS, Puppeteer and Clerk for authentication.
           </p>
-          <p className="text-(length:--fs-small)">
+          <p className="txt-small">
             Designed and developed by <a href="https://www.reihopsti.ee/" aria-label='Link to developers Rei Sikk portfolio website' className='underline underline-offset-2' target="_blank" rel="noopener noreferrer">Rei Sikk</a>.<br/> All rights reserved {new Date().getFullYear()}.
           </p>
         </div>
@@ -88,7 +88,7 @@ function SiteFooter() {
         <div className="flex flex-col items-start md:items-end gap-4 order-1 md:order-2">
           <button 
           type='button'
-          className="btn-main text-(length:--fs-small) w-full max-w-[175px] ml-auto mt-6 mb-6 md:mt-0 md:mb-0"
+          className="btn-main txt-small w-full max-w-[175px] ml-auto mt-6 mb-6 md:mt-0 md:mb-0"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="Back to top"
           >
@@ -111,30 +111,30 @@ function SiteFooter() {
                     name="email"
                     id="email"
                     aria-label="Email input for newsletter subscription"
-                    className="w-full p-2 border border-(--color-primary--light)  rounded-l-sm text-neutral-800 focus:outline-none focus-ring-2 focus:ring-(--color-primary) focus:border-(--color-primary) text-(length:--fs-small)"
+                    className="w-full p-2 border border-(--color-primary--light)  rounded-l-sm text-neutral-800 focus:outline-none focus-ring-2 focus:ring-(--color-primary) focus:border-(--color-primary) txt-small"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     />
                      <button
                         type="submit"
-                        className="btn-main rounded-r-sm text-(length:--fs-small) font-normal tracking-wide rounded-l-none max-w-[175px] w-full ml-auto flex-[40%]"
+                        className="btn-main rounded-r-sm txt-small font-normal tracking-wide rounded-l-none max-w-[175px] w-full ml-auto flex-[40%]"
                         disabled={status === "loading" || status === "success"}
                     >
                         {status === "loading" ? "Subscribing..." : "Subscribe"}
                     </button>
                 </div>
                 {status === "invalid" && (
-                    <p className="text-red-600 text-(length:--fs-small) mt-2">
+                    <p className="text-red-600 txt-small mt-2">
                     Please enter a valid email address.
                     </p>
                 )}
                 {status === "success" && (
-                    <p className="text-(--color-primary) text-(length:--fs-p) font-semibold mt-2">
+                    <p className="text-(--color-primary) txt-p font-semibold mt-2">
                     Thanks for subscribing!
                     </p>
                 )}
                 {status === "error" && (
-                    <p className="text-(--color-primary) text-(length:--fs-p) font-semibold mt-2">
+                    <p className="text-(--color-primary) txt-p font-semibold mt-2">
                     Something went wrong. Please try again.
                     </p>
                 )}
