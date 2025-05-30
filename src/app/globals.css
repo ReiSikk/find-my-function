@@ -6,16 +6,16 @@
     background: var(--color-bg);
     color: var(--color-primary);
     border-radius: 200px;
+    border: 1px solid var(--color-primary);
     padding: var(--p-btn);
     font-size: var(--fs-p);
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     transition: background 0.3s ease, color 0.3s ease;
-    height: 36px;
     text-wrap: nowrap;
-    border: 1px solid var(--color-primary);
     cursor: pointer;
     transition: color 200ms, background 200ms, border-color 200ms;
     transition-duration: 200ms;
@@ -63,7 +63,7 @@
   /* Paddings */
   --pb-cards: clamp(18px, 3vw, 24px);
   --pi-cards: clamp(14px, 2vw, 16px);
-  --p-btn: 22px 8px;
+  --p-btn: 8px 22px;
 
 
   @keyframes collapsible-down {
