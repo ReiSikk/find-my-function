@@ -3,6 +3,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { Drink } from '../types';
 import { createSupabaseClient } from '../supabase-client';
 import useSWR from 'swr';
+import { useQuery } from '@tanstack/react-query';
 
 async function fetchDrinks(): Promise<Drink[]> {
   const supabase = createSupabaseClient();
@@ -36,16 +37,21 @@ export function useDrinks(initialSearchTerm = '') {
   const [pendingMaxPrice, setPendingMaxPrice] = useState(100);
   
   // Use SWR for data fetching with caching
-  const { 
-    data: drinks, 
-    error, 
-    isLoading,
-    mutate
-  } = useSWR('drinks', fetchDrinks, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    dedupingInterval: 3600000, // Cache for 1 hour
+  // const { 
+  //   data: drinks, 
+  //   error, 
+  //   isLoading,
+  //   mutate
+  // } = useSWR('drinks', fetchDrinks, {
+  //   revalidateIfStale: false,
+  //   revalidateOnFocus: false,
+  //   revalidateOnReconnect: true,
+  //   dedupingInterval: 3600000, // Cache for 1 hour
+  // });
+    const { data: drinks, error, isLoading, refetch } = useQuery({
+    queryKey: ["drinks"],
+    queryFn: fetchDrinks,
+    staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
   
@@ -170,8 +176,8 @@ const filteredDrinks = useMemo(() => {
   // Manual refresh function
   const refreshDrinks = useCallback(() => {
     console.log('Refreshing drinks data...');
-    return mutate();
-  }, [mutate]);
+    return refetch();
+  }, [refetch]);
 
 
   // Check if pending filters differ from active filters
@@ -207,7 +213,7 @@ const filteredDrinks = useMemo(() => {
     // Overlay states for cards
     openOverlays,
     toggleCardOverlay,
-    refreshDrinks,
+    refreshDrinks: refetch,
     hasPendingChanges
   };
 }

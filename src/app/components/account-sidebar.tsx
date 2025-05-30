@@ -21,12 +21,10 @@ import { useState } from "react"
 
 interface AccountSidebarProps {
   user: UserData,
-  onSelectStack: (stack: string) => void
 }
 
-export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
-  const [selectedStack, setSelectedStack] = useState<string>("all")
-  
+export function AccountSidebar({ user }: AccountSidebarProps) {
+
   const getInitials = (firstName?: string | null, lastName?: string | null) => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase()
   }
@@ -85,15 +83,6 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
         </SidebarGroup>
 
         <SidebarSeparator />
-
-        <SidebarGroupLabel className="border-b border-(--color-primary) rounded-none px-0 mx-2 mb-2 txt-small font-semibold opacity-70">Search AI for products</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <div className="flex flex-col gap-2 px-2">
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("all")}>
-              Create Custom Performance Stack
-            </Button>
-          </div>
-        </SidebarGroupContent>
       </SidebarContent>
 
       <SidebarFooter className="p-4">

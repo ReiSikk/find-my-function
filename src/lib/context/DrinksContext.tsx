@@ -7,6 +7,7 @@ const DrinksContext = createContext<ReturnType<typeof useDrinks> | null>(null);
 
 export function DrinksProvider({ children }: { children: React.ReactNode }) {
   const drinks = useDrinks();
+  
   return (
     <DrinksContext.Provider value={drinks}>
       {children}

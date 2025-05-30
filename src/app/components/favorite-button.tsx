@@ -5,7 +5,7 @@ import { useUser } from '@clerk/nextjs';
 interface FavoriteButtonProps {
   drink: Drink;
   isFavorited: boolean;
-  onToggleFavorite: (drink: Drink) => void;
+  onToggleFavorite: (drink: Drink) => Promise<void>;
   className?: string;
 }
 
@@ -28,10 +28,10 @@ export function FavoriteButton({
 
   return (
     <Heart
-      className={`h-6 w-6 cursor-pointer transition-colors duration-200 flex-shrink-0 ${
+      className={`h-6 w-6 cursor-pointer transition-colors duration-200 ${
         isFavorited
           ? 'text-red-500 fill-current'
-          : 'text-[var(--color-primary)] hover:text-[var(--color-primary)]'
+          : 'text-[var(--color-secondary)] hover:text-[var(--color-white)]'
       } ${className}`}
       onClick={handleClick}
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
