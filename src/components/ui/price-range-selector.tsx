@@ -33,7 +33,7 @@ export default function PriceRangeSelector({
           variant="ghost" 
           size="sm"
           onClick={onReset}
-          className="text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:text-[var(--color-text)] text-(length:--fs-small) cursor-pointer"
+          className="text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:text-[var(--color-text)] txt-small cursor-pointer"
         >
           Reset
         </Button>

@@ -14,16 +14,15 @@ import {
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Mail, Calendar, LogOut, Plus } from "lucide-react"
+import { Mail, Calendar, LogOut } from "lucide-react"
 import { UserData } from "@/lib/types"
-import { AccountSideBarTrigger } from "./account-sidebar-trigger"
 
 interface AccountSidebarProps {
   user: UserData,
-  onSelectStack: (stack: string) => void,
 }
 
-export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
+export function AccountSidebar({ user }: AccountSidebarProps) {
+
   const getInitials = (firstName?: string | null, lastName?: string | null) => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase()
   }
@@ -40,9 +39,6 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
   return (
     <Sidebar className="border-r bg-(--color-bg) text-(--color-primary) z-10">
       <SidebarHeader className="p-4">
-        <SidebarRail className=" bg-(--color-bg) text-(--color-primary) z-10 max-h-fit mt-[16px] background-transparent">
-          <AccountSideBarTrigger />
-      </SidebarRail>
         <div className="flex items-center gap-3">
           <Avatar className="h-12 w-12">
             <AvatarImage src={user.imageUrl || "/placeholder.svg"} alt={user.firstName || "User"} />
@@ -63,7 +59,7 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="px-0 rounded-none mb-2 mx-2 border-(--color-primary) border-b text-(length:--fs-small) font-semibold opacity-70">Account Details</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-0 rounded-none mb-2 mx-2 border-(--color-primary) border-b txt-small font-semibold opacity-70">Account Details</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="space-y-3 px-2">
               <div className="flex items-center gap-2 text-sm">
@@ -82,21 +78,6 @@ export function AccountSidebar({ user, onSelectStack }: AccountSidebarProps) {
         </SidebarGroup>
 
         <SidebarSeparator />
-
-        <SidebarGroupLabel className="border-b border-(--color-primary) rounded-none px-0 mx-2 mb-2 text-(length:--fs-small) font-semibold opacity-70">Search AI for products</SidebarGroupLabel>
-        <SidebarGroupContent>
-          <div className="flex flex-col gap-2 px-2">
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("hydration")}>
-              Hydration Products
-            </Button>
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("protein")}>
-              Protein Products
-            </Button>
-            <Button variant="outline" className="cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)" onClick={() => onSelectStack("supplements")}>
-              Supplements
-            </Button>
-          </div>
-        </SidebarGroupContent>
       </SidebarContent>
 
       <SidebarFooter className="p-4">

@@ -1,14 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Archivo } from "next/font/google"
-import { ThemeProvider } from "./components/theme-provider"
-import {
-  ClerkProvider,
-} from '@clerk/nextjs'
 import { Header } from "./components/header"
 import './globals.css'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import SiteFooter from "./components/site-footer"
+import { Providers } from "../lib/context/Providers"
+import { Toaster } from "@/components/ui/sonner"
 
 
 export const metadata: Metadata = {
@@ -26,19 +24,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
-    <ClerkProvider>
     <html lang="en" suppressHydrationWarning>
       <body className={`${archivo.className} bg-(--color-bg)`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-        <SidebarProvider>
-        <Header />
-          {children}
-      </SidebarProvider>
-        </ThemeProvider>
-        <SiteFooter />
+        <Providers>
+          <SidebarProvider>
+          <Header />
+            {children}
+          <SiteFooter />
+          </SidebarProvider>
+          <Toaster />
+        </Providers>
       </body>
     </html>
-    </ClerkProvider>
   )
 }
