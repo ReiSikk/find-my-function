@@ -120,7 +120,7 @@ function Carousel({
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative p-4", className)}
+        className={cn("relative mt-12 md:mt-0 md:p-4", className)}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -163,7 +163,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="carousel-item"
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-4" : "pt-4",
+        orientation === "horizontal" ? "md:pl-4" : "pt-4",
         className
       )}
       {...props}
@@ -187,7 +187,7 @@ function CarouselPrevious({
       className={cn(
         "absolute size-8 rounded-full cursor-pointer border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
         orientation === "horizontal"
-          ? "-top-4 right-14 -translate-y-1/2"
+          ? "-top-6 md:-top-4 right-14 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
@@ -217,7 +217,7 @@ function CarouselNext({
       className={cn(
         "absolute size-8 rounded-full cursor-pointer border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
         orientation === "horizontal"
-          ? "-top-4 right-4 -translate-y-1/2"
+          ? "-top-6 md:-top-4 right-4 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}

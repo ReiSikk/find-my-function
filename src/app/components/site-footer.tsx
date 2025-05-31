@@ -2,6 +2,7 @@
 
 import { LucideArrowUp } from 'lucide-react';
 import React, { useState, useEffect } from 'react'
+import { toast } from "sonner"
 
 
 function isValidEmail(email: string) {
@@ -22,53 +23,43 @@ function SiteFooter() {
         }
     }, [status]);
 
-   /*  const handleSubmit = async (e: React.FormEvent) => {
+ 
+      const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!isValidEmail(email)) {
+          setStatus("invalid");
+          toast("Please enter a valid email", {
+          description: "Only valid emails are allowed.",
+          action: {
+            label: "Close",
+            onClick: () => console.log("Close"),
+          },
+        })
+          return;
+        }
         setStatus("loading");
         try {
-        const res = await fetch("/api/send", {
+          const res = await fetch("/api/send", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
-        });
-        if (res.ok) {
+          });
+          if (res.ok) {
             setStatus("success");
+            toast('Thanks for subscribing!')
             setEmail("");
-        } else {
+          } else {
             setStatus("error");
-        }
+            toast('Something went wrong. Please try again.')
+          }
         } catch {
-        setStatus("error");
+          setStatus("error");
         }
-    }; */
-
-      const handleSubmit = async (e: React.FormEvent) => {
-        console.log("Form submitted with email:", email);
-    e.preventDefault();
-    if (!isValidEmail(email)) {
-      setStatus("invalid");
-      return;
-    }
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (res.ok) {
-        setStatus("success");
-        setEmail("");
-      } else {
-        setStatus("error");
-      }
-    } catch {
-      setStatus("error");
-    }
-  };
+      };
 
   return (
-    <footer className="bg-(--color-bg) pt-[32px] pb-[64px] lg:pb-32 lg:pt-16 border-t border-(--color-secondary) text-(--color-primary)">
+    <footer className="bg-(--color-bg) pt-[64px] pb-[64px] lg:pb-32 lg:pt-16 border-t border-(--color-secondary) text-(--color-primary)">
       <div className="px-[16px] md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full">
         <div className='flex flex-col items-start order-2 md:order-1'>
           <h3 className="h4 font-semibold text-neutral-800 mb-4">
@@ -123,21 +114,6 @@ function SiteFooter() {
                         {status === "loading" ? "Subscribing..." : "Subscribe"}
                     </button>
                 </div>
-                {status === "invalid" && (
-                    <p className="text-red-600 txt-small mt-2">
-                    Please enter a valid email address.
-                    </p>
-                )}
-                {status === "success" && (
-                    <p className="text-(--color-primary) txt-p font-semibold mt-2">
-                    Thanks for subscribing!
-                    </p>
-                )}
-                {status === "error" && (
-                    <p className="text-(--color-primary) txt-p font-semibold mt-2">
-                    Something went wrong. Please try again.
-                    </p>
-                )}
             </form>
           </div>
         </div>

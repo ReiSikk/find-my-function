@@ -74,18 +74,20 @@ export function NutritionStackView({ stack, onSelectStack }: NutritionStackViewP
   }, [search, stack]);
 
   return (
-    <div>
-      <div className="flex flex-col mb-16">
+    <div className="mt-8 md:mt-16">
+      <div className="flex flex-col mb-16 max-w-full">
         <h2 className="h4 mb-2">I'm interested in creating a</h2>
-        <div className="flex flex gap-2">
-          <div className={`btn-main ${stack === "hydration" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("hydration")}>
-            Hydration Stack
-          </div>
-          <div className={`btn-main ${stack === "protein" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("protein")}>
-            Protein Stack
-          </div>
-          <div className={`btn-main ${stack === "supplements" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("supplements")}>
-            Supplement Stack
+        <div className="relative overflow-gradient">
+          <div className="flex flex gap-2 overflow-x-auto scrollbar-hide">
+            <div className={`btn-main ${stack === "hydration" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("hydration")}>
+              Hydration Stack
+            </div>
+            <div className={`btn-main ${stack === "protein" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("protein")}>
+              Protein Stack
+            </div>
+            <div className={`btn-main ${stack === "supplements" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("supplements")}>
+              Supplement Stack
+            </div>
           </div>
         </div>
       </div>
@@ -94,7 +96,7 @@ export function NutritionStackView({ stack, onSelectStack }: NutritionStackViewP
       </h2>
       <p className="mb-4">Find the best {stack} products for your needs using our AI-powered search.</p>
       <input
-        className="w-full p-2 border rounded mb-4"
+        className="w-full p-2 border rounded mb-4 max-w-[500px]"
         placeholder={`Search for ${stack} products...`}
         value={search}
         onChange={e => setSearch(e.target.value)}

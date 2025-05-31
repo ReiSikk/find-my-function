@@ -162,6 +162,40 @@
     font-weight: 400;
   }
 
+    .scrollbar-hide {
+        /* IE and Edge */
+        -ms-overflow-style: none;
+        /* Firefox */
+        scrollbar-width: none;
+        /* Safari and Chrome */
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+
+  /* Gradient for overflowing horizontal containers  */
+  .overflow-gradient {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .overflow-gradient::after {
+    content: '';
+    pointer-events: none;
+    user-select: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-bg) 90%
+    );
+  }
+
 .dark {
   --sidebar: hsl(240 5.9% 10%);
   --sidebar-foreground: hsl(240 4.8% 95.9%);

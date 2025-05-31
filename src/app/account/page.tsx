@@ -3,7 +3,6 @@
 import { useUser } from "@clerk/nextjs"
 import { AccountSidebar } from "../components/account-sidebar"
 import { SidebarInset } from "@/components/ui/sidebar"
-import { DrinksList } from "../components/drinks-list"
 import  CardsCarousel  from "../components/cards-carousel"
 import { DrinksProvider } from "@/lib/context/DrinksContext"
 import { UserData } from "@/lib/types"
@@ -57,7 +56,6 @@ export default function AccountPage() {
       <DrinksProvider>
           <div className="flex min-h-screen w-full">
             <AccountSidebar user={userData} />
-            <SidebarInset className="flex-1">
               <main className="flex-1 overflow-y-auto">
                 <div className="container mx-auto pt-6 px-6 pb-[100px]">
                   <div className="space-y-6">
@@ -73,7 +71,6 @@ export default function AccountPage() {
                   </div>
                 </div>
               </main>
-            </SidebarInset>
           </div>
       </DrinksProvider>
     </div>

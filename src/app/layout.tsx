@@ -6,6 +6,7 @@ import './globals.css'
 import { SidebarProvider } from "@/components/ui/sidebar"
 import SiteFooter from "./components/site-footer"
 import { Providers } from "../lib/context/Providers"
+import { Toaster } from "@/components/ui/sonner"
 
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({
             {children}
           <SiteFooter />
           </SidebarProvider>
+          <Toaster />
         </Providers>
       </body>
     </html>

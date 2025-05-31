@@ -54,7 +54,7 @@ export function DrinkCard({
           </div>
         )}
       </CardContent>
-      <CardFooter className="pt-0 px-4 justify-between flex gap-2 relative">
+      <CardFooter className="pt-0 px-4 justify-between flex flex-wrap md:flex-nowrap gap-2 relative">
         <FavoriteButton 
           drink={drink} 
           isFavorited={isFavorited}
@@ -70,8 +70,8 @@ export function DrinkCard({
           aria-label={`${openOverlay ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
           role="button"
         >
-          <span className="whitespace-nowrap text-[var(--fs-small)]">
-            {openOverlay ? 'Close overlay' : 'View ingredients'}
+          <span className="whitespace-nowrap text-(length:--fs-small)">
+            {openOverlay ? 'Close overlay' : 'Ingredients'}
           </span>
           <div className="bg-[var(--color-bg)] rounded-full p-2 transition-all duration-200 group-hover:bg-[var(--color-primary)]">
             <LucidePlus 

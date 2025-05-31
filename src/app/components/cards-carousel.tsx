@@ -10,7 +10,6 @@ import { useDrinksContext } from "@/lib/context/DrinksContext"
 import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
-import { Car } from 'lucide-react'
 
 interface CardsCarouselProps {
   showOnlyFavorites?: boolean;
@@ -20,10 +19,6 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
 
     const {
         filteredDrinks,
-        searchTerm,
-        setSearchTerm,
-        loading,
-        error,
         openOverlays,
         toggleCardOverlay,
     } = useDrinksContext(); 
@@ -47,7 +42,7 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
         loop: false,
      }}
     >
-        <CarouselContent className='ml-2 md:-ml-4'>
+        <CarouselContent className='md:ml-2 lg:-ml-4'>
         {displayDrinks.map((drink, index) => (
             <CarouselItem
              className="md:basis-1/2 lg:basis-1/3 l-2 md:pl-4 "
