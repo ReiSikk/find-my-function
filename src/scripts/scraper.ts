@@ -10,6 +10,12 @@ import * as puppeteer from 'puppeteer';
 import type { ScrapedDrink } from "@/lib/types"
 import { analyzeDrinkIngredients } from '../lib/tag-utils';
 
+interface ScrapeOptions {
+  includeSelver?: boolean;
+  includeRimi?: boolean;
+  includePrisma?: boolean;
+}
+
 // Extract ingredients from Selver product page
 async function extractIngredients(page: puppeteer.Page, productUrl: string): Promise<string[]> {
   try {
@@ -171,7 +177,60 @@ async function extractRimiIngredients(page: puppeteer.Page, productUrl: string):
   }
 }
 
-// Example scraper function for E-Selver
+
+// Extract ingredients from Prisma product page
+async function extractPrismaIngredients(page: puppeteer.Page, productUrl: string): Promise<string[]> {
+  try {
+    console.log(`Visiting product page: ${productUrl}`);
+    const fullUrl = productUrl.startsWith('http') ? productUrl : `https://www.prismamarket.ee${productUrl}`;
+
+    
+    // Navigate to the product page
+    await page.goto(fullUrl, {
+      waitUntil: 'networkidle2',
+      timeout: 30000
+    });
+    
+    // Wait for the content to load
+    await page.waitForSelector('[data-test-id="product-info-content"]', { 
+      timeout: 10000 
+    });
+
+    // Extract ingredients text using the structure from the screenshot
+    const ingredientsText = await page.evaluate(() => {
+      const ingredientsSection = document.querySelector('[data-test-id="product-info-ingredients"]');
+      console.log("ingredientsSection", ingredientsSection);
+      if (!ingredientsSection) return null;
+
+      // Find the paragraph containing ingredients
+      const ingredientsParagraph = ingredientsSection.querySelector('p');
+      return ingredientsParagraph?.textContent?.trim() || null;
+    });
+
+    if (!ingredientsText) {
+      console.log('No ingredients found on product page');
+      return ['No ingredients found'];
+    }
+
+    // Split ingredients by commas and clean up
+    const ingredients = ingredientsText
+      .split(',')
+      .map(item => item.trim())
+      .filter(item => item.length > 0)
+      // Remove percentage values in parentheses
+      .map(item => item.replace(/\s*\([^)]*\)\s*/g, ' ').trim())
+      .filter(item => item.length > 0);
+
+    console.log(`Found ${ingredients.length} ingredients`);
+    return ingredients;
+
+  } catch (error) {
+    console.error(`Error extracting ingredients from ${productUrl}:`, error);
+    return ['Error extracting ingredients'];
+  }
+}
+
+// Scraper function for E-Selver
 export async function scrapeESelver(): Promise<ScrapedDrink[]> {
 
   const browser = await puppeteer.launch();
@@ -243,7 +302,7 @@ export async function scrapeESelver(): Promise<ScrapedDrink[]> {
   return drinks
 }
 
-// Example scraper function for Rimi
+// Scraper function for Rimi
 export async function scrapeRimi(): Promise<ScrapedDrink[]> {
     const browser = await puppeteer.launch();
 
@@ -350,14 +409,120 @@ export async function scrapeRimi(): Promise<ScrapedDrink[]> {
 
 }
 
-// Main function to run both scrapers
-export async function scrapeAllStores() {
-  const selverDrinks = await scrapeESelver()
-  const rimiDrinks = await scrapeRimi()
+// Scraper function for E-Prisma
+export async function scrapePrisma(): Promise<ScrapedDrink[]> {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage()
 
-  const allDrinks = [...selverDrinks, ...rimiDrinks]
+     // Set a realistic user agent
+    await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36');
+    
+    // Set viewport to simulate a regular browser window
+    await page.setViewport({ width: 1366, height: 768 });
+    
+    // Increase navigation timeout
+    await page.setDefaultNavigationTimeout(60000); // 60 seconds
+    
+    // Disable browser features that might reveal we're automating
+    await page.evaluateOnNewDocument(() => {
+      Object.defineProperty(navigator, 'webdriver', { get: () => false });
+    });
+
+    const drinks: ScrapedDrink[] = []
+
+
+    try {
+    // Navigate to Prismas "health" drinks page
+    await page.goto("https://www.prismamarket.ee/tooted/joogid/energia-ja-spordijoogid/tervisejoogid", {
+      waitUntil: 'networkidle0', // Change to wait for all network requests
+      timeout: 30000
+    });
+
+    // Wait for Next JS hydration
+    await page.waitForFunction(() => {
+      return (window as any).__NEXT_DATA__ !== undefined;
+    }, { timeout: 10000 });
+
+    // Wait for the products to load
+    // await page.waitForSelector(".sc-a5e31db2-2 fepwfv")
+    await page.waitForSelector(".sc-1fceec99-0", {
+      visible: true,
+      timeout: 10000
+    });
+
+    // Extract product information
+    const products = await page.$$(".sc-a5e31db2-2")
+
+    for (const product of products) {
+      // Extract product details
+      const name = await product.$eval(".sc-d9655132-0", (el) => el.textContent?.trim() || "")
+
+      // Get all text from the price container, including child elements
+      const priceText = await product.$eval(".sc-32aab3ea-1", el => el.textContent?.trim() || "0");
+      // Clean and parse the price
+      const price = parseFloat(priceText.replace(/[^\d,\.]/g, '').replace(',', '.'));
+      const imageUrl = await product.$eval("img", (el) => el.getAttribute("src") || "")
+      const productUrl = await product.$eval("a", (el) => el.getAttribute("href") || "")
+      console.log("Product URL for Prisma prod:", productUrl)
+
+       // Create a new page for ingredient extraction to avoid navigation issues on main page
+        const ingredientPage = await browser.newPage();
+        await ingredientPage.setDefaultNavigationTimeout(30000);
+        
+        // Extract ingredients
+        const ingredients = await extractPrismaIngredients(ingredientPage, productUrl);
+          if (ingredients.includes('Error extracting ingredients') || 
+            ingredients.includes('No ingredients found')) {
+          console.log(`Skipping product ${name} due to ingredient extraction failure`);
+          continue; // Skip this product and move to the next one
+        }
+        const tags = analyzeDrinkIngredients(ingredients);
+        console.log("Tags:", tags);
+        
+        // Close the ingredient page to free up resources
+        await ingredientPage.close();
+
+
+      drinks.push({
+        name,
+        price,
+        image: imageUrl,
+        store: "E-Prisma",
+        ingredients,
+        url: productUrl.startsWith('http') ? productUrl : `https://www.prismamarket.ee${productUrl}`,
+        tags
+      })
+    }
+  } catch (error) {
+    console.error("Error scraping Prisma:", error)
+  } finally {
+    await browser.close()
+  }
+
+    return drinks
+
+}
+
+// Main function to run both scrapers
+export async function scrapeAllStores(options: ScrapeOptions = {
+  includeSelver: false,
+  includeRimi: false,
+  includePrisma: true
+}) {
+    const results = await Promise.all([
+    options.includeSelver ? scrapeESelver() : Promise.resolve([]),
+    options.includeRimi ? scrapeRimi() : Promise.resolve([]),
+    options.includePrisma ? scrapePrisma() : Promise.resolve([])
+  ]);
+  const [selverDrinks, rimiDrinks, prismaDrinks] = results;
+  // const selverDrinks = await scrapeESelver()
+  // const rimiDrinks = await scrapeRimi()
+  // const prismaDrinks = await scrapePrisma()
+
+  const allDrinks = [...selverDrinks, ...rimiDrinks, ...prismaDrinks];
 
   // Return all drinks for so the API can insert them in to the database
+  console.log(`Scraped ${selverDrinks.length} Selver drinks, ${rimiDrinks.length} Rimi drinks, and ${prismaDrinks.length} Prisma drinks`);
   return allDrinks
 
 }

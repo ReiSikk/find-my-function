@@ -33,7 +33,7 @@ export function DrinkCard({
         <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-primary) text-(--color-bg) txt-small rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">
           {drink.price.toFixed(2)}€
         </Badge>
-        <Image src={drink.image || "/placeholder.svg"} alt={`Product image displaying the product ${drink.name}`} fill className="object-cover" />
+        <Image src={drink.image || "/placeholder.svg"} alt={`Product image displaying the product ${drink.name}`} fill className="w-full height-full object-contain" />
       </div>
       <CardContent className="p-4">
         <div className="flex justify-between items-start">
