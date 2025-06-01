@@ -59,7 +59,7 @@ function SiteFooter() {
       };
 
   return (
-    <footer className="bg-(--color-bg) pt-[64px] pb-[64px] lg:pb-32 lg:pt-16 border-t border-(--color-secondary) text-(--color-primary)">
+    <footer className="bg-(--color-bg) pt-[32px] pb-[64px] lg:pb-32 lg:pt-16 border-t border-(--color-secondary) text-(--color-primary)">
       <div className="px-[16px] md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full">
         <div className='flex flex-col items-start order-2 md:order-1'>
           <h3 className="h4 font-semibold text-neutral-800 mb-4">

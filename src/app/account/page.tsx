@@ -2,7 +2,6 @@
 
 import { useUser } from "@clerk/nextjs"
 import { AccountSidebar } from "../components/account-sidebar"
-import { SidebarInset } from "@/components/ui/sidebar"
 import  CardsCarousel  from "../components/cards-carousel"
 import { DrinksProvider } from "@/lib/context/DrinksContext"
 import { UserData } from "@/lib/types"
@@ -63,9 +62,8 @@ export default function AccountPage() {
                       <LucideArrowLeft className="h-4 w-4" />
                       Back home
                       </Link>
-                      <h1 className="text-3xl font-bold tracking-tight">My List</h1>
+                      <h1 className="text-(length:--fs-h4) mb-2 font-bold">My List</h1>
                       <p className="text-muted-foreground">Your saved drinks and favorites</p>
-                      {/* <DrinksList showOnlyFavorites={true} /> */}
                       <CardsCarousel showOnlyFavorites={true}/>
                       <NutritionStackView stack={selectedStack} onSelectStack={setSelectedStack}/>
                   </div>

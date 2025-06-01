@@ -7,7 +7,7 @@
    ========================================================================== */
 
 import * as puppeteer from 'puppeteer';
-import type { Drink, ScrapedDrink } from "@/lib/types"
+import type { ScrapedDrink } from "@/lib/types"
 import { analyzeDrinkIngredients } from '../lib/tag-utils';
 
 // Extract ingredients from Selver product page
@@ -88,8 +88,8 @@ async function extractRimiIngredients(page: puppeteer.Page, productUrl: string):
         return text.includes('karboniseeritud vesi') || text.includes('Koostisosad');
       }, { timeout: 10000 });
       console.log('Ingredient content detected');
-    } catch (e) {
-      console.log('Proceeding without ingredient content detection...');
+    } catch (error) {
+      console.error(error)
     }
     
     // Extract ingredients based on the HTML structure from your screenshot
@@ -290,7 +290,7 @@ export async function scrapeRimi(): Promise<ScrapedDrink[]> {
         // Clean and parse the price
         price = parseFloat(priceText.replace(/[^\d,\.]/g, '').replace(',', '.'));
         
-      } catch (error) {
+      } catch {
         // First fallback: try ProductPrice selector
         try {
           const fallbackText = await product.$eval(".card__price-tag", el => el.textContent?.trim() || "0");

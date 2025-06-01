@@ -7,7 +7,6 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-  UserProfile
 } from '@clerk/nextjs'
 import { useSidebar } from "@/components/ui/sidebar"
 import { LucideClipboardList } from "lucide-react"
@@ -25,7 +24,7 @@ export function Header() {
   return (
     <header className="relative border-b border-(--color-secondary) shadow-sm bg-(--color-bg) text-(--color-primary)">
       <div className="flex h-16 px-[16px] md:px-[32px] py-2 items-center justify-between w-full">
-        <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-(length:--fs-h6) text-nowrap uppercase font-bold">
+        <Link href="/" className="absolute left-[16px] md:left-1/2 top-1/2 translate-x-[16px] md:-translate-x-1/2 -translate-y-1/2 text-(length:--fs-h6) text-nowrap uppercase font-bold">
           Tempo
         </Link>
         <nav className={`flex items-center space-x-4 ${sidebarOpen ? 'justify-end' : 'justify-end'} w-full`}>

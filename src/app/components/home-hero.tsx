@@ -1,22 +1,16 @@
 "use client"
 
 import type React from "react"
-
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Filter, BarChart3, Sparkles, LucideArrowRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 
 export function HeroSection() {
-  const [searchQuery, setSearchQuery] = useState("")
-
   // Hero dynamic section animations
   const KEYWORDS = ["hydration", "energy", "recovery", "protein", "electrolyte"];
   const keywordsLoop = [...KEYWORDS, KEYWORDS[0]];
   const [keywordIndex, setKeywordIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(true);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 useEffect(() => {
   const interval = setInterval(() => {
@@ -31,21 +25,19 @@ useEffect(() => {
     });
   }, 2000);
   return () => clearInterval(interval);
-}, []);
+}, [KEYWORDS.length]);
 
 
 
   return (
     <section className="relative bg-(--color-bg) py-20 px-4 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,hsl(var(--color-primary))_1px,transparent_0)] bg-[length:20px_20px]" />
-
       <div className="relative max-w-4xl mx-auto text-center">
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-(--color-primary) mb-8 tracking-tight">
           Fuel Your Tempo.
         </h1>
 
-        <div className="pos relative text-lg sm:text-xl text-(--color-primary) mb-12 max-w-3xl mx-auto leading-relaxed opacity-70 flex justify-center">
-          <span>Find the best&nbsp;</span>
+        <div className="pos relative text-lg sm:text-xl text-(--color-primary) mb-12 max-w-3xl mx-auto leading-relaxed opacity-70 flex justify-center flex-wrap">
+          <span className="text-nowrap">Find the best&nbsp;</span>
           <span className="relative inline-block h-[1.5em] overflow-hidden align-middle">
             <span
               className={`flex flex-col ${isAnimating ? "transition-transform duration-500" : ""}`}
@@ -73,12 +65,13 @@ useEffect(() => {
                 ))}
               </span>
             </span>
-          <span>&nbsp;products, built for performance.</span>
+          <span className="text-nowrap">&nbsp;products, built for performance.</span>
         </div>
 
         <Link
           href="/account"
           className="btn-main mb-16 max-w-2xl mx-auto"
+          prefetch={true}
         >
           <span>Find your tempo</span>
           <LucideArrowRight className="w-4 h-4" />
