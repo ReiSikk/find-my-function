@@ -2,7 +2,6 @@
 import { useState, useCallback, useMemo } from 'react';
 import { Drink } from '../types';
 import { createSupabaseClient } from '../supabase-client';
-import useSWR from 'swr';
 import { useQuery } from '@tanstack/react-query';
 
 async function fetchDrinks(): Promise<Drink[]> {
@@ -51,7 +50,7 @@ export function useDrinks(initialSearchTerm = '') {
     const { data: drinks, error, isLoading, refetch } = useQuery({
     queryKey: ["drinks"],
     queryFn: fetchDrinks,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 60, // 1 hour
   });
 
   
@@ -171,13 +170,6 @@ const filteredDrinks = useMemo(() => {
     [index]: !prev[index]
   }));
 }, []);
-
-
-  // Manual refresh function
-  const refreshDrinks = useCallback(() => {
-    console.log('Refreshing drinks data...');
-    return refetch();
-  }, [refetch]);
 
 
   // Check if pending filters differ from active filters

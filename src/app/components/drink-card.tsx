@@ -38,7 +38,7 @@ export function DrinkCard({
       <CardContent className="p-4">
         <div className="flex justify-between items-start">
           <div className="flex items-start justify-between gap-6">
-            <h3 className="font-medium text-(length:--fs-h6)">{drink.name}</h3>
+            <h3 className="font-medium text-(length:--fs-h6) text-(--color-primary)">{drink.name}</h3>
             <a className="bg-(--color-primary) text-(--color-bg) flex items-center justify-center cursor-pointer rounded-full p-2" href={drink.url} target="_blank" rel="noopener noreferrer" aria-label="External link to buy the product">
               <ExternalLink className="h-4 w-4" />
             </a>

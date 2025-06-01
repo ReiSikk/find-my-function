@@ -185,7 +185,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full cursor-pointer border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
+        "absolute size-8 rounded-full cursor-pointer text-(--color-primary) border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
         orientation === "horizontal"
           ? "-top-6 md:-top-4 right-14 -translate-y-1/2"
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
@@ -215,7 +215,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        "absolute size-8 rounded-full cursor-pointer border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
+        "absolute size-8 rounded-full cursor-pointer text-(--color-primary) border-(--color-primary) hover:bg-(--color-primary) hover:text-(--color-bg)",
         orientation === "horizontal"
           ? "-top-6 md:-top-4 right-4 -translate-y-1/2"
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",

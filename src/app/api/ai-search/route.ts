@@ -26,7 +26,8 @@ export async function POST(req: NextRequest) {
     const reply = data.choices?.[0]?.message?.content;
 
     return NextResponse.json({ reply });
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error("AI Search error:", error instanceof Error ? error.message : "Unknown error");
     return NextResponse.json({ error: "AI search failed" }, { status: 500 });
   }
 }

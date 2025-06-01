@@ -42,12 +42,12 @@ const { isFavorited, toggleFavorite } = useFavorites();
     <div className="space-y-6 mb-[100px]">
       <div className="flex flex-col gap-2 sm:flex-row justify-between">
           {displayDrinks && (
-          <h1 className="text-2xl font-bold">
+          <h2 className="text-(length:--fs-h6) font-bold">
             {showOnlyFavorites 
               ? `Found ${displayDrinks.length} favorite drinks` 
               : `Found ${displayDrinks.length} matching drinks`
             }
-          </h1>
+          </h2>
         )}
         <div className="w-full sm:max-w-[250px]">
           <Input 

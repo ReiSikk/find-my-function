@@ -21,7 +21,7 @@ export async function GET() {
 
     
     // Insert/update the data in Supabase
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('drinks')
       .upsert(allDrinks, {
         onConflict: 'url',
@@ -46,11 +46,12 @@ export async function GET() {
         rimi: allDrinks.filter(d => d.store === "Rimi").length
       }
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
     console.error("Error running scraper:", error)
     return NextResponse.json({
       success: false,
-      message: `Failed to run scraper: ${error.message}`,
+      message: `Failed to run scraper: ${errorMessage}`,
     }, { status: 500 })
   }
 }

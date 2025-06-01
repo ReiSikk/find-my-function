@@ -1,7 +1,10 @@
+"use client"
+
 import { DrinksList } from "./components/drinks-list"
 import { FilterSidebar } from "./components/filter-sidebar"
 import { DrinksProvider } from "@/lib/context/DrinksContext"
 import { HeroSection } from "./components/home-hero"
+import CardsCarousel from "./components/cards-carousel"
 
 export default function Home() {
   return (
@@ -16,6 +19,10 @@ export default function Home() {
           <DrinksList />
         </div>
       </div>
+    <section className="carousel">
+      <h4 className="text-(length:--fs-h4) md:pl-4 w-fit">Your favourites</h4>
+      <CardsCarousel showOnlyFavorites={true}/>
+    </section>
     </main>
     </DrinksProvider>
   )
