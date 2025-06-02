@@ -439,9 +439,9 @@ export async function scrapePrisma(): Promise<ScrapedDrink[]> {
     });
 
     // Wait for Next JS hydration
-    await page.waitForFunction(() => {
-      return (window as any).__NEXT_DATA__ !== undefined;
-    }, { timeout: 10000 });
+    // await page.waitForFunction(() => {
+    //   return (window as any).__NEXT_DATA__ !== undefined;
+    // }, { timeout: 10000 });
 
     // Wait for the products to load
     // await page.waitForSelector(".sc-a5e31db2-2 fepwfv")

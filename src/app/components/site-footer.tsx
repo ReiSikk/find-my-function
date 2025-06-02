@@ -13,7 +13,6 @@ function isValidEmail(email: string) {
 function SiteFooter() {
     const [email, setEmail] = useState("");
       const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" | "invalid">("idle");
-    console.log("Form status:", status);
 
     // Remove form feedback after 5 seconds
       useEffect(() => {
