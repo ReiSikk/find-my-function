@@ -90,6 +90,14 @@ const handleDrinkCategoryChange = useCallback((category: string) => {
   });
 }, []);
 
+// Function to clear selected ingredient categories
+const clearIngredients = useCallback(() => {
+  setActiveFilters(prev => ({
+    ...prev,
+    selectedIngredients: []
+  }));
+}, []);
+
 
 // Handle store selection change
 const handleMerchantChange = useCallback((merchant: string) => {
@@ -121,6 +129,17 @@ const handlePriceRangeChange = useCallback(([min, max]: [number, number]) => {
     ...prev,
     minPrice: min,
     maxPrice: max
+  }));
+}, []);
+
+// Reset price
+const resetPrice = useCallback(() => {
+  setPendingMinPrice(0);
+  setPendingMaxPrice(100);
+  setActiveFilters(prev => ({
+    ...prev,
+    minPrice: 0,
+    maxPrice: 100
   }));
 }, []);
 
@@ -187,6 +206,7 @@ const filteredDrinks = useMemo(() => {
     // For drink categories
     selectedIngredients: activeFilters.selectedIngredients,
     handleDrinkCategoryChange,
+    clearIngredients,
     // For merchants
     handleMerchantChange,
     // For price range (pending)
@@ -195,6 +215,7 @@ const filteredDrinks = useMemo(() => {
     setMinPrice: setPendingMinPrice,
     setMaxPrice: setPendingMaxPrice,
     handlePriceRangeChange,
+    resetPrice,
     // Active filters state
     activeFilters,
     // Filter actions

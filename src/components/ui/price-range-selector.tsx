@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { useState, useEffect } from 'react'
 
 interface PriceRangeSelectorProps {
   minPrice: number;
@@ -22,6 +23,13 @@ export default function PriceRangeSelector({
   onRangeChange,
   onReset
 }: PriceRangeSelectorProps) {
+    const [sliderValue, setSliderValue] = useState<[number, number]>([minPrice, maxPrice]);
+    // Update slider values
+      // Update slider when min/max prices change
+    useEffect(() => {
+      setSliderValue([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
+
   return (
     <div className="grid gap-4 px-1.5 py-3">
       <div className="flex items-center justify-between">
@@ -32,7 +40,7 @@ export default function PriceRangeSelector({
           variant="ghost" 
           size="sm"
           onClick={onReset}
-          className="text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:text-[var(--color-text)] txt-small cursor-pointer"
+          className="text-[var(--color-text)] hover:bg-[var(--color-bg)] hover:text-[var(--color-text)] txt-p cursor-pointer"
         >
           Reset
         </Button>
@@ -41,7 +49,7 @@ export default function PriceRangeSelector({
         min={0}
         max={100}
         step={1}
-        value={[minPrice, maxPrice]}
+        value={sliderValue}
         onValueChange={(values) => onRangeChange(values as [number, number])}
         className="w-full"
       />

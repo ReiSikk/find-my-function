@@ -21,13 +21,15 @@ export function DrinkCard({
   onToggleFavorite,
   openOverlay,
   onToggleOverlay,
+  carouselMode
 }: DrinkCardProps) {
 
   return (
     <Card 
       key={drink.name} 
-      className="overflow-hidden relative h-full"
+      className={`overflow-hidden relative h-full`}
       hasActiveOverlay={openOverlay}
+
     >
       <div className="aspect-square relative bg-muted">
         <Badge variant="outline" className="absolute top-2 right-2 z-8 bg-(--color-primary) text-(--color-bg) txt-small rounded-full border-none px-[12px] py-[6px]" aria-label="Badge displaying product price">

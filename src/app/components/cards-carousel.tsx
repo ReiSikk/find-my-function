@@ -42,10 +42,10 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
         loop: false,
      }}
     >
-        <CarouselContent className='md:ml-2 lg:-ml-4'>
+        <CarouselContent className=''>
         {displayDrinks.map((drink, index) => (
             <CarouselItem
-             className="md:basis-1/2 lg:basis-1/3 l-2 md:pl-4 "
+             className="md:basis-1/2 lg:basis-1/3 l-2 "
              key={index}>
                  <DrinkCard 
                      key={drink.id}

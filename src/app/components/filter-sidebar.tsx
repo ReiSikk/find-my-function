@@ -26,8 +26,10 @@ export function FilterSidebar() {
     handlePriceRangeChange,
     selectedIngredients,
     handleDrinkCategoryChange,
+    clearIngredients,
     handleMerchantChange,
     resetFilters,
+    resetPrice,
   } = useDrinksContext();
 
   return (
@@ -50,6 +52,7 @@ export function FilterSidebar() {
           <AccordionContent className="flex flex-col px-3 py-3">
             <span
               className="mb-2 underline underline-offset-2 cursor-pointer txt-small"
+              onClick={clearIngredients}
             >
               Clear all
             </span>
@@ -61,7 +64,7 @@ export function FilterSidebar() {
                     id={`ingredient-${ingredient}`}
                     className="cursor-pointer"
                   />
-                <Label htmlFor={`ingredient-${ingredient}`}>{ingredient}</Label>
+                <Label htmlFor={`ingredient-${ingredient}`} className="text-(length:--fs-p)">{ingredient}</Label>
               </div>
             ))}
           </AccordionContent>
@@ -78,7 +81,7 @@ export function FilterSidebar() {
                   className="cursor-pointer"
                   onCheckedChange={() => handleMerchantChange(merchant)}
                 />
-                <Label htmlFor="store-selver">{merchant}</Label>
+                <Label htmlFor="store-selver" className="text-(length:--fs-p)">{merchant}</Label>
               </div>
             ))}
           </AccordionContent>
@@ -93,7 +96,7 @@ export function FilterSidebar() {
               onMinPriceChange={setMinPrice}
               onMaxPriceChange={setMaxPrice}
               onRangeChange={handlePriceRangeChange}
-              onReset={resetFilters}
+              onReset={resetPrice}
             />
           </AccordionContent>
         </AccordionItem>

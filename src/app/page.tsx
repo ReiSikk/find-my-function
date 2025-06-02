@@ -19,7 +19,7 @@ export default function Home() {
           <DrinksList />
         </div>
       </div>
-    <section className="carousel">
+    <section className="carousel mb-8">
       <h4 className="text-(length:--fs-h4) md:pl-4 w-fit">Your favourites</h4>
       <CardsCarousel showOnlyFavorites={true}/>
     </section>
