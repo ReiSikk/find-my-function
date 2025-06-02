@@ -12,7 +12,6 @@ interface DrinkCardProps {
   openOverlay: boolean;
   onToggleOverlay: () => void;
   index: number;
-  carouselMode?: boolean;
 }
 
 export function DrinkCard({
@@ -21,7 +20,6 @@ export function DrinkCard({
   onToggleFavorite,
   openOverlay,
   onToggleOverlay,
-  carouselMode
 }: DrinkCardProps) {
 
   return (

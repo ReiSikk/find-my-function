@@ -55,7 +55,6 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
                      openOverlay={openOverlays[index]}
                      onToggleOverlay={() => toggleCardOverlay(index)}
                      index={index}
-                     carouselMode={true}
                  />
              </CarouselItem>
         ))}
