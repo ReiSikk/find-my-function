@@ -122,7 +122,7 @@ const { isFavorited, toggleFavorite } = useFavorites();
               disabled={loadingMore}
               variant="outline"
               size="lg"
-              className="min-w-[120px]"
+              className="min-w-[120px] cursor-pointer hover:bg-(--color-primary) hover:text-(--color-bg)"
             >
               {loadingMore ? (
                 <>
