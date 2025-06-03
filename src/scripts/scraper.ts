@@ -8,7 +8,7 @@
 
 import * as puppeteer from 'puppeteer';
 import type { ScrapedDrink } from "@/lib/types"
-import { analyzeDrinkIngredients } from '../lib/tag-utils';
+import { analyzeDrinkIngredients } from '../lib/utils/tag-utils';
 
 interface ScrapeOptions {
   includeSelver?: boolean;

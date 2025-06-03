@@ -4,7 +4,6 @@ import { useUser } from "@clerk/nextjs"
 import { AccountSidebar } from "../components/account-sidebar"
 import  CardsCarousel  from "../components/cards-carousel"
 import { DrinksProvider } from "@/lib/context/DrinksContext"
-import { UserData } from "@/lib/types"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { LucideArrowLeft } from "lucide-react"
@@ -12,6 +11,7 @@ import { NutritionStackView } from "../components/nutrition-stack-view"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
+  const isAdmin = user?.publicMetadata?.role === "admin"
 
   // Handle custom shopping list creation
     const [selectedStack, setSelectedStack] = useState("");
@@ -39,22 +39,11 @@ export default function AccountPage() {
     );
   }
 
-    const userData: UserData = {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    username: user.username,
-    imageUrl: user.imageUrl,
-    emailAddress: user.emailAddresses[0]?.emailAddress, // This can be undefined
-    createdAt: user.createdAt, // This is Date | null from Clerk
-  }
-
-
   return (
     <div className="min-h-screen bg-(--color-bg) text-(--color-primary)">
       <DrinksProvider>
           <div className="flex min-h-screen w-full">
-            <AccountSidebar user={userData} />
+            <AccountSidebar user={user} isAdmin={isAdmin}/>
               <main className="flex-1 overflow-y-auto">
                 <div className="container mx-auto pt-6 px-6 pb-[100px]">
                   <div className="space-y-6">

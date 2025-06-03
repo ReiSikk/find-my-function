@@ -81,7 +81,7 @@ const handleDrinkCategoryChange = useCallback((category: string) => {
       ? prev.selectedIngredients.filter(item => item !== category)
       : [...prev.selectedIngredients, category];
       
-    console.log('New selection:', newIngredients);
+    // console.log('New selection:', newIngredients);
     
     return {
       ...prev,

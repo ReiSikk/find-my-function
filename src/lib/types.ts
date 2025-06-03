@@ -1,4 +1,4 @@
-import { TagCategory } from './ingredient-tags';
+import { TagCategory } from './utils/ingredient-tags';
 
 // Base interface for scraped drinks (without id)
 export interface ScrapedDrink {
