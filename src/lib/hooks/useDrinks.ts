@@ -1,23 +1,58 @@
-// src/lib/hooks/useDrinks.ts
 import { useState, useCallback, useMemo } from 'react';
 import { Drink } from '../types';
 import { createSupabaseClient } from '../supabase-client';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-async function fetchDrinks(): Promise<Drink[]> {
+
+// async function fetchDrinks(): Promise<Drink[]> {
+//   const supabase = createSupabaseClient();
+  
+//   const { data, error } = await supabase
+//     .from('drinks')
+//     .select('*')
+//     .order('price', { ascending: true });
+    
+//   if (error) {
+//     console.error("Error fetching drinks:", error);
+//     throw new Error("Failed to load drinks data");
+//   }
+  
+//   return data || [];
+// }
+const PAGE_SIZE = 12;
+
+async function fetchDrinksPage({ 
+  pageParam = 0 
+}: { 
+  pageParam: number 
+}): Promise<{ drinks: Drink[], hasMore: boolean, nextPage: number | null, totalCount: number }> {
   const supabase = createSupabaseClient();
   
-  const { data, error } = await supabase
+  const from = pageParam * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+  
+  const { data, error, count } = await supabase
     .from('drinks')
-    .select('*')
-    .order('price', { ascending: true });
+    .select('*', { count: 'exact' })
+    .order('price', { ascending: true })
+    .range(from, to);
     
   if (error) {
     console.error("Error fetching drinks:", error);
     throw new Error("Failed to load drinks data");
   }
   
-  return data || [];
+  const drinks = data || [];
+  const totalCount = count || 0;
+  const hasMore = (pageParam + 1) * PAGE_SIZE < totalCount;
+  const nextPage = hasMore ? pageParam + 1 : null;
+  
+  return {
+    drinks,
+    hasMore,
+    nextPage,
+    totalCount,
+  };
 }
 
 export function useDrinks(initialSearchTerm = '') {
@@ -35,23 +70,37 @@ export function useDrinks(initialSearchTerm = '') {
   const [pendingMinPrice, setPendingMinPrice] = useState(0);
   const [pendingMaxPrice, setPendingMaxPrice] = useState(100);
   
-  // Use SWR for data fetching with caching
-  // const { 
-  //   data: drinks, 
-  //   error, 
-  //   isLoading,
-  //   mutate
-  // } = useSWR('drinks', fetchDrinks, {
-  //   revalidateIfStale: false,
-  //   revalidateOnFocus: false,
-  //   revalidateOnReconnect: true,
-  //   dedupingInterval: 3600000, // Cache for 1 hour
-  // });
-    const { data: drinks, error, isLoading, refetch } = useQuery({
+  // Use infinite query for pagination
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch
+  } = useInfiniteQuery({
     queryKey: ["drinks"],
-    queryFn: fetchDrinks,
+    queryFn: fetchDrinksPage,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+    initialPageParam: 0,
     staleTime: 1000 * 60 * 60, // 1 hour
   });
+
+   // Flatten all pages into a single array
+  const drinks = useMemo(() => {
+    if (!data?.pages) return [];
+    return data.pages.flatMap(page => page.drinks);
+  }, [data]);
+
+    // Get total count from first page
+  const totalCount = useMemo(() => {
+    return data?.pages?.[0]?.totalCount || 0;
+  }, [data]);
+
+  // Calculate how many items are currently loaded
+  const loadedCount = drinks.length;
+
 
   
   // Reset all filters to defaults
@@ -197,6 +246,13 @@ const filteredDrinks = useMemo(() => {
            pendingMaxPrice !== activeFilters.maxPrice;
   }, [pendingMinPrice, pendingMaxPrice, activeFilters]);
 
+  // Load more function
+  const loadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   
   return {
      drinks,
@@ -220,8 +276,16 @@ const filteredDrinks = useMemo(() => {
     activeFilters,
     // Filter actions
     resetFilters,
-    // Other state
+    // Loading states
     loading: isLoading,
+    loadingMore: isFetchingNextPage,
+    hasMore: hasNextPage,
+    loadMore,
+    // Counts
+      // Counts
+    totalCount,
+    loadedCount,
+    // Other state
     error: error ? "Failed to load drinks. Please try again later." : null,
     // Overlay states for cards
     openOverlays,
