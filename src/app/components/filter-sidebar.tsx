@@ -12,7 +12,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import PriceRangeSelector from "@/components/ui/price-range-selector"
-import { DRINK_CATEGORIES, MERCHANTS } from "@/lib/constants"
+import { DRINK_CATEGORIES, MERCHANTS } from "@/lib/utils/constants"
 
 
 

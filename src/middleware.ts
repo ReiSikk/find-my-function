@@ -1,9 +1,23 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
-const isProtectedRoute = createRouteMatcher('/account/(.*)')
+const isProtectedAccountRoute = createRouteMatcher('/account/(.*)')
+const isAdminRoute = createRouteMatcher('/api/scrape(.*)')
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isProtectedRoute(req)) await auth.protect()
+
+  // Protect Account routes
+  if (isProtectedAccountRoute(req)) {
+    await auth.protect()
+  }
+
+  // Protect API routes
+   if (isAdminRoute(req) && (await auth()).sessionClaims?.metadata?.role !== 'admin') {
+    const errorMessage = 'Not Found: you do not have permission to access this resource'
+    const url = new URL('/error', req.url)
+    url.searchParams.set('message', errorMessage)
+    return NextResponse.redirect(url)
+  }
 })
 
 export const config = {

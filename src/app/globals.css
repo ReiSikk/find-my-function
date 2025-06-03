@@ -252,13 +252,16 @@
   background: var(--color-bg);
   color: var(--color-primary);
 }
+.cl-modalCloseButton {
+  color: var(--color-primary);
+}
 .cl-navbarButton, .cl-navbarMobileMenuButton {
   color: var(--color-bg);
 }
 .cl-navbarMobileMenuButton:hover {
   color: var(--color-bg);
 }
-.cl-internal-pp7u0o, .cl-modalCloseButton {
+.cl-internal-pp7u0o {
   color: var(--color-bg);
 }
 .cl-internal-168uxhv {

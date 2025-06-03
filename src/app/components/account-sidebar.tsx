@@ -14,25 +14,36 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Mail, Calendar, LogOut } from "lucide-react"
-import { UserData } from "@/lib/types"
+import { UserResource } from "@clerk/types";
 
 interface AccountSidebarProps {
-  user: UserData,
+  user: UserResource | null;
+  banned?: boolean;
+  isAdmin: boolean;
 }
 
-export function AccountSidebar({ user }: AccountSidebarProps) {
+export function AccountSidebar({ user, isAdmin }: AccountSidebarProps) {
 
   const getInitials = (firstName?: string | null, lastName?: string | null) => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`.toUpperCase()
   }
 
-  const formatDate = (date: Date | null) => {
-  if (!date) return "Unknown"
-  
+const formatDate = (timestamp: Date | number | null) => {
+  if (!timestamp) return "Unknown"
+
+  // If timestamp is a Date, use it directly; if it's a number, convert to Date
+  const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
   })
+}
+
+if (!user) {
+  return (
+    <h2>User not found</h2>
+  )
 }
 
   return (
@@ -43,10 +54,11 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
             <AvatarImage src={user.imageUrl || "/placeholder.svg"} alt={user.firstName || "User"} />
             <AvatarFallback>{getInitials(user.firstName, user.lastName)}</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className="flex flex gap-2">
             <h2 className="font-semibold text-lg">
               {user.firstName} {user.lastName}
             </h2>
+            {isAdmin && <span className="px-2 py-1 bg-(--color-primary) text-(--color-bg) rounded-md txt-small flex items-center justify-center uppercase">Admin</span>}
             {user.username && (
               <p className="text-sm text-muted-foreground">@{user.username || "user"}</p>
             )}
@@ -65,7 +77,7 @@ export function AccountSidebar({ user }: AccountSidebarProps) {
                 <Mail className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Email:</span>
               </div>
-              <p className="text-sm font-medium px-6">{user.emailAddress}</p>
+              <p className="text-sm font-medium px-6">{user.primaryEmailAddress?.emailAddress}</p>
 
               <div className="flex items-center gap-2 text-sm">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
