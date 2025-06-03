@@ -7,6 +7,7 @@ import { HeroSection } from "./components/home-hero"
 import CardsCarousel from "./components/cards-carousel"
 
 export default function Home() {
+
   return (
     <DrinksProvider>
     <HeroSection />

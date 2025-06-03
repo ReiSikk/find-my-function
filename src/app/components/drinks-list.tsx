@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input"
 import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
-
-
+import { Button } from "@/components/ui/button"
 
 interface DrinksListProps {
   showOnlyFavorites?: boolean;
@@ -19,6 +18,11 @@ export function DrinksList({ showOnlyFavorites = false}: DrinksListProps) {
     searchTerm,
     setSearchTerm,
     loading,
+    loadingMore,
+    hasMore,
+    loadMore,
+    totalCount,
+    loadedCount,
     error,
     openOverlays,
     toggleCardOverlay,
@@ -43,10 +47,17 @@ const { isFavorited, toggleFavorite } = useFavorites();
       <div className="flex flex-col gap-2 sm:flex-row justify-between">
           {displayDrinks && (
           <h2 className="text-(length:--fs-h6) font-bold">
-            {showOnlyFavorites 
-              ? `Found ${displayDrinks.length} favorite drinks` 
-              : `Found ${displayDrinks.length} matching drinks`
-            }
+             <div>
+              {showOnlyFavorites
+                ? `Found ${displayDrinks.length} favorite drinks`
+                : `Found ${totalCount} drinks`
+              }
+            </div>
+            {!showOnlyFavorites && totalCount > 0 && (
+              <div className="txt-small opacity-80 text-muted-foreground/80">
+                Displaying {displayDrinks.length} of {totalCount} total drinks
+              </div>
+            )}
           </h2>
         )}
         <div className="w-full sm:max-w-[250px]">
@@ -101,6 +112,29 @@ const { isFavorited, toggleFavorite } = useFavorites();
         ))}
       </div>
       )}
+      {hasMore && !showOnlyFavorites && (
+          <div className="flex flex-col items-center gap-2 pt-6">
+            <div className="txt-small text-muted-foreground/70">
+              {`You have viewed ${loadedCount} of ${totalCount} drinks`}
+            </div>
+            <Button
+              onClick={loadMore}
+              disabled={loadingMore}
+              variant="outline"
+              size="lg"
+              className="min-w-[120px]"
+            >
+              {loadingMore ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
+                  Loading more...
+                </>
+              ) : (
+                `Load More (${totalCount - loadedCount} remaining)`
+              )}
+            </Button>
+          </div>
+        )}
     </div>
   )
 }
