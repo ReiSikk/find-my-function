@@ -3,22 +3,6 @@ import { Drink } from '../types';
 import { createSupabaseClient } from '../supabase-client';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-
-// async function fetchDrinks(): Promise<Drink[]> {
-//   const supabase = createSupabaseClient();
-  
-//   const { data, error } = await supabase
-//     .from('drinks')
-//     .select('*')
-//     .order('price', { ascending: true });
-    
-//   if (error) {
-//     console.error("Error fetching drinks:", error);
-//     throw new Error("Failed to load drinks data");
-//   }
-  
-//   return data || [];
-// }
 const PAGE_SIZE = 12;
 
 async function fetchDrinksPage({ 

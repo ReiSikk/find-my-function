@@ -61,10 +61,10 @@ export function DrinkCard({
           onToggleFavorite={() => onToggleFavorite(drink)}
         />
         <div 
-          className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border border-transparent bg-[var(--color-primary)] text-[var(--color-bg)] cursor-pointer z-10 transition-all duration-200 ${
+          className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border cursor-pointer z-10 transition-all duration-200 ${
             openOverlay 
-              ? ' bg-[var(--color-bg)] hover:text-[var(--color-bg)] hover:border-[var(--color-bg)]' 
-              : 'hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)]'
+              ? ' bg-(--color-bg) text-(--color-primary)' 
+              : 'border-(--color-primary) bg-(--color-primary) text-(--color-bg)  hover:bg-(--color-bg) hover:text-(--color-primary) hover:border-(--color-primary)'
           }`}
           onClick={onToggleOverlay}
           aria-label={`${openOverlay ? 'Close overlay' : 'Open card overlay to view product ingredients'}`}
@@ -73,10 +73,10 @@ export function DrinkCard({
           <span className="whitespace-nowrap text-(length:--fs-small)">
             {openOverlay ? 'Close overlay' : 'Ingredients'}
           </span>
-          <div className="bg-[var(--color-bg)] rounded-full p-2 transition-all duration-200 group-hover:bg-[var(--color-primary)]">
+          <div className={`bg-(--color-bg) rounded-full p-2 transition-all duration-200 group-hover:bg-(--color-primary) ${openOverlay ? 'bg-(--color-primary)' : ''}`}>
             <LucidePlus 
-              className={`h-4 w-4 text-[var(--color-primary)] transition-all duration-200 group-hover:text-[var(--color-bg)] ${
-                openOverlay ? 'rotate-45' : ''
+              className={`h-4 w-4 transition-all duration-200 group-hover:text-(--color-bg) ${
+                openOverlay ? 'text-(--color-bg) rotate-45' : 'text-(--color-primary)'
               }`}
             />
           </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +10,15 @@ import { useDrinksContext } from "@/lib/context/DrinksContext"
 import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 
 interface CardsCarouselProps {
   showOnlyFavorites?: boolean;
 }
 
 export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarouselProps) {
+    const carouselRef = useRef<HTMLDivElement>(null);
+    console.log(carouselRef)
 
     const {
         filteredDrinks,
@@ -35,12 +38,23 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
         return filteredDrinks;
       }, [filteredDrinks, showOnlyFavorites, isFavorited]);
 
+      // Define wheel gesture options for carousel
+        const wheelGesturesOptions = {
+          forceWheelAxis: 'x',
+          wheelDraggingClass: 'is-wheeling',
+          target: carouselRef.current
+        }
+
   return (
     <Carousel
      opts={{
         align: "start",
         loop: false,
+        slidesToScroll: 'auto'
      }}
+      plugins={[WheelGesturesPlugin(wheelGesturesOptions)]}
+      className='carousel'
+      ref={carouselRef}
     >
         <CarouselContent className=''>
         {displayDrinks.map((drink, index) => (
