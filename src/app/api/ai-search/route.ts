@@ -22,7 +22,6 @@ export async function POST(req: NextRequest) {
     });
 
     const data = await response.json();
-    console.log("AI Search Response:", data);
     const reply = data.choices?.[0]?.message?.content;
 
     return NextResponse.json({ reply });

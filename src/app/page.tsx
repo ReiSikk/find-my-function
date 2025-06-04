@@ -6,9 +6,15 @@ import { DrinksProvider } from "@/lib/context/DrinksContext"
 import { HeroSection } from "./components/home-hero"
 import CardsCarousel from "./components/cards-carousel"
 import { useFavorites } from "@/lib/hooks/useFavourites"
+import { LucideArrowRight } from 'lucide-react'
+import {
+  SignInButton,
+  useSession,
+} from '@clerk/nextjs'
 
 export default function Home() {
   const { data: favoritedDrinks = new Set() } = useFavorites();
+  const { session } = useSession();
 
   return (
     <DrinksProvider>
@@ -28,9 +34,22 @@ export default function Home() {
           <CardsCarousel showOnlyFavorites={true}/>
           : (
             <div className="w-full flex flex-col gap-4 items-center justify-center bg-(--color-primary) p-16 rounded-sm md:max-w-[50vw] m-auto">
-              <p className="text-(--color-bg) text-center">
-                You have no favorites yet. Start browsing and add products to your favourites list.
-              </p>
+              {!session ? (
+                <p className="text-(--color-bg) text-center">
+                  You have no favorites yet. Log in or Sign up to start adding favourites.
+                </p>
+              ) : (
+                 <p className="text-(--color-bg) text-center">
+                  You have no favorites yet. Start browsing and add drinks to your list.
+                </p>
+              )
+              }
+              <SignInButton mode="redirect">
+                <button className="btn-main hover:border-(--color-bg)" type="button" aria-label="Sign in to your account">
+                  <span>Continue</span>
+                  <LucideArrowRight className="w-4 h-4" />
+                </button>
+              </SignInButton>
             </div>
           )
           }

@@ -1,7 +1,6 @@
 import { TagCategory, ingredientTagMap } from './ingredient-tags';
 
 export function analyzeDrinkIngredients(ingredients: string[]): TagCategory[] {
-    console.log('analyzeDrinkIngredients called with', ingredients);
   const tags = new Set<TagCategory>();
   
   // Convert all ingredients to lowercase for case-insensitive matching

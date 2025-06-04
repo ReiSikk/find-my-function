@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { LucideArrowLeft } from "lucide-react"
 import { NutritionStackView } from "../components/nutrition-stack-view"
+import { redirect } from "next/navigation"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -15,10 +16,14 @@ export default function AccountPage() {
 
   // Handle custom shopping list creation
     const [selectedStack, setSelectedStack] = useState("");
-
-    useEffect(() => {
+      useEffect(() => {
     if (isLoaded && !user) {
-      window.location.href = "https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000/";
+      // handle dev & prod environments
+       const baseUrl = process.env.NODE_ENV === 'production' 
+        ? `https://immune-fowl-19.accounts.dev/sign-in?redirect_url=${process.env.NEXT_PUBLIC_APP_URL}`
+        : 'https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000'
+      
+      redirect(`${baseUrl}/`)
     }
   }, [isLoaded, user]);
 

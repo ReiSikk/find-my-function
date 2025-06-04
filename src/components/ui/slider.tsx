@@ -23,11 +23,6 @@ function Slider({
     [value, defaultValue, min, max]
   )
 
-  React.useEffect(() => {
-console.log("values changed");
-console.log(value)
-  }, [value])
-
   return (
     <SliderPrimitive.Root
       data-slot="slider"

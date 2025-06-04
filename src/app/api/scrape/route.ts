@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
       includeRimi: searchParams.get('rimi') !== 'false',
       includePrisma: searchParams.get('prisma') !== 'false'
     };
-    console.log(options, "options in API")
 
     // 1. Run the scraper
     console.log("Starting scraper process...")

@@ -11,6 +11,9 @@ import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
 import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
+import { LucideArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { getBaseUrl } from '../../lib/utils/get-base-url'
 
 interface CardsCarouselProps {
   showOnlyFavorites?: boolean;
@@ -54,6 +57,22 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
       </div>
     );
+  }
+
+  if (showOnlyFavorites && favoritedDrinks.size <= 0) {
+    return (
+       <div className="w-full flex flex-col gap-4 items-center justify-center bg-(--color-primary) p-16 rounded-sm md:max-w-[50vw] m-auto">
+          <p className="text-(--color-bg) text-center">
+            You have no favorites yet. Start browsing and add drinks to your list.
+          </p>
+        <Link href={getBaseUrl() || '/'}>
+          <button className="btn-main hover:border-(--color-bg)" type="button" aria-label="Sign in to your account">
+            <span>Continue</span>
+            <LucideArrowRight className="w-4 h-4" />
+          </button>
+        </Link>
+      </div>
+    )
   }
 
   return (
