@@ -21,6 +21,7 @@ export default function AccountPage() {
   useEffect(() => {
     if (isLoaded && !user) {
       const baseUrl = getBaseUrl() || '/'
+      console.log(baseUrl);
       redirect(`https://immune-fowl-19.accounts.dev/sign-in?redirect_url=${baseUrl}`)
     }
   }, [isLoaded, user])
