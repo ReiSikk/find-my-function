@@ -9,6 +9,7 @@ import Link from "next/link"
 import { LucideArrowLeft } from "lucide-react"
 import { NutritionStackView } from "../components/nutrition-stack-view"
 import { redirect } from "next/navigation"
+import { getBaseUrl } from '../../lib/utils/get-base-url'
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -16,16 +17,13 @@ export default function AccountPage() {
 
   // Handle custom shopping list creation
     const [selectedStack, setSelectedStack] = useState("");
-      useEffect(() => {
+
+  useEffect(() => {
     if (isLoaded && !user) {
-      // handle dev & prod environments
-       const baseUrl = process.env.NODE_ENV === 'production' 
-        ? `https://immune-fowl-19.accounts.dev/sign-in?redirect_url=${process.env.NEXT_PUBLIC_APP_URL}`
-        : 'https://immune-fowl-19.accounts.dev/sign-in?redirect_url=http://localhost:3000'
-      
-      redirect(`${baseUrl}/`)
+      const baseUrl = getBaseUrl() || '/'
+      redirect(`https://immune-fowl-19.accounts.dev/sign-in?redirect_url=${baseUrl}`)
     }
-  }, [isLoaded, user]);
+  }, [isLoaded, user])
 
   // Show loading while Clerk loads user data
   if (!isLoaded) {
