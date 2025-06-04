@@ -1,40 +1,48 @@
 import { Heart } from 'lucide-react';
 import { Drink } from '../../lib/types';
 import { useUser } from '@clerk/nextjs';
+import { useFavorites, useToggleFavorite } from '@/lib/hooks/useFavourites';
 
 interface FavoriteButtonProps {
   drink: Drink;
-  isFavorited: boolean;
-  onToggleFavorite: (drink: Drink) => Promise<void>;
   className?: string;
 }
 
-export function FavoriteButton({ 
-  drink, 
-  isFavorited, 
-  onToggleFavorite, 
-  className = '' 
-}: FavoriteButtonProps) {
+export function FavoriteButton({ drink, className }: FavoriteButtonProps) {
   const { user } = useUser();
-
-  if (!user) {
+  const { data: favorites = new Set(), isLoading } = useFavorites();
+  const toggleFavorite = useToggleFavorite();
+  
+  // Don't render if no user or still loading
+  if (!user || isLoading) {
     return null;
   }
 
-  const handleClick = () => {
-    console.log("Heart clicked for drink:", drink.name);
-    onToggleFavorite(drink);
+  const isFavorited = favorites.has(drink.id!);
+
+  const handleClick = () => {    
+    toggleFavorite.mutate({ 
+      drinkId: drink.id!, 
+      isFavorited 
+    });
   };
 
   return (
-    <Heart
-      className={`h-6 w-6 cursor-pointer transition-colors duration-200 ${
-        isFavorited
-          ? 'text-red-500 fill-current'
-          : 'text-[var(--color-secondary)] hover:text-[var(--color-white)]'
-      } ${className}`}
-      onClick={handleClick}
+    <button
+      type='button'
+      disabled={toggleFavorite.isPending}
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
-    />
+      onClick={handleClick}
+     >
+      <Heart
+        className={`h-6 w-6 cursor-pointer transition-colors duration-200 ${
+          isFavorited
+            ? 'text-red-500 fill-current'
+            : 'text-[var(--color-secondary)] hover:text-[var(--color-white)]'
+        } ${
+          toggleFavorite.isPending ? 'opacity-50 cursor-not-allowed' : ''
+        } ${className}`}
+      />
+    </button>
   );
 }
