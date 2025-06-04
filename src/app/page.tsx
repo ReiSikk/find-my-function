@@ -8,7 +8,7 @@ import CardsCarousel from "./components/cards-carousel"
 import { useFavorites } from "@/lib/hooks/useFavourites"
 
 export default function Home() {
-  const { favoritedDrinks } = useFavorites()
+  const { data: favoritedDrinks = new Set() } = useFavorites();
 
   return (
     <DrinksProvider>

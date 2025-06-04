@@ -7,17 +7,13 @@ import { Drink } from "../../lib/types";
 
 interface DrinkCardProps {
   drink: Drink;
-  isFavorited: boolean;
-  onToggleFavorite: (drink: Drink) => Promise<void>;
-  openOverlay: boolean;
-  onToggleOverlay: () => void;
+  openOverlay?: boolean;
+  onToggleOverlay?: () => void;
   index: number;
 }
 
 export function DrinkCard({
   drink,
-  isFavorited,
-  onToggleFavorite,
   openOverlay,
   onToggleOverlay,
 }: DrinkCardProps) {
@@ -57,8 +53,7 @@ export function DrinkCard({
       <CardFooter className="pt-0 px-4 justify-between flex flex-wrap md:flex-nowrap gap-2 relative">
         <FavoriteButton 
           drink={drink} 
-          isFavorited={isFavorited}
-          onToggleFavorite={() => onToggleFavorite(drink)}
+          className="drop-shadow-md"
         />
         <div 
           className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border cursor-pointer z-10 transition-all duration-200 ${

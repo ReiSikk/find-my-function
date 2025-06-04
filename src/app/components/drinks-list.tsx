@@ -27,19 +27,27 @@ export function DrinksList({ showOnlyFavorites = false}: DrinksListProps) {
     openOverlays,
     toggleCardOverlay,
   } = useDrinksContext();  
+
+  const { data: favoritedDrinks = new Set(), isLoading } = useFavorites();
   
 
-  // Pass refreshDrinks as callback to useFavorites
-const { isFavorited, toggleFavorite } = useFavorites();
-
-
   // Memoize the display drinks to prevent unnecessary recalculations
-  const displayDrinks = useMemo(() => {
+   const displayDrinks = useMemo(() => {
     if (showOnlyFavorites) {
-      return filteredDrinks.filter(drink => drink.id && isFavorited(drink.id));
+      return filteredDrinks.filter(drink => 
+        drink.id && favoritedDrinks.has(drink.id)
+      );
     }
     return filteredDrinks;
-  }, [filteredDrinks, showOnlyFavorites, isFavorited]);
+  }, [filteredDrinks, showOnlyFavorites, favoritedDrinks]);
+
+  if (showOnlyFavorites && isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
   
 
   return (
@@ -103,8 +111,6 @@ const { isFavorited, toggleFavorite } = useFavorites();
           <DrinkCard 
               key={drink.id}
               drink={drink}
-              isFavorited={isFavorited(drink.id!)}
-              onToggleFavorite={() => toggleFavorite(drink)} 
               openOverlay={openOverlays[index]}
               onToggleOverlay={() => toggleCardOverlay(index)}
               index={index}

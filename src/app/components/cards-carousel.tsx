@@ -18,7 +18,6 @@ interface CardsCarouselProps {
 
 export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarouselProps) {
     const carouselRef = useRef<HTMLDivElement>(null);
-    console.log(carouselRef)
 
     const {
         filteredDrinks,
@@ -26,24 +25,36 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
         toggleCardOverlay,
     } = useDrinksContext(); 
 
-      // Pass refreshDrinks as callback to useFavorites
-    const { isFavorited, toggleFavorite } = useFavorites();
+      // Get favourites from hook
+       const { data: favoritedDrinks = new Set(), isLoading } = useFavorites();
     
     
       // Memoize the display drinks to prevent unnecessary recalculations
-      const displayDrinks = useMemo(() => {
-        if (showOnlyFavorites) {
-          return filteredDrinks.filter(drink => drink.id && isFavorited(drink.id));
-        }
-        return filteredDrinks;
-      }, [filteredDrinks, showOnlyFavorites, isFavorited]);
+       const displayDrinks = useMemo(() => {
+          if (showOnlyFavorites) {
+            return filteredDrinks.filter(drink => 
+              drink.id && favoritedDrinks.has(drink.id)
+            );
+          }
+          return filteredDrinks;
+        }, [filteredDrinks, showOnlyFavorites, favoritedDrinks]);
 
-      // Define wheel gesture options for carousel
-        const wheelGesturesOptions = {
-          forceWheelAxis: 'x',
-          wheelDraggingClass: 'is-wheeling',
-          target: carouselRef.current
-        }
+
+// Define wheel gesture options for carousel
+  const wheelGesturesOptions = {
+    forceWheelAxis: 'x',
+    wheelDraggingClass: 'is-wheeling',
+    target: carouselRef.current
+  }
+
+
+    if (showOnlyFavorites && isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <Carousel
@@ -64,8 +75,6 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
                  <DrinkCard 
                      key={drink.id}
                      drink={drink}
-                     isFavorited={isFavorited(drink.id!)}
-                     onToggleFavorite={() => toggleFavorite(drink)} 
                      openOverlay={openOverlays[index]}
                      onToggleOverlay={() => toggleCardOverlay(index)}
                      index={index}
