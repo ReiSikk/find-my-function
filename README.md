@@ -38,11 +38,18 @@ A smart beverage discovery platform that helps users explore and track functiona
 - OpenRouter API integration for AI models integration
 - react-markdown for LLM output formatting
 
+### Deployment & CI/CD
+- Vercel for hosting and deployments
+- Automatic preview deployments
+- Continuous Integration pipeline
+- Environment variable management
+
 ### External Services & APIs
 - OpenRouter for LLM access
 - Resend Email API to handle email sign ups
 - Clerk for user authentication and account management
 - Supabase for database hosting
+- Vercel for deployment and hosting
 
 ### Data Collection
 - Puppeteer for web scraping
