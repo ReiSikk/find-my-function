@@ -24,6 +24,14 @@
   background: var(--color-primary);
   color: var(--color-bg);;
 }
+.btn-main--alt {
+    background: var(--color-primary);
+    color: var(--color-bg);
+}
+.btn-main--alt:hover {
+    background: var(--color-bg);
+    color: var(--color-primary);
+}
 }
 
 

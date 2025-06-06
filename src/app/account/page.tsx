@@ -10,6 +10,7 @@ import { LucideArrowLeft } from "lucide-react"
 import { NutritionStackView } from "../components/nutrition-stack-view"
 import { redirect } from "next/navigation"
 import { getBaseUrl } from '../../lib/utils/get-base-url'
+import StravaActivities from "../components/strava-activities"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -27,13 +28,13 @@ export default function AccountPage() {
   }, [isLoaded, user])
 
   // Show loading while Clerk loads user data
-  if (!isLoaded) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-      </div>
-    )
-  }
+  // if (!isLoaded) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  //     </div>
+  //   )
+  // }
 
     if (!user) {
     return (
@@ -55,6 +56,7 @@ export default function AccountPage() {
                       <LucideArrowLeft className="h-4 w-4" />
                       Back home
                       </Link>
+                      <StravaActivities />
                       <h1 className="text-(length:--fs-h4) mb-2 font-bold">My List</h1>
                       <p className="text-muted-foreground">Your saved drinks and favorites</p>
                       <CardsCarousel showOnlyFavorites={true}/>

@@ -62,7 +62,7 @@ function SiteFooter() {
       <div className="px-[16px] md:px-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full">
         <div className='flex flex-col items-start order-2 md:order-1'>
           <h3 className="h4 font-semibold text-neutral-800 mb-4">
-            Find My Function
+            Fuel Your Tempo
           </h3>
           <p className="txt-p font-medium mb-6 lg:mb-16">
             A personal project to experiment, learn and have fun with new technologies.

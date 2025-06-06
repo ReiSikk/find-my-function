@@ -10,8 +10,8 @@ import { Toaster } from "@/components/ui/sonner"
 
 
 export const metadata: Metadata = {
-  title: "Find your tempo",
-  description: "A collection of functional drinks from Estonian grocery stores. Find your tempo.",
+  title: "Fuel Your Tempo",
+  description: "A collection of functional drinks from Estonian grocery stores. Fuel your tempo.",
 }
 
 const archivo = Archivo({
