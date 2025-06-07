@@ -45,8 +45,8 @@ export function FilterSidebar() {
       </div>
 
 
-      <div className="flex-col gap-4 mt-auto">
-       <Accordion type="multiple" defaultValue={["item-1"]}  className="w-full">
+      <div className="mt-auto">
+       <Accordion type="multiple" defaultValue={["item-1"]}  className="w-full flex flex-col gap-1">
         <AccordionItem value="item-1" className="">
           <AccordionTrigger className="txt-p font-normal cursor-pointer hover:bg-(--color-primary) text-(--color-primary) hover:text-(--color-bg) px-3 py-3">Functional ingredients</AccordionTrigger>
           <AccordionContent className="flex flex-col px-3 py-3">

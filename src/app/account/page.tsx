@@ -11,6 +11,7 @@ import { NutritionStackView } from "../components/nutrition-stack-view"
 import { redirect } from "next/navigation"
 import { getBaseUrl } from '../../lib/utils/get-base-url'
 import StravaActivities from "../components/strava-activities"
+import { Spinner } from "@/components/ui/spinner"
 
 export default function AccountPage() {
   const { user, isLoaded } = useUser()
@@ -39,7 +40,7 @@ export default function AccountPage() {
     if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <Spinner />
       </div>
     );
   }

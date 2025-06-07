@@ -39,19 +39,20 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   return (
     <>
       <div
-        className="relative overflow-hidden rounded-lg border border-[--color-primary] bg-[color--bg] p-5 shadow-sm transition-all hover:shadow-md cursor-pointer"
+        className="group flex flex-col relative overflow-hidden rounded-lg border border-[--color-primary] bg-[color--bg] pt-[70px] p-5 shadow-sm transition-all hover:shadow-md cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
-        <div className="absolute -right-10 -top-10 h-24 w-24 rounded-full bg-[--color-primary] opacity-10" />
-
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-[--color-primary]">{activity.name}</h3>
-          <span className="rounded-full bg-[--color-primary] bg-opacity-10 px-3 py-1 text-xs font-medium text-[--color-primary]">
+        <div className="absolute flex items-center justify-center right-0 top-0 h-[50px] w-full bg-(--color-primary) opacity-20" >
+          <span className="rounded-full bg-(--color-primary) bg-opacity-10 px-3 py-1 text-xs font-medium text-(--color-bg)">
             {activity.sport_type}
           </span>
         </div>
 
-        <div className="mb-4 grid grid-cols-2 gap-3">
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="text-lg font-semibold">{activity.name}</h3>
+        </div>
+
+        <div className="mb-4 grid grid-cols-2 gap-3 mt-auto">
           <div className="flex items-center gap-2 text-sm">
             <Calendar className="h-4 w-4 text-[--color-primary]" />
             <span>{formattedDate}</span>
@@ -90,7 +91,8 @@ export function ActivityCard({ activity }: ActivityCardProps) {
           </div>
         )}
 
-        <div className="mt-4 flex items-center justify-end">
+        <div className="mt-auto flex items-center justify-center ml-auto w-fit md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+           View details
           <ChevronRight className="h-5 w-5 text-[--color-primary] opacity-50" />
         </div>
       </div>
