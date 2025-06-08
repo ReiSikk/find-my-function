@@ -1,11 +1,12 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import type { Activity } from "@/lib/types"
+import type { Activity, DetailedActivity } from "@/lib/types"
 import { PolylineVisualizer } from "./polyline-visualizer"
 import { X, Clock, MapPin, Zap, Award, Flame } from "lucide-react"
 import { parseISO } from "date-fns"
+import { Spinner } from "@/components/ui/spinner"
 
 interface ActivityModalProps {
   activity: Activity
@@ -17,6 +18,37 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
   const modalRef = useRef<HTMLDivElement>(null)
   // Check for Polyline map
   const hasMap = activity.map.summary_polyline !== "";
+  const [detailedActivity, setDetailedActivity] = useState<DetailedActivity | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Fetch detailed activity data when modal opens
+  useEffect(() => {
+    
+    const fetchActivityDetails = async () => {
+      setLoading(true)
+      setError(null)
+
+      try {
+        const response = await fetch(`/api/strava/activities/${activity.id}`)
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch activity details")
+        }
+
+        const details = await response.json()
+        setDetailedActivity(details)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred")
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    if (isOpen && !detailedActivity) {
+      fetchActivityDetails()
+    }
+  }, [isOpen, activity.id, detailedActivity])
 
   // Close modal when clicking outside
   useEffect(() => {
@@ -63,6 +95,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
   // Format speed in km/h
   const speedKmh = (activity.average_speed * 3.6).toFixed(1)
+
 
   return (
     <AnimatePresence>
@@ -177,8 +210,16 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
                 {activity.average_watts && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Power</span>
+                    <span className="text-sm text-gray-500">Power </span>
                     <span className="text-sm font-medium">{Math.round(activity.average_watts)} watts</span>
+                  </div>
+                )}
+
+                
+                {detailedActivity && detailedActivity.calories && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">Calories burned</span>
+                    <span className="text-sm font-medium">{Math.round(detailedActivity.calories)} kcal</span>
                   </div>
                 )}
 

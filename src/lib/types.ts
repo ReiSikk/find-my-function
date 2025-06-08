@@ -92,6 +92,36 @@ export interface Activity {
   resource_state: number
 }
 
+// Extended interface for detailed activity data
+export interface DetailedActivity extends Activity {
+  calories?: number
+  description?: string
+  device_name?: string
+  embed_token?: string
+  // segment_efforts?: SegmentEffort[]
+  // splits_metric?: Split[]
+  // splits_standard?: Split[]
+  // laps?: Lap[]
+  // best_efforts?: BestEffort[]
+  photos?: {
+    // primary?: Photo
+    use_primary_photo?: boolean
+    count?: number
+  }
+  // stats_visibility?: StatsVisibility[]
+  hide_from_home?: boolean
+  similar_activities?: {
+    effort_count: number
+    average_speed: number
+    min_elapsed_time: number
+    mid_date: string
+    pr_rank: number | null
+    max_elapsed_time: number
+    resource_state: number
+  }
+  available_zones?: string[]
+}
+
 
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
