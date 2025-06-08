@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useDrinksContext } from "@/lib//context/DrinksContext"
+import { useDrinksContext } from "@/lib//context/DrinksProvider"
 
 import {
   Accordion,

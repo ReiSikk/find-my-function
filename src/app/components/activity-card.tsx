@@ -5,6 +5,7 @@ import { parseISO } from "date-fns"
 import type { Activity } from "../../lib/types"
 import { ActivityModal } from "./activity-modal"
 import { Calendar, Clock, ArrowUp, Zap, Heart, MapPin, ChevronRight } from "lucide-react"
+import { getActivityEmoji } from "@/lib/utils/emoji-mapper"
 
 interface ActivityCardProps {
   activity: Activity
@@ -12,6 +13,7 @@ interface ActivityCardProps {
 
 export function ActivityCard({ activity }: ActivityCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  console.log(activity);
 
   // Format date
   const date = parseISO(activity.start_date)
@@ -22,7 +24,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   }).format(date)
 
   // Format distance in km
-  const distance = (activity.distance / 1000).toFixed(2)
+  const distance = parseFloat((activity.distance / 1000).toFixed(2))
 
   // Format duration
   const hours = Math.floor(activity.moving_time / 3600)
@@ -42,9 +44,12 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         className="group flex flex-col relative overflow-hidden rounded-lg border border-[--color-primary] bg-[color--bg] pt-[70px] p-5 shadow-sm transition-all hover:shadow-md cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
-        <div className="absolute flex items-center justify-center right-0 top-0 h-[50px] w-full bg-(--color-primary) opacity-20" >
-          <span className="rounded-full bg-(--color-primary) bg-opacity-10 px-3 py-1 text-xs font-medium text-(--color-bg)">
+        <div className="absolute flex items-center justify-center right-0 top-0 h-[50px] w-full bg-(--color-primary)" >
+          <span className="rounded-full bg-(--color-btn) bg-opacity-10 px-3 py-1 text-small font-medium text-(--color-primary)">
             {activity.sport_type}
+            <span className="ml-2">
+                {getActivityEmoji(activity.sport_type)}
+            </span>
           </span>
         </div>
 
@@ -52,7 +57,7 @@ export function ActivityCard({ activity }: ActivityCardProps) {
           <h3 className="text-lg font-semibold">{activity.name}</h3>
         </div>
 
-        <div className="mb-4 grid grid-cols-2 gap-3 mt-auto">
+        <div className="mb-4 grid grid-cols-2 gap-3">
           <div className="flex items-center gap-2 text-sm">
             <Calendar className="h-4 w-4 text-[--color-primary]" />
             <span>{formattedDate}</span>
@@ -61,14 +66,18 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             <Clock className="h-4 w-4 text-[--color-primary]" />
             <span>{duration}</span>
           </div>
+           {distance !== 0  &&
           <div className="flex items-center gap-2 text-sm">
             <MapPin className="h-4 w-4 text-[--color-primary]" />
             <span>{distance} km</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Zap className="h-4 w-4 text-[--color-primary]" />
-            <span>{pace}</span>
-          </div>
+          }
+           {(activity.sport_type === "Run" || activity.sport_type === "TrailRun") &&
+            <div className="flex items-center gap-2 text-sm">
+              <Zap className="h-4 w-4 text-[--color-primary]" />
+              <span>{pace}</span>
+            </div>
+           }
         </div>
 
         {activity.has_heartrate && activity.average_heartrate && (

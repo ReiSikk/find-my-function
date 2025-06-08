@@ -78,7 +78,8 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
           >
             <button
               onClick={onClose}
-              className="absolute right-4 top-4 rounded-full p-1 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+              type="button"
+              className="absolute cursor-pointer right-4 top-4 rounded-full p-1 border border-(--color-primary) transition-colors bg-(--color-primary) text-(--color-bg) hover:bg-(--color-bg) hover:text-(--color-primary)"
             >
               <X className="h-5 w-5" />
             </button>
@@ -86,7 +87,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-[--color-primary]">{activity.name}</h2>
               <div className="mt-1 flex items-center gap-2">
-                <span className="rounded-full bg-[--color-primary] bg-opacity-10 px-3 py-1 text-xs font-medium text-[--color-primary]">
+                <span className="rounded-full bg-(--color-btn) bg-opacity-10 px-3 py-1 text-xs font-medium text-(--color-text)">
                   {activity.sport_type}
                 </span>
                 {activity.achievement_count > 0 && (

@@ -20,6 +20,7 @@ export default function StravaActivities() {
      const [accordionValue, setAccordionValue] = useState<string>("activities");
 
 
+     // Fetch Strava Data from API
      async function getActivities() {
         
         try {
@@ -43,7 +44,6 @@ export default function StravaActivities() {
             }
 
             const stravaActivities = await response.json();
-            console.log("Strava activities:", stravaActivities);
             
             setActivities(stravaActivities);
 
@@ -53,6 +53,19 @@ export default function StravaActivities() {
         } finally {
         setLoading(false);
         }
+    }
+
+    // Handle Strava Activity Type formatting
+    const formatActivityType = (activityType: string): string => {
+      if (!activityType) {
+        return 'Unknown Activity'
+      }
+
+      // Add space before capital letters and capitalize first letter
+      return activityType
+        .replace(/([A-Z])/g, ' $1') // Add space before capital letters
+        .replace(/^./, str => str.toUpperCase()) // Capitalize first letter
+        .trim()
     }
 
      useEffect(() => {
@@ -71,28 +84,28 @@ export default function StravaActivities() {
 
     if (loading) {
         return (
-             <div className="flex min-h-[200px] gap-2 items-center justify-center">
-                 <Spinner />
-                <div>Loading Strava activities...</div>
-              </div>
+          <div className="flex min-h-[200px] gap-2 items-center justify-center">
+              <Spinner />
+            <div>Loading Strava activities...</div>
+          </div>
         )
     }
 
     if (error) {
         return (
         <div>
-            <p>Error: {error}</p>
-            <button onClick={getActivities}>Retry</button>
+          <p>Error: {error}</p>
+          <button onClick={getActivities}>Retry</button>
         </div>
         );
     }
 
       if (activities.length === 0) {
-            return (
-            <div className="rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
-                <p className="text-gray-500">No activities found</p>
-            </div>
-            )
+          return (
+          <div className="rounded-lg border border-gray-200 bg-gray-50 p-8 text-center">
+              <p className="text-gray-500">No activities found</p>
+          </div>
+          )
        }
 
 
@@ -116,7 +129,7 @@ export default function StravaActivities() {
         onValueChange={setAccordionValue}
       >
         <AccordionItem value="activities">
-          <AccordionTrigger className="text-left px-4 cursor-pointer border border-(--color-primary) data-[state=closed]:bg-(--color-primary) data-[state=closed]:text-(--color-bg) [&[data-state=closed]>span]:text-(--color-primary)">
+          <AccordionTrigger className="text-left px-4 cursor-pointer border border-(--color-primary) data-[state=closed]:bg-(--color-primary) data-[state=closed]:text-(--color-bg) [&[data-state=closed]>span]:text-(--color-primary) items-center">
             <div className="h6 tracking-medium uppercase">
               {accordionValue === "" ? 'View Strava activities' : 'Collapse Strava activities'} ({activities.length})
             </div>
@@ -124,21 +137,18 @@ export default function StravaActivities() {
           <AccordionContent>
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4'>
               {activities.map((activity: Activity, index) => (
-                <ActivityCard activity={activity} key={index} />
+                <ActivityCard 
+                key={index} 
+                activity={{
+                  ...activity,
+                  sport_type: formatActivityType(activity.sport_type)
+                }}
+                />
               ))}
             </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {/* {activities.length === 0 ? (
-        <p>No activities found</p>
-      ) : (
-        <ul className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-          {activities.map((activity: Activity, index) => (
-            <ActivityCard activity={activity} key={index} />
-          ))}
-        </ul>
-      )} */}
     </div>
   )
 }

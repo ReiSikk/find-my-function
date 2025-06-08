@@ -2,7 +2,7 @@
 
 import { DrinksList } from "./components/drinks-list"
 import { FilterSidebar } from "./components/filter-sidebar"
-import { DrinksProvider } from "@/lib/context/DrinksContext"
+import { DrinksProvider } from "@/lib/context/DrinksProvider"
 import { HeroSection } from "./components/home-hero"
 import CardsCarousel from "./components/cards-carousel"
 import { useFavorites } from "@/lib/hooks/useFavourites"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useDrinksContext } from "../../lib/context/DrinksContext"
+import { useDrinksContext } from "../../lib/context/DrinksProvider"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { useFavorites } from "../../lib/hooks/useFavourites"
