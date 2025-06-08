@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { ActivityCard } from './activity-card'
 import { Activity } from '@/lib/types'
@@ -14,15 +14,14 @@ import {
 
 export default function StravaActivities() {
      const { user, isLoaded } = useUser();
-     const [activities, setActivities] = useState([]);
+     const [activities, setActivities] = useState<Activity[]>([]);
      const [loading, setLoading] = useState(false);
      const [error, setError] = useState<string | null>(null);
      const [accordionValue, setAccordionValue] = useState<string>("activities");
 
 
      // Fetch Strava Data from API
-     async function getActivities() {
-        
+     const getActivities = useCallback(async () => {
         try {
             setLoading(true);
             setError(null);
@@ -53,7 +52,7 @@ export default function StravaActivities() {
         } finally {
         setLoading(false);
         }
-    }
+     }, [user])
 
     // Handle Strava Activity Type formatting
     const formatActivityType = (activityType: string): string => {
@@ -68,11 +67,12 @@ export default function StravaActivities() {
         .trim()
     }
 
+
      useEffect(() => {
         if (isLoaded && user) {
         getActivities();
         }
-    }, [isLoaded, user]);
+    }, [isLoaded, user, getActivities]);
 
     if (!isLoaded) {
         return <div>Loading user...</div>;

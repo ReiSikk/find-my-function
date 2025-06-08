@@ -2,9 +2,10 @@ import { NextResponse } from 'next/server';
 import { auth, clerkClient } from '@clerk/nextjs/server';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
+    request: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
+
   try {
     console.log('Starting Strava activity details API route...');
     
@@ -15,9 +16,9 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const activityId = params.id;
+    const { id } = await params;
 
-    if (!activityId) {
+    if (!id) {
       return NextResponse.json({ error: 'Activity ID is required' }, { status: 400 });
     }
 
@@ -35,7 +36,7 @@ export async function GET(
     const token = data[0].token;
 
     // Fetch detailed activity from Strava API
-    const stravaResponse = await fetch(`https://www.strava.com/api/v3/activities/${activityId}`, {
+    const stravaResponse = await fetch(`https://www.strava.com/api/v3/activities/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },

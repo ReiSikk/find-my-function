@@ -18,6 +18,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
   const modalRef = useRef<HTMLDivElement>(null)
   // Check for Polyline map
   const hasMap = activity.map.summary_polyline !== "";
+  const includePaceAndSpeed = activity.moving_time > 0 && activity.distance > 0;
   const [detailedActivity, setDetailedActivity] = useState<DetailedActivity | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -96,7 +97,6 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
   // Format speed in km/h
   const speedKmh = (activity.average_speed * 3.6).toFixed(1)
 
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -116,6 +116,23 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             >
               <X className="h-5 w-5" />
             </button>
+
+            {error && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+                <div className="max-w-md w-full bg-white rounded-lg p-6 shadow-lg text-center">
+                  <h2 className="text-xl font-semibold text-red-600">Error</h2>
+                  <p className="mt-2 text-gray-700">{error}</p>
+                  <button
+                    type="button"
+                    aria-label="Close modal"
+                    onClick={onClose}
+                    className="mt-4 px-4 py-2 bg-(--color-primary) text-(--color-bg) rounded hover:bg-(--color-bg) hover:text-(--color-primary) cursor-pointer transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-[--color-primary]">{activity.name}</h2>
@@ -138,7 +155,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             </div>
            }
 
-            <div className="mb-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="mb-6 grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4">
               <div className="rounded-lg bg-gray-50 p-3">
                 <div className="mb-1 flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-[--color-primary]" />
@@ -155,26 +172,37 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                 <p className="text-lg font-semibold">{duration}</p>
               </div>
 
-              <div className="rounded-lg bg-gray-50 p-3">
-                <div className="mb-1 flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-[--color-primary]" />
-                  <span className="text-xs text-gray-500">Pace</span>
+            {includePaceAndSpeed && (
+              <>
+                <div className="rounded-lg bg-gray-50 p-3">
+                  <div className="mb-1 flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-[--color-primary]" />
+                    <span className="text-xs text-gray-500">Pace</span>
+                  </div>
+                  <p className="text-lg font-semibold">{pace}</p>
                 </div>
-                <p className="text-lg font-semibold">{pace}</p>
-              </div>
 
-              <div className="rounded-lg bg-gray-50 p-3">
-                <div className="mb-1 flex items-center gap-2">
-                  <Flame className="h-4 w-4 text-[--color-primary]" />
-                  <span className="text-xs text-gray-500">Speed</span>
+                <div className="rounded-lg bg-gray-50 p-3">
+                  <div className="mb-1 flex items-center gap-2">
+                    <Flame className="h-4 w-4 text-[--color-primary]" />
+                    <span className="text-xs text-gray-500">Speed</span>
+                  </div>
+                  <p className="text-lg font-semibold">{speedKmh} km/h</p>
                 </div>
-                <p className="text-lg font-semibold">{speedKmh} km/h</p>
-              </div>
+                </>
+            )
+            }
             </div>
 
             <div className="mb-6">
-              <h3 className="mb-3 text-lg font-semibold">Details</h3>
-              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+              <h3 className="mb-3 text-lg font-semibold border-b border-(--color-primary)">Details</h3>
+                 {loading ? (
+              <div className="flex items-center justify-center p-8">
+                 <Spinner />
+                <span className="ml-2">Loading activity details...</span>
+              </div>
+            ) : (
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-500">Date</span>
                   <span className="text-sm font-medium">{formattedDate}</span>
@@ -229,6 +257,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                   <span className="text-sm font-medium">{activity.kudos_count}</span>
                 </div> */}
               </div>
+            )}
             </div>
           </motion.div>
         </div>
