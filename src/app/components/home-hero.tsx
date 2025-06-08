@@ -73,7 +73,7 @@ useEffect(() => {
           className="btn-main mb-16 max-w-2xl mx-auto"
           prefetch={true}
         >
-          <span>Find your tempo</span>
+          <span>Fuel your tempo</span>
           <LucideArrowRight className="w-4 h-4" />
         </Link>
 

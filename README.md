@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Find My Function
+# Fuel Your Tempo web application
 
 A smart beverage discovery platform that helps users explore and track functional drinks across major Estonian retailers. Built with Next.js, TypeScript, Supabase, TanStack Query, Puppeteer and Tailwind CSS.
 

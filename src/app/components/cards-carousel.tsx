@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { useDrinksContext } from "@/lib/context/DrinksContext"
+import { useDrinksContext } from "@/lib/context/DrinksProvider"
 import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
@@ -14,6 +14,7 @@ import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures'
 import { LucideArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getBaseUrl } from '../../lib/utils/get-base-url'
+import { Spinner } from '@/components/ui/spinner'
 
 interface CardsCarouselProps {
   showOnlyFavorites?: boolean;
@@ -54,7 +55,7 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
     if (showOnlyFavorites && isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <Spinner />
       </div>
     );
   }

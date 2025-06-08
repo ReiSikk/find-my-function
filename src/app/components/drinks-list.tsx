@@ -1,12 +1,13 @@
 "use client"
 
-import { useDrinksContext } from "../../lib/context/DrinksContext"
+import { useDrinksContext } from "../../lib/context/DrinksProvider"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { useFavorites } from "../../lib/hooks/useFavourites"
 import { DrinkCard } from "./drink-card"
 import { useMemo } from "react"
 import { Button } from "@/components/ui/button"
+import { Spinner } from "@/components/ui/spinner"
 
 interface DrinksListProps {
   showOnlyFavorites?: boolean;
@@ -44,7 +45,7 @@ export function DrinksList({ showOnlyFavorites = false}: DrinksListProps) {
   if (showOnlyFavorites && isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <Spinner size="lg"/>
       </div>
     );
   }
@@ -81,7 +82,7 @@ export function DrinksList({ showOnlyFavorites = false}: DrinksListProps) {
 
         {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-primary)]"></div>
+          <Spinner size="lg"/>
         </div>
       ) : error ? (
         <div className="text-center p-6 bg-red-50 text-red-500 rounded-md">
@@ -132,7 +133,7 @@ export function DrinksList({ showOnlyFavorites = false}: DrinksListProps) {
             >
               {loadingMore ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
+                  <Spinner size="sm"/>
                   Loading more...
                 </>
               ) : (
