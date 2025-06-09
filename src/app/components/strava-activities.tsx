@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { LucideArrowRight } from 'lucide-react'
 
 
 export default function StravaActivities() {
@@ -93,9 +94,19 @@ export default function StravaActivities() {
 
     if (error) {
         return (
-        <div>
-          <p>Error: {error}</p>
-          <button onClick={getActivities}>Retry</button>
+        <div className="flex flex-col items-center min-h-[200px] gap-2 items-center justify-center border border-(--color-primary) rounded-none p-6">
+          <div className="text-center">
+            <p>Log in with Strava to see your activities and get nutritional recommendations.</p>
+          </div>
+          <button 
+          onClick={getActivities} 
+          type='button' 
+          aria-label='Retry Strava connection'
+          className='btn-main mt-4 min-w-[150px]'
+          >
+            Retry
+            <LucideArrowRight className="w-4 h-4" />
+          </button>
         </div>
         );
     }
