@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Filter, BarChart3, Sparkles, LucideArrowRight } from "lucide-react"
+import { LucideArrowRight } from "lucide-react"
+import UspCards from "./usp-cards"
 
 export function HeroSection() {
   // Hero dynamic section animations
@@ -31,7 +32,7 @@ useEffect(() => {
 
   return (
     <section className="relative bg-(--color-bg) py-20 px-4 sm:px-6 lg:px-8">
-      <div className="relative max-w-4xl mx-auto text-center">
+      <div className="relative mx-auto text-center">
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-(--color-primary) mb-8 tracking-tight">
           Fuel Your Tempo.
         </h1>
@@ -76,38 +77,7 @@ useEffect(() => {
           <span>Fuel your tempo</span>
           <LucideArrowRight className="w-4 h-4" />
         </Link>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="text-center group">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[hsl(var(--color-primary)/0.1)] hover:bg-[hsl(var(--color-primary)/0.15)] rounded-2xl mb-6 transition-all duration-200 group-hover:scale-105">
-              <Filter className="w-8 h-8 text-(--color-primary)" />
-            </div>
-            <h3 className="text-xl font-semibold text-(--color-primary) mb-3">Ingredient Filtering</h3>
-            <p className="text-(--color-primary) leading-relaxed opacity-70">
-              Find drinks based on electrolytes, caffeine, or vitamins.
-            </p>
-          </div>
-
-          <div className="text-center group">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[hsl(var(--color-primary)/0.1)] hover:bg-[hsl(var(--color-primary)/0.15)] rounded-2xl mb-6 transition-all duration-200 group-hover:scale-105">
-              <BarChart3 className="w-8 h-8 text-(--color-primary)" />
-            </div>
-            <h3 className="text-xl font-semibold text-(--color-primary) mb-3">Store Comparison</h3>
-            <p className="text-(--color-primary) leading-relaxed opacity-70">
-              Compare prices across multiple Estonian grocery stores.
-            </p>
-          </div>
-
-          <div className="text-center group">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-[hsl(var(--color-primary)/0.1)] hover:bg-[hsl(var(--color-primary)/0.15)] rounded-2xl mb-6 transition-all duration-200 group-hover:scale-105">
-              <Sparkles className="w-8 h-8 text-(--color-primary)" />
-            </div>
-            <h3 className="text-xl font-semibold text-(--color-primary) mb-3">Smart Recommendations</h3>
-            <p className="text-(--color-primary) leading-relaxed opacity-70">
-              Get personalized suggestions for running, lifting, or recovering.
-            </p>
-          </div>
-        </div>
+        <UspCards />
       </div>
     </section>
   )

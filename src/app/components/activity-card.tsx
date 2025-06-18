@@ -13,6 +13,7 @@ interface ActivityCardProps {
 
 export function ActivityCard({ activity }: ActivityCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  console.log("ActivityCard with data rendered:", activity);
 
   // Format date
   const date = parseISO(activity.start_date)
