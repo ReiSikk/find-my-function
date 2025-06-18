@@ -10,6 +10,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { WeeklySummary } from './weekly-summary'
 import { LucideArrowRight } from 'lucide-react'
 
 
@@ -133,6 +134,8 @@ export default function StravaActivities() {
             Refresh Activities
         </button>
       </div>
+      {/* Add Weekly Summary */}
+      {activities.length > 0 && <WeeklySummary activities={activities} />}
       <Accordion 
         type="single" 
         collapsible 
