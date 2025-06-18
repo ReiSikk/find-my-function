@@ -57,7 +57,7 @@
   --fs-p: clamp(14px, 2vw, 16px);
   --fs-small: 12px;
 
-    --animate-collapsible-down: collapsible-down 0.2s ease-out;
+  --animate-collapsible-down: collapsible-down 0.2s ease-out;
   --animate-collapsible-up: collapsible-up 0.2s ease-out;
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -73,6 +73,9 @@
   --pi-cards: clamp(14px, 2vw, 16px);
   --p-btn: 8px 22px;
 
+
+  /* Borders */
+  --bradius: 6px;
 
   @keyframes collapsible-down {
     from {
@@ -276,3 +279,131 @@
   color: var(--color-bg);
   opacity: 0.8;
 }
+
+
+/*
+   Home valdiation points cards
+   ========================================================================== */
+   .uspCard {
+    position: relative;
+    padding-block: 0px clamp(16px, 2vw, 24px);
+    padding-inline: clamp(24px, 3vw, 32px);
+    height: 48.925vh;
+    width: 100%;
+    border-radius: 4px;
+    /* box-shadow: 1px 2px 8px 2px rgba(0, 0, 0, 0.2); */
+    cursor: pointer;
+    overflow: hidden;
+    background: var(--color-primary);
+    color: var(--color-bg);
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+      &:hover {
+        .txt-reveal--bottom {
+          transform: translateY(-50%);
+          opacity: 1;
+        }
+  
+        .btn-reveal--top {
+          transform: translateY(0%);
+          opacity: 1;
+        }
+  
+        .txt-slide--lr {
+          transform: translateX(0%);
+          opacity: 1;
+        }
+      }
+        
+    }
+
+
+    .extra-bg {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 12.5694vw;
+      min-width: 181px;
+      max-width: 225px;
+      height: auto;
+    }
+   }
+
+
+   .txt-reveal--bottom {
+    position: absolute;
+    opacity:0;
+    bottom: 0;
+    transform: translateY(50%);
+    transition: opacity 0.2s ease, transform 0.4s ease;
+   }
+
+   .txt-slide--lr {
+    position: absolute;
+    color: var(--color-primary);
+    bottom: 0;
+    right: 16px;
+    bottom: 4px;
+    z-index: 1;
+    transition: opacity 0.2s ease, transform 0.4s ease;
+
+   }
+
+   .btn-reveal--top {
+    position: absolute;
+    background: var(--color-bg);
+    color: var(--color-primary);
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    top: 0;
+    transition: opacity 0.2s ease-in-out, transform 0.4s ease-in-out, gap 0.2s ease-in-out;
+
+    span {
+      text-wrap: wrap;
+    }
+
+    .btn-arrow {
+      position: relative;
+      overflow: hidden;
+      width: 18px;
+      height: 18px;
+
+      > svg {
+        transition: transform 0.3s ease-in-out;
+        position: absolute;
+        flex-shrink: 0;
+      }
+
+      .hover-icon {
+        transform: translateX(-150%);
+      }
+      .initial-icon {
+        transform: translateX(0%);
+      }
+    }
+
+    &:hover {
+     .btn-arrow {
+      .hover-icon {
+        transform: translateX(0%);
+      }
+      .initial-icon {
+        transform: translateX(150%);
+      }
+     }
+    }
+   }
+
+
+     @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+       .txt-slide--lr {
+          transform: translateX(-100%);
+          opacity: 0;
+       }
+
+       .btn-reveal--top {
+          opacity: 0;
+          transform: translateY(-100%);
+       }
+   }
