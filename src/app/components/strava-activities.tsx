@@ -128,7 +128,7 @@ export default function StravaActivities() {
         <h3 className="h4">Your recent Strava activities</h3>
         <button 
           type='button' 
-          className="btn-main btn-main--alt" 
+          className="btn-main btn-main--alt px-4 font-medium text-sm" 
           onClick={getActivities}
           >
             Refresh Activities

@@ -4,9 +4,13 @@ import { useRef, useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import type { Activity, DetailedActivity } from "@/lib/types"
 import { PolylineVisualizer } from "./polyline-visualizer"
-import { X, Clock, MapPin, Zap, Award, Flame } from "lucide-react"
+import { X, Clock, MapPin, Zap, Award, Flame, Loader2, Brain } from "lucide-react"
 import { parseISO } from "date-fns"
 import { Spinner } from "@/components/ui/spinner"
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+
 
 interface ActivityModalProps {
   activity: Activity
@@ -22,6 +26,13 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
   const [detailedActivity, setDetailedActivity] = useState<DetailedActivity | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+
+  // AI analysis for activity
+  const [aiAnalysis, setAiAnalysis] = useState<string | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [analysisError, setAnalysisError] = useState<string | null>(null)
+
 
   // Fetch detailed activity data when modal opens
   useEffect(() => {
@@ -96,6 +107,40 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
   // Format speed in km/h
   const speedKmh = (activity.average_speed * 3.6).toFixed(1)
+
+
+
+  const analyzeWorkout = async () => {
+    if (isAnalyzing) return
+    
+    setIsAnalyzing(true)
+    setAnalysisError(null)
+    
+    try {
+      const response = await fetch('/api/ai/analyze-workout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          activity: detailedActivity || activity
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to analyze workout')
+      }
+
+      const data = await response.json()
+      setAiAnalysis(data.analysis)
+      
+    } catch (error) {
+      console.error('Analysis error:', error)
+      setAnalysisError('Failed to analyze workout. Please try again.')
+    } finally {
+      setIsAnalyzing(false)
+    }
+}
 
   return (
     <AnimatePresence>
@@ -192,6 +237,73 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                 </>
             )
             }
+            </div>
+
+             {/* AI Analysis Section */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <Brain className="h-5 w-5" />
+                  AI Nutrition Analysis
+                </h3>
+                
+                {!aiAnalysis && (
+                  <button
+                    onClick={analyzeWorkout}
+                    disabled={isAnalyzing}
+                    className="flex items-center gap-2 px-4 py-2 bg-(--color-btn) text-(--color-primary) rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-wait transition-opacity cursor-pointer"
+                  >
+                    {isAnalyzing ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Analyzing...
+                      </>
+                    ) : (
+                      <>
+                        <Brain className="h-4 w-4" />
+                        Analyze Workout
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+
+              {/* Analysis Results */}
+              {aiAnalysis && (
+                <div className="bg-gray-50 rounded-lg p-4 shadow-md">
+                  <Markdown 
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      h3: ({children}) => <h3 className="text-lg font-semibold mt-4 mb-2 text-(--color-primary)">{children}</h3>,
+                      ul: ({children}) => <ul className="list-disc list-inside space-y-1 mb-6">{children}</ul>,
+                      li: ({children}) => <li className="mb-3">{children}</li>,
+                      p: ({children}) => <p className="mb-2">{children}</p>
+                    }}
+                    >
+                      {aiAnalysis}
+                   </Markdown>
+                  
+                  <button
+                    onClick={() => setAiAnalysis(null)}
+                    className="btn-main btn-main--alt mt-4 text-sm"
+                  >
+                    Generate new analysis
+                  </button>
+                </div>
+              )}
+
+              {/* Analysis Error */}
+              {analysisError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                  <p className="text-red-700 text-sm">{analysisError}</p>
+                  <button
+                    onClick={analyzeWorkout}
+                    className="mt-2 text-sm text-red-600 hover:text-red-700 underline"
+                  >
+                    Try again
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="mb-6">
