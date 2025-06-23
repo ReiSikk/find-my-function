@@ -38,13 +38,13 @@ export function WeeklySummary({ activities }: WeeklySummaryProps) {
       title: 'Week in Total',
       icon: <Zap className="h-5 w-5" />,
       data: weeklyTotals.overall,
-      color: 'bg-purple-50 border-purple-200',
+      color: 'bg-rose-50 border-rose-200',
       iconColor: 'text-purple-600'
     }
   ]
 
   return (
-    <div className="mb-6">
+    <div className="mb-12">
       <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
         <Calendar className="h-5 w-5" />
         Your weekly summary

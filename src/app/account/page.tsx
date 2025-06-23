@@ -59,6 +59,12 @@ export default function AccountPage() {
                       <LucideArrowLeft className="h-4 w-4" />
                       Back home
                       </Link>
+                      <div className="accountDashboard__header flex justify-between items-start flex-wrap mb-14">
+                        <h1 className="h1 h1-grotesk mb-2 sm:w-full md:w-1/2">Hi, {user.firstName}</h1>
+                        <p className="txt-medium sm:w-full md:w-1/2">Welcome to your dashboard!
+                        Here you can manage your account, view your Strava activities, and explore and order your saved functional products.
+                        </p>
+                      </div>
                       <StravaActivities />
                       <h1 className="text-(length:--fs-h4) mb-2 font-bold">My List</h1>
                       <p className="text-muted-foreground">Your saved drinks and favorites</p>

@@ -81,7 +81,7 @@ export default function StravaActivities() {
     }
 
     if (!user) {
-        return <div>Please sign in to view Strava activities</div>;
+        return <div>Please sign in to view activities</div>;
     }
 
     if (loading) {
@@ -123,18 +123,17 @@ export default function StravaActivities() {
 
 
   return (
-    <div className='stravaActivities'>
-      <div className="flex items-center md:justify-between flex-wrap gap-4 w-full mb-8">
+    <div className='stravaActivities mb-2'>
+      {/* <div className="flex items-center md:justify-between flex-wrap gap-4 w-full mb-8">
         <h3 className="h4">Your recent Strava activities</h3>
         <button 
           type='button' 
-          className="btn-main btn-main--alt" 
+          className="btn-main btn-main--alt px-4 font-medium text-sm" 
           onClick={getActivities}
           >
             Refresh Activities
         </button>
-      </div>
-      {/* Add Weekly Summary */}
+      </div> */}
       {activities.length > 0 && <WeeklySummary activities={activities} />}
       <Accordion 
         type="single" 
@@ -142,10 +141,10 @@ export default function StravaActivities() {
         value={accordionValue}
         onValueChange={setAccordionValue}
       >
-        <AccordionItem value="activities">
+        <AccordionItem value="activities" className='stravaActivities__accordion'>
           <AccordionTrigger className="text-left px-4 cursor-pointer border border-(--color-primary) data-[state=closed]:bg-(--color-primary) data-[state=closed]:text-(--color-bg) [&[data-state=closed]>span]:text-(--color-primary) items-center">
             <div className="h6 tracking-medium uppercase">
-              {accordionValue === "" ? 'View Strava activities' : 'Collapse Strava activities'} ({activities.length})
+              {accordionValue === "" ? 'View activities' : 'Collapse activities'} ({activities.length})
             </div>
           </AccordionTrigger>
           <AccordionContent>

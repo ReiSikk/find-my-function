@@ -47,7 +47,7 @@ export function NutritionStackView({ stack, onSelectStack }: NutritionStackViewP
 
     const delay = setTimeout(() => {
       setLoading(true);
-      fetch("/api/ai-search", {
+      fetch("/api/ai/ai-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: search, stack, systemPrompt: getSystemPrompt(stack) }),
