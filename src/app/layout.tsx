@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Archivo } from "next/font/google"
+import { Host_Grotesk } from "next/font/google"
 import { Header } from "./components/header"
 import './globals.css'
 import { SidebarProvider } from "@/components/ui/sidebar"
@@ -18,6 +19,11 @@ const archivo = Archivo({
   subsets: ["latin"],
   variable: "--font-archivo",
 })
+const host_grotesk = Host_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-grotesk",
+})
+
 
 export default function RootLayout({
   children,
@@ -27,7 +33,7 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${archivo.className} bg-(--color-bg)`}>
+      <body className={`${archivo.className} ${host_grotesk.className} bg-(--color-bg)`}>
         <Providers>
           <SidebarProvider>
           <Header />

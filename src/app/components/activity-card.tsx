@@ -4,7 +4,7 @@ import { useState } from "react"
 import { parseISO } from "date-fns"
 import type { Activity } from "../../lib/types"
 import { ActivityModal } from "./activity-modal"
-import { Calendar, Clock, ArrowUp, Zap, Heart, MapPin, ChevronRight } from "lucide-react"
+import { Calendar, Clock, ArrowUp, Zap, Heart, MapPin, ChevronRight, ChevronsRightIcon } from "lucide-react"
 import { getActivityEmoji } from "@/lib/utils/emoji-mapper"
 
 interface ActivityCardProps {
@@ -41,46 +41,43 @@ export function ActivityCard({ activity }: ActivityCardProps) {
   return (
     <>
       <div
-        className="group flex flex-col relative overflow-hidden rounded-lg border border-[--color-primary] bg-[color--bg] pt-[70px] p-5 shadow-sm transition-all hover:shadow-md cursor-pointer"
+        className="group flex flex-col relative overflow-hidden rounded-lg border border-[--color-primary] bg-[color--bg] p-4 shadow-sm transition-all hover:shadow-md cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
-        <div className="absolute flex items-center justify-center right-0 top-0 h-[50px] w-full bg-(--color-primary)" >
-          <span className="rounded-full bg-(--color-btn) bg-opacity-10 px-3 py-1 text-small font-medium text-(--color-primary)">
-            {activity.sport_type}
-            <span className="ml-2">
-                {getActivityEmoji(activity.sport_type)}
+        <div className="flex justify-between items-start gap-2 mb-6 border-b border-(--color-primary) pb-2">
+            <h3 className="h4 h4-grotesk text-lg font-semibold">{activity.name}</h3>
+            <span className="flex items-center justify-center rounded-full bg-(--color-btn) bg-opacity-10 px-3 py-1 text-small font-medium text-(--color-primary)">
+              {/* {activity.sport_type} */}
+              <span className="w-[24px] h-[24px] flex items-center justify-center">
+                  {getActivityEmoji(activity.sport_type)}
+              </span>
             </span>
-          </span>
-        </div>
-
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{activity.name}</h3>
         </div>
 
         <div className="mb-4 grid grid-cols-2 gap-3">
-          <div className="flex items-center gap-2 text-sm">
+          {/* <div className="flex items-center gap-2 text-sm">
             <Calendar className="h-4 w-4 text-[--color-primary]" />
             <span>{formattedDate}</span>
-          </div>
+          </div> */}
           <div className="flex items-center gap-2 text-sm">
-            <Clock className="h-4 w-4 text-[--color-primary]" />
-            <span>{duration}</span>
+            <Clock className="h-4 w-4 text-(--color-btn)" />
+            <span className="h5 h5-grotesk opacity-90">{duration}</span>
           </div>
            {distance !== 0  &&
           <div className="flex items-center gap-2 text-sm">
-            <MapPin className="h-4 w-4 text-[--color-primary]" />
-            <span>{distance} km</span>
+            <MapPin className="h-4 w-4 text-(--color-btn)" />
+            <span className="h5 h5-grotesk opacity-90">{distance} km</span>
           </div>
           }
            {(activity.sport_type === "Run" || activity.sport_type === "TrailRun") &&
             <div className="flex items-center gap-2 text-sm">
-              <Zap className="h-4 w-4 text-[--color-primary]" />
-              <span>{pace}</span>
+              <Zap className="h-4 w-4 text-(--color-btn)" />
+              <span className="h5 h5-grotesk opacity-90">{pace}</span>
             </div>
            }
         </div>
 
-        {activity.has_heartrate && activity.average_heartrate && (
+        {/* {activity.has_heartrate && activity.average_heartrate && (
           <div className="mb-3 flex items-center gap-2">
             <Heart className="h-4 w-4 text-red-500" />
             <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
@@ -91,18 +88,20 @@ export function ActivityCard({ activity }: ActivityCardProps) {
             </div>
             <span className="text-xs font-medium">{Math.round(activity.average_heartrate)} bpm</span>
           </div>
-        )}
+        )} */}
 
-        {activity.total_elevation_gain > 0 && (
+        {/* {activity.total_elevation_gain > 0 && (
           <div className="mb-4 flex items-center gap-1 text-xs">
             <ArrowUp className="h-3 w-3" />
             <span>{activity.total_elevation_gain}m</span>
           </div>
-        )}
+        )} */}
 
-        <div className="mt-auto flex items-center justify-center ml-auto w-fit md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-           View details
+        <div className="mt-auto pt-4 flex items-center justify-center ml-auto w-fit md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute right-[0px] bg-(--color-primary) text-(--color-bg) flex items-center rounded-ss-full gap-2 pl-8 pr-2 py-2">
+           <span className="txt-small">More details</span>
           <ChevronRight className="h-5 w-5 text-[--color-primary] opacity-50" />
+          </div>
         </div>
       </div>
 

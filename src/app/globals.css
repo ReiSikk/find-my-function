@@ -140,21 +140,56 @@
     font-size: var(--fs-h1);
     font-weight: 700;
   }
+  .h1-grotesk {
+    font-family: var(--font-grotesk);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.15;
+  }
   .h2 {
     font-size: var(--fs-h2);
     font-weight: 600;
   }
+  .h2-grotesk {
+    font-family: var(--font-grotesk);
+    font-weight: 800;
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-transform: uppercase;
+  }
   .h3 {
     font-size: var(--fs-h3);
     font-weight: 600;
+    line-height: 1.15;
+  }
+   .h3-grotesk {
+    font-family: var(--font-grotesk);
+    font-weight: 800;
+    font-optical-sizing: auto;
+    font-style: normal;
+    text-transform: uppercase;
   }
   .h4 {
     font-size: var(--fs-h4);
     font-weight: 600;
+    line-height: 1.1;
   }
-  .h5 {
+   .h4-grotesk {
+    font-family: var(--font-grotesk);
+    font-weight: 800;
+    font-size: var(--fs-h4);
+    line-height: 1;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+   .h5 {
     font-size: var(--fs-h5);
-    font-weight: 600;
+    font-weight: 800;
+  }
+    .h5-grotesk {
+    font-family: var(--font-grotesk);
+    font-optical-sizing: auto;
+    font-style: normal;
   }
   .h6 {
     font-size: var(--fs-h6);
@@ -163,6 +198,11 @@
   .txt-small {
     font-size: var(--fs-small);
     font-weight: 400;
+  }
+  .txt-medium {
+    font-size: var(--fs-p);
+    font-weight: 500;
+    line-height: 1.25;
   }
   .txt-nav {
     font-size: var(--fs-nav);
