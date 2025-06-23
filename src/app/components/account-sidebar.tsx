@@ -59,9 +59,6 @@ if (!user) {
               {user.firstName} {user.lastName}
             </h2>
             {isAdmin && <span className="px-2 py-1 bg-(--color-primary) text-(--color-bg) rounded-md txt-small flex items-center justify-center uppercase">Admin</span>}
-            {user.username && (
-              <p className="text-sm text-muted-foreground">@{user.username || "user"}</p>
-            )}
           </div>
         </div>
       </SidebarHeader>
@@ -73,17 +70,17 @@ if (!user) {
           <SidebarGroupLabel className="px-0 rounded-none mb-2 mx-2 border-(--color-primary) border-b txt-small font-semibold opacity-70">Account Details</SidebarGroupLabel>
           <SidebarGroupContent>
             <div className="space-y-3 px-2">
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm mb-1">
                 <Mail className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Email:</span>
+                <span className="text-muted-foreground">Email</span>
               </div>
-              <p className="text-sm font-medium px-6">{user.primaryEmailAddress?.emailAddress}</p>
+              <p className="text-sm font-medium">{user.primaryEmailAddress?.emailAddress}</p>
 
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm mb-1">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Member since:</span>
+                <span className="text-muted-foreground">Member since</span>
               </div>
-              <p className="text-sm font-medium px-6">{formatDate(user.createdAt)}</p>
+              <p className="text-sm font-medium">{formatDate(user.createdAt)}</p>
             </div>
           </SidebarGroupContent>
         </SidebarGroup>

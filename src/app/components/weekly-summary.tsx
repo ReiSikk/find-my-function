@@ -44,7 +44,7 @@ export function WeeklySummary({ activities }: WeeklySummaryProps) {
   ]
 
   return (
-    <div className="mb-6">
+    <div className="mb-12">
       <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
         <Calendar className="h-5 w-5" />
         Your weekly summary
