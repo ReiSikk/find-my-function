@@ -55,7 +55,7 @@
   --fs-h6: clamp(15.97px, 2vw, 21.3px);
   --fs-nav: 14px;
   --fs-p: clamp(14px, 2vw, 16px);
-  --fs-small: 12px;
+  --fs-small: clamp(12px, 2vw, 14px);
 
   --animate-collapsible-down: collapsible-down 0.2s ease-out;
   --animate-collapsible-up: collapsible-up 0.2s ease-out;
