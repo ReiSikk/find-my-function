@@ -38,7 +38,7 @@ export function FavoriteButton({ drink, className }: FavoriteButtonProps) {
         className={`h-6 w-6 cursor-pointer transition-colors duration-200 ${
           isFavorited
             ? 'text-red-500 fill-current'
-            : 'text-[var(--color-secondary)] hover:text-[var(--color-white)]'
+            : 'text-(--color-primary)  hover:text-red-500'
         } ${
           toggleFavorite.isPending ? 'opacity-50 cursor-not-allowed' : ''
         } ${className}`}

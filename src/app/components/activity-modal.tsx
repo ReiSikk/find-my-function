@@ -157,7 +157,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             <button
               onClick={onClose}
               type="button"
-              className="absolute cursor-pointer right-4 top-4 rounded-full p-1 border border-(--color-primary) transition-colors bg-(--color-primary) text-(--color-bg) hover:bg-(--color-bg) hover:text-(--color-primary)"
+              className="absolute cursor-pointer right-4 top-4 rounded-full p-1 border border-(--color-primary) transition-colors bg-(--color-primary) text-(--color-bg) hover:bg-(--color-bg) hover:opacity-80 transition-opacity"
             >
               <X className="h-5 w-5" />
             </button>
@@ -285,7 +285,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                   
                   <button
                     onClick={() => setAiAnalysis(null)}
-                    className="btn-main btn-main--alt mt-4 text-sm"
+                    className="btn-main btn-main--alt mt-4 text-sm hover:opacity-80 transition-opacity"
                   >
                     Generate new analysis
                   </button>
@@ -294,11 +294,11 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
               {/* Analysis Error */}
               {analysisError && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-red-700 text-sm">{analysisError}</p>
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex flex-col items-center">
+                  <p className="text-red-700 text-sm text-center mb-1">{analysisError}</p>
                   <button
                     onClick={analyzeWorkout}
-                    className="mt-2 text-sm text-red-600 hover:text-red-700 underline"
+                    className="mt-2 btn-main hover:opacity-80"
                   >
                     Try again
                   </button>

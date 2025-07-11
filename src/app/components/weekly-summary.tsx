@@ -50,21 +50,21 @@ export function WeeklySummary({ activities }: WeeklySummaryProps) {
         Your weekly summary
       </h4>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
         {summaryCards.map((card) => (
           <div 
             key={card.title}
-            className={`p-4 rounded-lg border shadow-md ${card.color}`}
+            className={`p-4 rounded-lg border shadow-md min-w-[250px] ${card.color}`}
           >
-            <div className="flex items-start justify-between gap-2 mb-2">
-                <div>
-                    <div className={card.iconColor}>
+            <div className="flex items-start justify-between gap-2 mb-4">
+                <div className='flex nowrap items-start gap-2'>
+                    <div className={`${card.iconColor} mt-2`}>
                         {card.icon}
                     </div>
-                    <h5 className="font-medium mt-2">{card.title}</h5>
+                    <h5 className="font-medium h4-grotesk">{card.title}</h5>
                 </div>
                 {('sessionCount' in card.data ? card.data.sessionCount : card.data.totalSessions) > 0 && (
-                <div className="text-xs px-2 py-1 flex gap-1 border border-(--color-primary) rounded-md shadow-sm opacity-70">
+                <div className="text-xs px-2 py-1 flex gap-1 border border-(--color-primary) bg-(--color-primary) text-(--color-bg) rounded-md">
                   <span>
                     {('sessionCount' in card.data ? card.data.sessionCount : card.data.totalSessions)}
                    </span> 
@@ -78,13 +78,13 @@ export function WeeklySummary({ activities }: WeeklySummaryProps) {
             <div className="space-y-1 text-sm">
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4 opacity-60" />
-                <span>{formatTime(card.data.totalTime)}</span>
+                <span className="h5 h5-grotesk">{formatTime(card.data.totalTime)}</span>
               </div>
               
               {'totalDistance' in card.data && (
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 opacity-60" />
-                  <span>{formatDistance(card.data.totalDistance as number)}</span>
+                  <span className="h5 h5-grotesk">{formatDistance(card.data.totalDistance as number)}</span>
                 </div>
               )}
             </div>

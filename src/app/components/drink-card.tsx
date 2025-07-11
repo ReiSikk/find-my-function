@@ -64,7 +64,7 @@ export function DrinkCard({
           className="drop-shadow-md"
         />
         <div 
-          className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full shadow-[1px_1px_6px_1px_#321E1E] py-2 border cursor-pointer z-10 transition-all duration-200 ${
+          className={`group flex flex-1 justify-between max-w-[225px] items-center pl-[22px] pr-[8px] gap-4 rounded-full py-2 border cursor-pointer z-10 transition-all duration-200 ${
             openOverlay 
               ? ' bg-(--color-bg) text-(--color-primary)' 
               : 'border-(--color-primary) bg-(--color-primary) text-(--color-bg)  hover:bg-(--color-bg) hover:text-(--color-primary) hover:border-(--color-primary)'
