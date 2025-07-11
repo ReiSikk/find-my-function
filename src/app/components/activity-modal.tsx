@@ -270,7 +270,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
               {/* Analysis Results */}
               {aiAnalysis && (
-                <div className="bg-gray-50 rounded-lg p-4 shadow-md">
+                <div className="bg-gray-50 flex flex-col rounded-lg p-4 shadow-md">
                   <Markdown 
                     remarkPlugins={[remarkGfm]}
                     components={{
@@ -285,7 +285,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                   
                   <button
                     onClick={() => setAiAnalysis(null)}
-                    className="btn-main btn-main--alt mt-4 text-sm hover:opacity-80 transition-opacity"
+                    className="btn-main btn-main--alt ml-auto mt-4 text-sm hover:opacity-80 transition-opacity"
                   >
                     Generate new analysis
                   </button>
