@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @layer theme, base, components, utilities;
+/* Third-party Map styles */
+@import "leaflet/dist/leaflet.css";
 
 @layer components {
   .btn-main {
@@ -415,6 +417,19 @@ html {
   }
 }
 
+/*
+   Activity Modal
+   ========================================================================== */
+.aiAnalysis {
+  button {
+    justify-content: center;
+  }
+}
+
+/*
+   Text and Button Reveal Effects
+   ========================================================================== */
+
 .txt-reveal--bottom {
   position: absolute;
   opacity: 0;
@@ -468,9 +483,17 @@ html {
   }
 }
 
-
 /*
    Product Cards Carousel
    ========================================================================== */
-   .drinkCard__img {
-   }
+.drinkCard__img {
+}
+
+/* Basic leaflet styling */
+.leaflet-control {
+  border-radius: 8px !important;
+}
+.custom-div-icon {
+  background: transparent !important;
+  border: none !important;
+}

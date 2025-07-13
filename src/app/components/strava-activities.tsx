@@ -124,16 +124,6 @@ export default function StravaActivities() {
 
   return (
     <div className='stravaActivities mb-2'>
-      {/* <div className="flex items-center md:justify-between flex-wrap gap-4 w-full mb-8">
-        <h3 className="h4">Your recent Strava activities</h3>
-        <button 
-          type='button' 
-          className="btn-main btn-main--alt px-4 font-medium text-sm" 
-          onClick={getActivities}
-          >
-            Refresh Activities
-        </button>
-      </div> */}
       {activities.length > 0 && <WeeklySummary activities={activities} />}
       <Accordion 
         type="single" 
