@@ -60,7 +60,7 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
     );
   }
 
-  if (showOnlyFavorites && favoritedDrinks.size <= 0) {
+  if (showOnlyFavorites && !displayDrinks.length) {
     return (
        <div className="w-full flex flex-col gap-4 items-center justify-center bg-(--color-primary) p-16 rounded-sm md:max-w-[50vw] m-auto">
           <p className="text-(--color-bg) text-center">
@@ -68,7 +68,7 @@ export default function CardsCarousel({ showOnlyFavorites = false }: CardsCarous
           </p>
         <Link href={getBaseUrl() || '/'}>
           <button className="btn-main hover:border-(--color-bg)" type="button" aria-label="Sign in to your account">
-            <span>Continue</span>
+            <span>Start adding favorites</span>
             <LucideArrowRight className="w-4 h-4" />
           </button>
         </Link>

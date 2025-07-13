@@ -37,7 +37,7 @@ export function FilterSidebar() {
       <div className="flex items-center justify-between w-full gap-2 pb-2">
         <h2 className="text-(length:--fs-h6) text-(--color-primary) font-medium py-3">Filters</h2>
         <Button 
-        className="cursor-pointer bg-[var(--color-btn)] text-[var(--color-primary)] rounded-full border border-transparent hover:border-[var(--color-primary)]"
+        className="cursor-pointer bg-[var(--color-btn)] text-[var(--color-primary)] rounded-full border border-transparent hover:bg-(--color-btn) hover:opacity-90 transition-opacity"
         onClick={resetFilters}
         >
           Reset filters

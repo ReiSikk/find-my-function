@@ -53,7 +53,7 @@ export default function AccountPage() {
           <div className="flex min-h-screen w-full">
             <AccountSidebar user={user} isAdmin={isAdmin}/>
               <main className="flex-1 overflow-y-auto">
-                <div className="container mx-auto pt-6 px-6 pb-[100px]">
+                <div className="container mx-auto pt-6 px-8 pb-[100px] max-w-full">
                   <div className="space-y-6">
                       <Link href="/" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer bg-[var(--color-bg)] text-[var(--color-primary)] border border-transparent hover:border-[var(--color-primary)] hover:bg-secondary rounded-full px-4 py-2 mt-4" aria-label="Back to home page">
                       <LucideArrowLeft className="h-4 w-4" />
