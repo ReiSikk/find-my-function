@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         'X-Title': 'Fuel Your Tempo - Workout Analysis'
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.2-1b-instruct:free',
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: [
           {
             role: 'system',

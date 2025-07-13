@@ -52,12 +52,6 @@ export const ingredientTagMap: Record<string, TagCategory[]> = {
 
 'kloriid': ['Electrolytes', 'Salts'],
 'kloriiditsitraat': ['Electrolytes', 'Salts'],
-
-'elektrolüüdid': ['Electrolytes'],
-'elektrolüütide segu': ['Electrolytes'],
-'mineraalained': ['Electrolytes'],
-'mineraalisoolad': ['Electrolytes'],
-'mineraalide segu': ['Electrolytes'],
   
   // Caffeine sources (Kofeiini allikad)
   'kofeiin': ['Caffeine'],

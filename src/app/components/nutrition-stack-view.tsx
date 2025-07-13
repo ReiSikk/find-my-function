@@ -76,9 +76,9 @@ export function NutritionStackView({ stack, onSelectStack }: NutritionStackViewP
   return (
     <div className="mt-8 md:mt-16">
       <div className="flex flex-col mb-16 max-w-full">
-        <h2 className="h4 mb-2">I&apos;m interested in creating a</h2>
+        <h2 className="h4 mb-4">I&apos;m interested in creating a</h2>
         <div className="relative overflow-gradient">
-          <div className="flex flex gap-2 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
             <div className={`btn-main text-nowrap ${stack === "hydration" && 'bg-(--color-primary) text-(--color-bg)'} hover:bg-(--color-primary) hover:text-(--color-bg) rounded-full`} onClick={() => onSelectStack("hydration")}>
               Hydration Stack
             </div>

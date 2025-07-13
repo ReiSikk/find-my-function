@@ -14,27 +14,30 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease;
     text-wrap: nowrap;
     cursor: pointer;
-    transition: color 200ms, background 200ms, border-color 200ms;
+    transition:
+      color 200ms,
+      background 200ms,
+      border-color 200ms;
     transition-duration: 200ms;
-}
-.btn-main:hover {
-  background: var(--color-primary);
-  color: var(--color-bg);;
-}
-.btn-main--alt {
+  }
+  .btn-main:hover {
     background: var(--color-primary);
     color: var(--color-bg);
-}
-.btn-main--alt:hover {
+  }
+  .btn-main--alt {
+    background: var(--color-primary);
+    color: var(--color-bg);
+  }
+  .btn-main--alt:hover {
     background: var(--color-bg);
     color: var(--color-primary);
+  }
 }
-}
-
-
 
 @theme {
   --sidebar: hsl(0 0% 98%);
@@ -46,13 +49,12 @@
   --sidebar-border: hsl(220 13% 91%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
 
-    /* Typography */
+  /* Typography */
   --fs-h1: clamp(67.36px, 9vw, 89.8px);
   --fs-h2: clamp(50.48px, 7vw, 67.3px);
   --fs-h3: clamp(37.88px, 5vw, 50.5px);
   --fs-h4: clamp(28.43px, 4vw, 37.9px);
-  --fs-h5: clamp(21.3px, 3vw, 28.4px)
-  --fs-h6: clamp(15.97px, 2vw, 21.3px);
+  --fs-h5: clamp(21.3px, 3vw, 28.4px) --fs-h6: clamp(15.97px, 2vw, 21.3px);
   --fs-nav: 14px;
   --fs-p: clamp(14px, 2vw, 16px);
   --fs-small: clamp(12px, 2vw, 14px);
@@ -63,16 +65,13 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
   --color-bg: #f4f1e0;
-  --color-primary: #321E1E;
+  --color-primary: #321e1e;
   --color-btn: #e9847c;
-
-
 
   /* Paddings */
   --pb-cards: clamp(18px, 3vw, 24px);
   --pi-cards: clamp(14px, 2vw, 16px);
   --p-btn: 8px 22px;
-
 
   /* Borders */
   --bradius: 6px;
@@ -121,7 +120,7 @@
     }
   }
 
-    @keyframes overlayFadeIn {
+  @keyframes overlayFadeIn {
     from {
       opacity: 0;
     }
@@ -129,123 +128,118 @@
       opacity: 1;
     }
   }
-
 }
 /* General reset */
-  html {
-    scroll-behavior: smooth;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  .h1 {
-    font-size: var(--fs-h1);
-    font-weight: 700;
-  }
-  .h1-grotesk {
-    font-family: var(--font-grotesk);
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: 1.15;
-  }
-  .h2 {
-    font-size: var(--fs-h2);
-    font-weight: 600;
-  }
-  .h2-grotesk {
-    font-family: var(--font-grotesk);
-    font-weight: 800;
-    font-optical-sizing: auto;
-    font-style: normal;
-    text-transform: uppercase;
-  }
-  .h3 {
-    font-size: var(--fs-h3);
-    font-weight: 600;
-    line-height: 1.15;
-  }
-   .h3-grotesk {
-    font-family: var(--font-grotesk);
-    font-weight: 800;
-    font-optical-sizing: auto;
-    font-style: normal;
-    text-transform: uppercase;
-  }
-  .h4 {
-    font-size: var(--fs-h4);
-    font-weight: 600;
-    line-height: 1.1;
-  }
-   .h4-grotesk {
-    font-family: var(--font-grotesk);
-    font-weight: 800;
-    font-size: var(--fs-h4);
-    line-height: 1;
-    font-optical-sizing: auto;
-    font-style: normal;
-  }
-   .h5 {
-    font-size: var(--fs-h5);
-    font-weight: 800;
-  }
-    .h5-grotesk {
-    font-family: var(--font-grotesk);
-    font-optical-sizing: auto;
-    font-style: normal;
-  }
-  .h6 {
-    font-size: var(--fs-h6);
-    font-weight: 500;
-  }
-  .txt-small {
-    font-size: var(--fs-small);
-    font-weight: 400;
-  }
-  .txt-medium {
-    font-size: var(--fs-p);
-    font-weight: 500;
-    line-height: 1.25;
-  }
-  .txt-nav {
-    font-size: var(--fs-nav);
-    font-weight: 500;
-  }
-  .txt-p {
-    font-size: var(--fs-p);
-    font-weight: 400;
-  }
+.h1 {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+}
+.h1-grotesk {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+.h2 {
+  font-size: var(--fs-h2);
+  font-weight: 600;
+}
+.h2-grotesk {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-optical-sizing: auto;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.h3 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.h3-grotesk {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-optical-sizing: auto;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.h4 {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: 1.1;
+}
+.h4-grotesk {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: var(--fs-h4);
+  line-height: 1;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.h5 {
+  font-size: var(--fs-h5);
+  font-weight: 800;
+}
+.h5-grotesk {
+  font-family: var(--font-grotesk);
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.h6 {
+  font-size: var(--fs-h6);
+  font-weight: 500;
+}
+.txt-small {
+  font-size: var(--fs-small);
+  font-weight: 400;
+}
+.txt-medium {
+  font-size: var(--fs-p);
+  font-weight: 500;
+  line-height: 1.25;
+}
+.txt-nav {
+  font-size: var(--fs-nav);
+  font-weight: 500;
+}
+.txt-p {
+  font-size: var(--fs-p);
+  font-weight: 400;
+}
 
-    .scrollbar-hide {
-        /* IE and Edge */
-        -ms-overflow-style: none;
-        /* Firefox */
-        scrollbar-width: none;
-        /* Safari and Chrome */
-        &::-webkit-scrollbar {
-          display: none;
-        }
-      }
-
-  /* Gradient for overflowing horizontal containers  */
-  .overflow-gradient {
-    position: relative;
-    overflow: hidden;
+.scrollbar-hide {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+  /* Safari and Chrome */
+  &::-webkit-scrollbar {
+    display: none;
   }
+}
 
-  .overflow-gradient::after {
-    content: '';
-    pointer-events: none;
-    user-select: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 50px;
-    pointer-events: none;
-    background: linear-gradient(
-      to right,
-      transparent,
-      var(--color-bg) 90%
-    );
-  }
+/* Gradient for overflowing horizontal containers  */
+.overflow-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.overflow-gradient::after {
+  content: "";
+  pointer-events: none;
+  user-select: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--color-bg) 90%);
+}
 
 .dark {
   --sidebar: hsl(240 5.9% 10%);
@@ -256,14 +250,15 @@
   --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
-
 }
 
 /* *** Clerck specific styling *** */
 .cl-userButtonBox {
   border: 1px solid var(--color-primary);
   border-radius: 200px;
-  transition: color 0.2s, background 0.2s;
+  transition:
+    color 0.2s,
+    background 0.2s;
 }
 
 .cl-userButtonBox:hover {
@@ -277,10 +272,13 @@
 .cl-userButtonPopoverMain {
   background: var(--color-bg);
 }
-.cl-userButtonPopoverActionButton, .cl-userButtonPopoverCustomItemButton, .cl-userPreview__userButton {
+.cl-userButtonPopoverActionButton,
+.cl-userButtonPopoverCustomItemButton,
+.cl-userPreview__userButton {
   color: var(--color-primary);
 }
-.cl-userButtonPopoverActionButton:hover, .cl-userButtonPopoverCustomItemButton:hover {
+.cl-userButtonPopoverActionButton:hover,
+.cl-userButtonPopoverCustomItemButton:hover {
   background: var(--color-primary);
   color: var(--color-bg);
 }
@@ -293,20 +291,22 @@
   display: none;
 } */
 
-
 /* ** Clerck User Profile Modal ** */
-.cl-navbar, .cl-navbarMobileMenuRow, .cl-footer  {
+.cl-navbar,
+.cl-navbarMobileMenuRow,
+.cl-footer {
   background: var(--color-primary);
   color: var(--color-bg);
 }
-.cl-pageScrollBox  {
+.cl-pageScrollBox {
   background: var(--color-bg);
   color: var(--color-primary);
 }
 .cl-modalCloseButton {
   color: var(--color-primary);
 }
-.cl-navbarButton, .cl-navbarMobileMenuButton {
+.cl-navbarButton,
+.cl-navbarMobileMenuButton {
   color: var(--color-bg);
 }
 .cl-navbarMobileMenuButton:hover {
@@ -320,158 +320,157 @@
   opacity: 0.8;
 }
 
-
 /*
    Home valdiation points cards
    ========================================================================== */
-   .uspCard {
-    position: relative;
-    padding-block: 0px clamp(16px, 2vw, 24px);
-    padding-inline: clamp(24px, 3vw, 32px);
-    height: 48.925vh;
-    width: 100%;
-    border-radius: 4px;
-    /* box-shadow: 1px 2px 8px 2px rgba(0, 0, 0, 0.2); */
-    cursor: pointer;
-    overflow: hidden;
-    background: var(--color-primary);
-    color: var(--color-bg);
+.uspCard {
+  position: relative;
+  padding-block: 0px clamp(16px, 2vw, 24px);
+  padding-inline: clamp(24px, 3vw, 32px);
+  height: 48.925vh;
+  width: 100%;
+  border-radius: 4px;
+  /* box-shadow: 1px 2px 8px 2px rgba(0, 0, 0, 0.2); */
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--color-primary);
+  color: var(--color-bg);
 
-    @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
-      &:hover {
-        .txt-reveal--bottom {
-          transform: translateY(-50%);
-          opacity: 1;
-        }
-  
-        .btn-reveal--top {
-          transform: translateY(0%);
-          opacity: 1;
-        }
-  
-        .txt-slide--lr {
-          transform: translateX(0%);
-          opacity: 1;
-        }
+  @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+    &:hover {
+      .txt-reveal--bottom {
+        transform: translateY(-50%);
+        opacity: 1;
       }
-        
+
+      .btn-reveal--top {
+        transform: translateY(0%);
+        opacity: 1;
+      }
+
+      .txt-slide--lr {
+        transform: translateX(0%);
+        opacity: 1;
+      }
     }
+  }
 
+  .extra-bg {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 12.5694vw;
+    min-width: 181px;
+    max-width: 225px;
+    height: auto;
+  }
+}
 
-    .extra-bg {
-      position: absolute;
-      bottom: -2px;
-      right: -2px;
-      width: 12.5694vw;
-      min-width: 181px;
-      max-width: 225px;
-      height: auto;
-    }
-   }
-
-
-   /*
+/*
     Strava Activities List
     ========================================================================== */
-    .acitivityCard {
-      @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
-        &:not(:hover) {
-          opacity: 0.85;
-          .activityCard__icon {
-            transform: translateX(-10%);
-          }
-        } 
+.acitivityCard {
+  @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+    &:not(:hover) {
+      opacity: 0.85;
+      .activityCard__icon {
+        transform: translateX(-10%);
       }
     }
+  }
+}
 
-    .stravaActivities__accordion {
-      .trigger {
-        width: fit-content;
-        margin-left: auto;
-      }
-      @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
-        .trigger {
-          max-width: 300px;          
-        }
-      }
-      button {
-        border: none;
-        background: none;
-        color: var(--color-primary);
-        padding: 8px 16px;
-        gap: 16px;
-        justify-content: start;
-        border-radius: 200px;
+.stravaActivities__accordion {
+  .trigger {
+    width: fit-content;
+    margin-left: auto;
+  }
+  @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+    .trigger {
+      max-width: 300px;
+    }
+  }
+  button {
+    border: none;
+    background: none;
+    color: var(--color-primary);
+    padding: 8px 16px;
+    gap: 16px;
+    justify-content: start;
+    border-radius: 200px;
+    background: var(--color-primary);
+    color: var(--color-bg);
+    text-decoration: none;
+
+    @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+      text-wrap: nowrap;
+      &:hover {
         background: var(--color-primary);
         color: var(--color-bg);
         text-decoration: none;
-
-        @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
-
-          text-wrap: nowrap;
-          &:hover {
-            background: var(--color-primary);
-            color: var(--color-bg);
-            text-decoration: none;
-          } 
-        }
-        .trigger_icon {
-
-        }
       }
     }
-
-   
-
-   .txt-reveal--bottom {
-    position: absolute;
-    opacity:0;
-    bottom: 0;
-    transform: translateY(50%);
-    transition: opacity 0.2s ease, transform 0.4s ease;
-   }
-
-   .txt-slide--lr {
-    position: absolute;
-    color: var(--color-primary);
-    bottom: 0;
-    right: 16px;
-    bottom: 4px;
-    z-index: 1;
-    transition: opacity 0.2s ease, transform 0.4s ease;
-    gap: 8px;
-
-   }
-
-   .btn-reveal--top {
-    position: absolute;
-    background: var(--color-primary);
-    color: var(--color-bg);
-    width: 100%;
-    border-radius: 4px;
-    border: 2px solid var(--color-primary);
-    top: 0;
-    transition: opacity 0.2s ease-in-out, transform 0.4s ease-in-out, gap 0.2s ease-in-out;
-
-    @media only screen and (min-width: 768px) and (max-width: 1024px) {
-      background: var(--color-bg);
-      color: var(--color-primary);
+    .trigger_icon {
     }
+  }
+}
 
-    span {
-      text-wrap: wrap;
-    }
-   }
+.txt-reveal--bottom {
+  position: absolute;
+  opacity: 0;
+  bottom: 0;
+  transform: translateY(50%);
+  transition:
+    opacity 0.2s ease,
+    transform 0.4s ease;
+}
+
+.txt-slide--lr {
+  position: absolute;
+  color: var(--color-primary);
+  bottom: 0;
+  right: 16px;
+  bottom: 4px;
+  z-index: 1;
+  transition:
+    opacity 0.2s ease,
+    transform 0.4s ease;
+  gap: 8px;
+}
+
+.btn-reveal--top {
+  position: absolute;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  width: 100%;
+  border-radius: 4px;
+  border: 2px solid var(--color-primary);
+  top: 0;
+  transition:
+    opacity 0.2s ease-in-out,
+    transform 0.4s ease-in-out,
+    gap 0.2s ease-in-out;
+
+  span {
+    text-wrap: wrap;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
+  .txt-slide--lr {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  .btn-reveal--top {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
 
 
-     @media only screen and (min-width: 768px) and (max-width: 1024px), only screen and (min-width: 1025px) {
-       .txt-slide--lr {
-          transform: translateX(-100%);
-          opacity: 0;
-       }
-
-       .btn-reveal--top {
-          opacity: 0;
-          transform: translateY(-100%);
-       }
+/*
+   Product Cards Carousel
+   ========================================================================== */
+   .drinkCard__img {
    }

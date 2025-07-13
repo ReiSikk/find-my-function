@@ -35,7 +35,7 @@ export function DrinkCard({
         alt={`Product image displaying the product ${drink.name}`} 
         fill 
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" 
-        className="w-full height-full object-contain" 
+        className="w-full height-auto object-contain drinkCard__img" 
         priority={index === 0}
         />
       </div>
@@ -101,12 +101,12 @@ export function DrinkCard({
             </div>
           </>
         )}
-        <ul className="list-none pl-6 mt-8 overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <ul className="list-none mt-8 pb-6 overflow-y-auto [scrollbar-width:thin] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {drink.ingredients.map((ingredient) => (
             <li key={ingredient} className="txt-small">{ingredient}</li>
           ))}
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--color-primary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
         </ul>
+          <div className="absolute bottom-0 left-0 right-0 h-18 bg-gradient-to-t from-[var(--color-primary)] to-transparent backdrop-blur-[1px] pointer-events-none"></div>
       </div>
     </Card>
   );
