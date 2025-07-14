@@ -19,6 +19,27 @@ interface ActivityModalProps {
 }
 
 export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps) {
+
+  // Close modal on ESC key press
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        onClose()
+      }
+    }
+
+    // Watch for ESC key when modal is open
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscKey)
+    }
+
+    // Cleanup event listener on unmount or when modal closes
+    return () => {
+      document.removeEventListener("keydown", handleEscKey)
+    }
+
+  }, [isOpen, onClose])
+
   const modalRef = useRef<HTMLDivElement>(null)
   // Check for Polyline map
   const hasMap = activity.map.summary_polyline !== "";
@@ -195,7 +216,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             </div>
 
            {hasMap &&
-            <div className="mb-6 h-48 w-full overflow-hidden rounded-lg bg-gray-100">
+            <div className="mb-6 h-full min-h-[250px] w-full overflow-hidden rounded-lg bg-gray-100">
               <PolylineVisualizer polyline={activity.map.summary_polyline} />
             </div>
            }
@@ -203,16 +224,16 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             <div className="mb-6 grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4">
               <div className="rounded-lg bg-gray-50 p-3">
                 <div className="mb-1 flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-[--color-primary]" />
-                  <span className="text-xs text-gray-500">Distance</span>
+                  <MapPin className="h-4 w-4 text-(--color-btn)" />
+                  <span className="text-xs ">Distance</span>
                 </div>
                 <p className="text-lg font-semibold">{distance} km</p>
               </div>
 
               <div className="rounded-lg bg-gray-50 p-3">
                 <div className="mb-1 flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-[--color-primary]" />
-                  <span className="text-xs text-gray-500">Duration</span>
+                  <Clock className="h-4 w-4 text-(--color-btn)" />
+                  <span className="text-xs ">Duration</span>
                 </div>
                 <p className="text-lg font-semibold">{duration}</p>
               </div>
@@ -221,16 +242,16 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
               <>
                 <div className="rounded-lg bg-gray-50 p-3">
                   <div className="mb-1 flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-[--color-primary]" />
-                    <span className="text-xs text-gray-500">Pace</span>
+                    <Zap className="h-4 w-4 text-(--color-btn)" />
+                    <span className="text-xs ">Pace</span>
                   </div>
                   <p className="text-lg font-semibold">{pace}</p>
                 </div>
 
                 <div className="rounded-lg bg-gray-50 p-3">
                   <div className="mb-1 flex items-center gap-2">
-                    <Flame className="h-4 w-4 text-[--color-primary]" />
-                    <span className="text-xs text-gray-500">Speed</span>
+                    <Flame className="h-4 w-4 text-(--color-btn)" />
+                    <span className="text-xs ">Speed</span>
                   </div>
                   <p className="text-lg font-semibold">{speedKmh} km/h</p>
                 </div>
@@ -240,7 +261,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             </div>
 
              {/* AI Analysis Section */}
-            <div className="mb-6">
+            <div className="aiAnalysis mb-6">
               <div className="flex flex-col sm:flex-row gap-2 sm:justify-between mb-4">
                 <h3 className="text-lg font-semibold flex items-center gap-2">
                   <Brain className="h-5 w-5 shrink-0" />
@@ -253,7 +274,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                     disabled={isAnalyzing}
                     role="button"
                     aria-label="Start AI analysis of workout"
-                    className="text-center px-4 py-2 bg-(--color-btn) text-(--color-primary) rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-wait transition-opacity cursor-pointer shrink-0 w-full max-w-[225px]"
+                    className="flex items-center px-4 py-2 bg-(--color-btn) text-(--color-primary) rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-wait transition-opacity cursor-pointer shrink-0 w-full max-w-[225px]"
                   >
                     {isAnalyzing ? (
                       <>
@@ -261,9 +282,9 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                         Analyzing...
                       </>
                     ) : (
-                      <>
+                      <span>
                         Start analysis
-                      </>
+                      </span>
                     )}
                   </button>
                 )}
@@ -317,57 +338,57 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             ) : (
                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">Date</span>
-                  <span className="text-sm font-medium">{formattedDate}</span>
+                  <span className="text-sm ">Date</span>
+                  <span className="h5 h5-grotesk">{formattedDate}</span>
                 </div>
 
                 {activity.has_heartrate && activity.average_heartrate && (
                   <>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">Avg Heart Rate</span>
-                      <span className="text-sm font-medium">{Math.round(activity.average_heartrate)} bpm</span>
+                      <span className="text-sm ">Avg Heart Rate</span>
+                      <span className="h5 h5-grotesk">{Math.round(activity.average_heartrate)} bpm</span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">Max Heart Rate</span>
-                      <span className="text-sm font-medium">{activity.max_heartrate} bpm</span>
+                      <span className="text-sm ">Max Heart Rate</span>
+                      <span className="h5 h5-grotesk">{activity.max_heartrate} bpm</span>
                     </div>
                   </>
                 )}
 
                 {activity.total_elevation_gain > 0 && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Elevation Gain</span>
-                    <span className="text-sm font-medium">{activity.total_elevation_gain}m</span>
+                    <span className="text-sm ">Elevation Gain</span>
+                    <span className="h5 h5-grotesk">{activity.total_elevation_gain}m</span>
                   </div>
                 )}
 
                 {activity.average_cadence && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Cadence</span>
-                    <span className="text-sm font-medium">{Math.round(activity.average_cadence)} spm</span>
+                    <span className="text-sm ">Cadence</span>
+                    <span className="h5 h5-grotesk">{Math.round(activity.average_cadence)} spm</span>
                   </div>
                 )}
 
                 {activity.average_watts && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Power </span>
-                    <span className="text-sm font-medium">{Math.round(activity.average_watts)} watts</span>
+                    <span className="text-sm ">Power </span>
+                    <span className="h5 h5-grotesk">{Math.round(activity.average_watts)} watts</span>
                   </div>
                 )}
 
                 
                 {detailedActivity && detailedActivity.calories && (
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Calories burned</span>
-                    <span className="text-sm font-medium">{Math.round(detailedActivity.calories)} kcal</span>
+                    <span className="text-sm ">Calories burned</span>
+                    <span className="h5 h5-grotesk">{Math.round(detailedActivity.calories)} kcal</span>
                   </div>
                 )}
 
                 {/* //TODO: Uncomment for Strava Kudos count */}
                 {/* <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">Kudos</span>
-                  <span className="text-sm font-medium">{activity.kudos_count}</span>
+                  <span className="text-sm ">Kudos</span>
+                  <span className="h5 h5-grotesk">{activity.kudos_count}</span>
                 </div> */}
               </div>
             )}

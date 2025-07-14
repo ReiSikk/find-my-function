@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @layer theme, base, components, utilities;
+/* Third-party Map styles */
+@import 'leaflet/dist/leaflet.css';
 
 @layer components {
   .btn-main {
@@ -415,6 +417,19 @@ html {
   }
 }
 
+/*
+   Activity Modal
+   ========================================================================== */
+.aiAnalysis {
+  button {
+    justify-content: center;
+  }
+}
+
+/*
+   Text and Button Reveal Effects
+   ========================================================================== */
+
 .txt-reveal--bottom {
   position: absolute;
   opacity: 0;
@@ -468,9 +483,38 @@ html {
   }
 }
 
-
 /*
    Product Cards Carousel
    ========================================================================== */
-   .drinkCard__img {
-   }
+.drinkCard__img {
+}
+
+/* Basic leaflet styling */
+.leaflet-container {
+  height: 33svh !important;
+  width: 100% !important;
+  z-index: 1 !important;
+}
+.leaflet-touch .leaflet-bar {
+  border: 1px solid var(--color-primary);
+}
+.leaflet-touch .leaflet-bar a {
+  background: var(--color-btn);
+  color: var(--color-primary);
+  width: 32px;
+  height: 32px;
+  font-size: 24px;
+  line-height: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.leaflet-control-zoom-in:active,
+.leaflet-control-zoom-out:active {
+  opacity: 0.8;
+}
+
