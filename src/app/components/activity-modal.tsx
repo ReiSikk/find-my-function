@@ -195,7 +195,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             </div>
 
            {hasMap &&
-            <div className="mb-6 min-h-[250px] w-full overflow-hidden rounded-lg bg-gray-100">
+            <div className="mb-6 h-full min-h-[250px] w-full overflow-hidden rounded-lg bg-gray-100">
               <PolylineVisualizer polyline={activity.map.summary_polyline} />
             </div>
            }
@@ -203,7 +203,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
             <div className="mb-6 grid grid-cols-2 gap-2 md:gap-4 md:grid-cols-4">
               <div className="rounded-lg bg-gray-50 p-3">
                 <div className="mb-1 flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-[--color-primary]" />
+                  <MapPin className="h-4 w-4 text-(--color-btn)" />
                   <span className="text-xs ">Distance</span>
                 </div>
                 <p className="text-lg font-semibold">{distance} km</p>
@@ -211,7 +211,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
               <div className="rounded-lg bg-gray-50 p-3">
                 <div className="mb-1 flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-[--color-primary]" />
+                  <Clock className="h-4 w-4 text-(--color-btn)" />
                   <span className="text-xs ">Duration</span>
                 </div>
                 <p className="text-lg font-semibold">{duration}</p>
@@ -221,7 +221,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
               <>
                 <div className="rounded-lg bg-gray-50 p-3">
                   <div className="mb-1 flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-[--color-primary]" />
+                    <Zap className="h-4 w-4 text-(--color-btn)" />
                     <span className="text-xs ">Pace</span>
                   </div>
                   <p className="text-lg font-semibold">{pace}</p>
@@ -229,7 +229,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
 
                 <div className="rounded-lg bg-gray-50 p-3">
                   <div className="mb-1 flex items-center gap-2">
-                    <Flame className="h-4 w-4 text-[--color-primary]" />
+                    <Flame className="h-4 w-4 text-(--color-btn)" />
                     <span className="text-xs ">Speed</span>
                   </div>
                   <p className="text-lg font-semibold">{speedKmh} km/h</p>
