@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState, use } from "react"
+import { useRef, useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import type { Activity, DetailedActivity } from "@/lib/types"
 import { PolylineVisualizer } from "./polyline-visualizer"
@@ -39,7 +39,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
     }
 
   }, [isOpen, onClose])
-  
+
   const modalRef = useRef<HTMLDivElement>(null)
   // Check for Polyline map
   const hasMap = activity.map.summary_polyline !== "";
