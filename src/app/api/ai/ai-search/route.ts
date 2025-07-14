@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: "deepseek/deepseek-chat-v3-0324:free",
+        model: "mistralai/mistral-small-3.1-24b-instruct:free",
          messages: [
           { role: "system", content: systemPrompt || `You are a helpful AI assistant for nutrition and fitness. Provide formatted responses without unnecessary information and keep the responses concise. Think and reason like an expert. No hallucinating allowed. When input includes drinks names, provide links to purchase those products in your output responses.` },
           { role: "user", content: `I'm looking for ${stack} products. ${query}` },

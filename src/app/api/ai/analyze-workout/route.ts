@@ -23,11 +23,11 @@ export async function POST(req: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || '',
+        'HTTP-Referer': process.env.NEXT_PUBLIC_APP_URL || 'https://find-my-function.vercel.app',
         'X-Title': 'Fuel Your Tempo - Workout Analysis'
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat-v3-0324:free',
+        model: 'mistralai/mistral-small-3.1-24b-instruct:free',
         messages: [
           {
             role: 'system',
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
           }
         ],
         max_tokens: 800,
-        temperature: 0.7,
+        temperature: 0.3,
         stream: false
       })
     })
