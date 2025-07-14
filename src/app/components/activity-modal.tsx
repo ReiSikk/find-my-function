@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, use } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import type { Activity, DetailedActivity } from "@/lib/types"
 import { PolylineVisualizer } from "./polyline-visualizer"
@@ -19,6 +19,27 @@ interface ActivityModalProps {
 }
 
 export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps) {
+
+  // Close modal on ESC key press
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        onClose()
+      }
+    }
+
+    // Watch for ESC key when modal is open
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscKey)
+    }
+
+    // Cleanup event listener on unmount or when modal closes
+    return () => {
+      document.removeEventListener("keydown", handleEscKey)
+    }
+
+  }, [isOpen, onClose])
+  
   const modalRef = useRef<HTMLDivElement>(null)
   // Check for Polyline map
   const hasMap = activity.map.summary_polyline !== "";
@@ -253,7 +274,7 @@ export function ActivityModal({ activity, isOpen, onClose }: ActivityModalProps)
                     disabled={isAnalyzing}
                     role="button"
                     aria-label="Start AI analysis of workout"
-                    className="flex align-center px-4 py-2 bg-(--color-btn) text-(--color-primary) rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-wait transition-opacity cursor-pointer shrink-0 w-full max-w-[225px]"
+                    className="flex items-center px-4 py-2 bg-(--color-btn) text-(--color-primary) rounded-lg hover:opacity-80 disabled:opacity-50 disabled:cursor-wait transition-opacity cursor-pointer shrink-0 w-full max-w-[225px]"
                   >
                     {isAnalyzing ? (
                       <>
