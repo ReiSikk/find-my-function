@@ -7,10 +7,11 @@ A smart beverage discovery platform that helps users explore and track functiona
 ## Features
 
 ### Core Functionality
-- 🔍 Smart filtering system for functional drinks
-- 💾 Real-time price tracking across multiple retailers
-- ❤️ Personal favorites list
-- 🔄 Carousel view for featured and favorite drinks
+- Smart filtering system for functional drinks
+- Real-time price tracking across multiple retailers
+- Personal favorites list
+- Strava integration and AI activity analysis
+- Carousel view for featured and favorite drinks
 
 ### Technical Features
 - Authentication via Clerk
