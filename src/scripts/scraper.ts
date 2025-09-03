@@ -444,21 +444,25 @@ export async function scrapePrisma(): Promise<ScrapedDrink[]> {
     // }, { timeout: 10000 });
 
     // Wait for the products to load
-    // await page.waitForSelector(".sc-a5e31db2-2 fepwfv")
-    await page.waitForSelector(".sc-1fceec99-0", {
+    // await page.waitForSelector(".sc-1fceec99-0", {
+    //   visible: true,
+    //   timeout: 10000
+    // });
+    await page.waitForSelector(".sc-b1ad2abf-5", {
       visible: true,
       timeout: 10000
     });
 
     // Extract product information
-    const products = await page.$$(".sc-a5e31db2-2")
+    const products = await page.$$(".sc-73697d86-0")
+    console.log(`Found ${products.length} products on Prisma page`)
 
     for (const product of products) {
       // Extract product details
       const name = await product.$eval(".sc-d9655132-0", (el) => el.textContent?.trim() || "")
 
       // Get all text from the price container, including child elements
-      const priceText = await product.$eval(".sc-32aab3ea-1", el => el.textContent?.trim() || "0");
+      const priceText = await product.$eval('[data-test-id="display-price"]', el => el.textContent?.trim() || "0");
       // Clean and parse the price
       const price = parseFloat(priceText.replace(/[^\d,\.]/g, '').replace(',', '.'));
       const imageUrl = await product.$eval("img", (el) => el.getAttribute("src") || "")
@@ -507,7 +511,7 @@ export async function scrapePrisma(): Promise<ScrapedDrink[]> {
 export async function scrapeAllStores(options: ScrapeOptions = {
   includeSelver: false,
   includeRimi: false,
-  includePrisma: true
+  includePrisma: false
 }) {
     const results = await Promise.all([
     options.includeSelver ? scrapeESelver() : Promise.resolve([]),
@@ -515,9 +519,7 @@ export async function scrapeAllStores(options: ScrapeOptions = {
     options.includePrisma ? scrapePrisma() : Promise.resolve([])
   ]);
   const [selverDrinks, rimiDrinks, prismaDrinks] = results;
-  // const selverDrinks = await scrapeESelver()
-  // const rimiDrinks = await scrapeRimi()
-  // const prismaDrinks = await scrapePrisma()
+  console.log("Options:", options);
 
   const allDrinks = [...selverDrinks, ...rimiDrinks, ...prismaDrinks];
 
