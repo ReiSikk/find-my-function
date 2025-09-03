@@ -1,0 +1,9 @@
+{
+  "cron": [
+    {
+      "path": "/api/keep-alive",
+      "schedule": "30 16 * * 3",
+      "description": "Keep Supabase database active - every Wednesday at 18:30 EET (16:30 UTC)"
+    }
+  ]
+}
